@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EclipseCodeFormatterProjectSettings">
+    <option name="projectSpecificProfile">
+      <ProjectSpecificProfile>
+        <option name="formatOtherFileTypesWithIntelliJ" value="false" />
+        <option name="formatSeletedTextInAllFileTypes" value="false" />
+        <option name="formatter" value="ECLIPSE" />
+        <option name="pathToConfigFileJava" value="R:\queo-Guidelines\Programmierung\Java\EclipseQueoFormatSettings_Eclipse4.8.xml" />
+        <option name="selectedJavaProfile" value="Queo 120 Zeichen" />
+      </ProjectSpecificProfile>
+    </option>
+  </component>
+</project>

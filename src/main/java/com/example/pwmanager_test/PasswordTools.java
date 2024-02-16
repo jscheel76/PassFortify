@@ -1,0 +1,436 @@
+package com.example.pwmanager_test;
+
+import javafx.stage.FileChooser;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Random;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+/**
+ * Helper class used by main controller class to generate passwords and evaluate password strength.
+ *
+ * @author Jannik Scheel
+ */
+public class PasswordTools {
+
+    /**
+     * Location of the master password file.
+     */
+    private static final String M_PASS_LOCATION = "MPass.txt";
+
+    /**
+     * Location of the password file.
+     */
+    private static final String PASSWORD_LOCATION = "Passwords.txt";
+
+    /**
+     * Location of the service file.
+     */
+    private static final String SERVICE_LOCATION = "Services.txt";
+
+    /**
+     * Location of the username file.
+     */
+    private static final String USERNAME_LOCATION = "Usernames.txt";
+
+    /**
+     * Simple password generation method, which is called upon after the onGenerateClick method is running
+     * Password length is chosen by a 16-32 RNG
+     * Characters for the password get picked randomly out of three simple character arrays, depending on second RNG
+     * Password gets returned
+     *
+     * @return returns generated password as a string
+     */
+    public static String passwordGenerator() {
+        final int minimumPasswordSize = 16;
+        //Arrays with letters, numbers and special characters
+        String[] characters = { "§", "!", "$", "%", "%", "&", "/", "?", "+", "*", "#", "~", "@" };
+        String[] letters = { "a", "A", "b", "B", "c", "C", "d", "D", "e", "E", "f", "F", "g", "G", "h", "H", "i", "I",
+                "j", "J", "k", "K", "l", "L", "m", "M", "n", "N" };
+        String[] numbers = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+        //Random number generator to pick the length of the password and the character type
+        Random randomizer = new Random();
+        StringBuilder randomPassword = new StringBuilder(); // empty string later to be used for the password
+        int passwordLength; //length of the password
+        int characterPicker; //0 = numbers, 1 = letters, 2 = special characters
+        int randomNumber; //random number to pick the character
+        passwordLength = randomizer.nextInt(minimumPasswordSize, 32); //password length will be between 16 and 32 characters
+
+        //Loop to generate the password
+        for (int i = 0; i < passwordLength; i++) {
+            final int amountOfArrays = 3; //amount of total arrays used
+            characterPicker = randomizer.nextInt(amountOfArrays); //random number to pick the character type
+            if (characterPicker == 0) { //if the character type is 0, a number will be picked
+                randomNumber = randomizer.nextInt(characters.length);
+                randomPassword.append(characters[randomNumber]);
+            } else if (characterPicker == 1) { //if the character type is 1, a letter will be picked
+                randomNumber = randomizer.nextInt(letters.length);
+                randomPassword.append(letters[randomNumber]);
+            } else {
+                randomNumber = randomizer.nextInt(numbers.length); //if the character type is 2, a special character will be picked
+                randomPassword.append(numbers[randomNumber]);
+            }
+        }
+        return randomPassword.toString(); //returns the password as string
+    }
+
+    /**
+     * Evaluates the strength of a password based on various criteria, including length, character types, and complexity.
+     *
+     * @param passwordToCheck The password to be evaluated for strength.
+     * @return An integer representing the password strength, where higher values indicate stronger passwords.
+     */
+    public static int passwordStrength(final String passwordToCheck) {
+
+        final int lowLength = 8; //Minimum length for an okay password
+        final int mediumLength = 10; //Minimum length for a secure password
+        int passwordStrength = 0; //Integer used to add up points to check password strength
+
+        //Checks whether the password is equal or longer than 8 characters
+        if (passwordToCheck.length() <= lowLength) {
+            passwordStrength -= 2; //Two points deducted if its shorter
+        }
+
+        //Checks whether the password is equal or longer than 10 characters
+        if (passwordToCheck.length() >= mediumLength) {
+            passwordStrength++; //Point added if its equal or longer
+        } else {
+            passwordStrength--;
+        }
+
+        //Checks whether the password contains lowercase letters
+        if (passwordToCheck.matches(".*[a-z].*")) {
+            passwordStrength++; //Point added if password contains at least one lowercase letter
+        }
+
+        //Checks whether the password contains uppercase letters
+        if (passwordToCheck.matches(".*[A-Z].*")) {
+            passwordStrength++; //Point added if password contains at least one uppercase letter
+        }
+
+        //Checks whether the password contains numbers
+        if (passwordToCheck.matches(".*[0-9].*")) {
+            passwordStrength++; //Point added if password contains at least one number
+        }
+
+        //Checks whether password contains special characters
+        if (passwordToCheck.matches(".*[§!$%&/?+*#~].*")) {
+            passwordStrength += 2; //Two points added if password contains at least one special character
+        }
+        return passwordStrength;
+    }
+
+    /**
+     * Evaluates the strength of a given password and returns a corresponding strength label.
+     * This method calculates the strength of the provided password using a scoring system and assigns a strength label
+     * based on predefined thresholds. The password strength labels include "weak," "medium," "strong," and "very strong."
+     *
+     * @param passwordToCheck The password to evaluate for strength.
+     * @return The strength label indicating the assessed strength of the password.
+     */
+    public static String passwordStrengthOutput(final String passwordToCheck) {
+        final int threeRules = 3; //Used to indicate password strength
+        final int fiveRules = 5; //Used to indicate password strength
+        int passwordStrength = passwordStrength(passwordToCheck);
+        String savedPasswordStrength;
+        if (passwordStrength < 2) { //Less than two points
+            savedPasswordStrength = "weak";
+        } else if (passwordStrength < threeRules) { //Less than three points, but more than two points
+            savedPasswordStrength = "medium";
+        } else if (passwordStrength <= fiveRules) { //Less than five, but more than three points
+            savedPasswordStrength = "strong";
+        } else { //Any amount of points greater than 6
+            savedPasswordStrength = "very strong";
+        }
+        return savedPasswordStrength; //Returning the strength of the password
+    }
+
+    /**
+     * Checks for duplicate passwords within an array of password content lines.
+     * This method iterates through the array of password content lines, comparing each password
+     * with every other password. If a duplicate password is found (excluding self-comparisons), the
+     * method returns true. Otherwise, it returns false.
+     *
+     * @param passwordContentLines An array of strings representing password content lines.
+     * @return True if a duplicate password is found; false otherwise.
+     */
+    public static boolean duplicatePasswordCheck(final String[] passwordContentLines) {
+        boolean hasSamePassword = false; //boolean used to save whether a password is found multiple times
+
+        //Loop that goes through the passwords and compares them with each other
+        for (int i = 0; i < passwordContentLines.length; i++) {
+            for (int j = 0; j < passwordContentLines.length; j++) {
+                if (passwordContentLines[i].equals(passwordContentLines[j]) && i != j) {
+                    hasSamePassword = true; //match found, boolean set to true
+                    break; // Exit the inner loop once a match is found
+                }
+            }
+        }
+        return hasSamePassword; //returning whether a password was found to be used multiple times
+    }
+
+    /**
+     * Checks if the provided master password is correct by decrypting the stored master password.
+     * This method verifies the correctness of the provided master password by attempting to decrypt
+     * the stored master password from the designated location. The comparison result is returned as a
+     * boolean, indicating whether the entered password matches the stored one.
+     *
+     * @param mPassword The master password to be checked for correctness.
+     * @return True if the entered password matches the stored master password; false otherwise.
+     *
+     * @throws Exception If an error occurs during the decryption process.
+     */
+    public static boolean checkMasterpassword(final String mPassword) throws Exception {
+        //Security function to check if the master password is correct. Useful as otherwise the application would double encrypt files
+        byte[] decryptedText = Cryptography.decryptFile(M_PASS_LOCATION, mPassword);
+        String decryptedMPass = new String(decryptedText, UTF_8);
+        return mPassword.equals(decryptedMPass); //Returning whether the entered password equals the saved one
+    }
+
+    /**
+     * Displays a file chooser dialog for selecting a folder to save a backup and returns the chosen path.
+     * This method opens a file chooser dialog prompting the user to select a folder for saving a backup.
+     * The initial directory is set to the user's home directory, and the suggested file name is "PassFortify Backup".
+     * The user's chosen path is then returned as a Path object.
+     *
+     * @return The Path object representing the selected folder path for saving a backup.
+     */
+    public static Path getFilePath() {
+        FileChooser filechooser = new FileChooser();
+        filechooser.setTitle("Open a folder to save backup"); //Title
+        filechooser.setInitialDirectory(new File(System.getProperty("user.home"))); //Set initial directory to users home directory
+        filechooser.setInitialFileName("PassFortify Backup"); //Set automatic name for the file to "Backup"
+        filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Folders", "*."));
+
+        return filechooser.showSaveDialog(null).toPath(); //Returning path chosen by user
+    }
+
+    /**
+     * Decrypts the content of a file using the provided master password, and then encrypts the
+     * decrypted content with a new master password, overwriting the original file.
+     * This method decrypts the specified file using the provided master password, retrieves the
+     * decrypted content, and encrypts the content using a new master password. The resulting
+     * encrypted content is then written back to the original file, overwriting its previous content.
+     *
+     * @param location    The location of the file to be decrypted and re-encrypted.
+     * @param mPassword   The current master password used to decrypt the file.
+     * @param newpass     The new master password used to encrypt the file.
+     *
+     * @throws Exception  If an error occurs during the decryption, encryption, or file writing process.
+     *                    The specific exception type may vary based on the underlying operations.
+     *
+     * @see Cryptography#decryptFile(String, String)
+     * @see #addDataWithoutAppend(String, String, String)
+     */
+    public static void decryptAndEncrypt(final String location, final String mPassword, final String newpass)
+            throws Exception {
+        byte[] decryptedPass = Cryptography.decryptFile(location, mPassword); //Decrypting the contents of the file
+        String pText = new String(decryptedPass, UTF_8);
+        addDataWithoutAppend(location, pText, newpass); //Adding the data by replacing it
+    }
+
+    /**
+     * Creates a backup of essential files in a specified destination directory.
+     * This method creates a backup by copying critical files, including passwords, usernames,
+     * services, settings, and master password information, from their original locations to the
+     * specified destination directory. The method also waits for a short duration to ensure that
+     * the backup creation message is displayed after the backup is actually created.
+     *
+     * @param destinationDirectory The path to the directory where the backup files will be stored.
+     * @param settingsLocation     The location of the settings file to be included in the backup.
+     *
+     * @throws IOException         If an I/O error occurs during file copying or directory creation.
+     * @throws InterruptedException If the thread sleep is interrupted.
+     */
+    public static void createBackup(final Path destinationDirectory, final String settingsLocation)
+            throws IOException, InterruptedException {
+        final int sleepAMinute = 1000; //Integer used to sleep for 1000ms
+        // Create the destination directory if it doesn't exist
+        Files.createDirectories(destinationDirectory);
+
+        // Define destination paths for each file
+        Path destinationPasswordPath = destinationDirectory.resolve("Passwords.txt");
+        Path destinationUsernamePath = destinationDirectory.resolve("Usernames.txt");
+        Path destinationServicePath = destinationDirectory.resolve("Services.txt");
+        Path destinationBackupPath = destinationDirectory.resolve("settings.txt");
+        Path destinationMpassPath = destinationDirectory.resolve("MPass.txt");
+
+        // Copy each file to the corresponding destination
+        Files.copy(Path.of(PASSWORD_LOCATION), destinationPasswordPath);
+        Files.copy(Path.of(USERNAME_LOCATION), destinationUsernamePath);
+        Files.copy(Path.of(SERVICE_LOCATION), destinationServicePath);
+        Files.copy(Path.of(settingsLocation), destinationBackupPath);
+        Files.copy(Path.of(M_PASS_LOCATION), destinationMpassPath);
+
+        //Waiting one second, to display the message once the backup is actually created
+        Thread.sleep(sleepAMinute);
+    }
+
+    /**
+     * Adds account data to a file, appends the content, and encrypts the file with the provided master password.
+     * This method appends the specified account data to the end of the specified file, and then encrypts
+     * the entire file using the provided master password.
+     *
+     * @param location       The location of the file to which account data is appended and encrypted.
+     * @param accountToAdd   The account data to be added to the file.
+     * @param mPassword      The master password used to encrypt the file.
+     *
+     * @throws Exception     If an error occurs during the file writing or encryption process.
+     *                       The specific exception type may vary based on the underlying operations.
+     */
+    public static void addData(final String location, final String accountToAdd, final String mPassword)
+            throws Exception {
+        FileWriter fWriter = new FileWriter(location, true);
+        BufferedWriter writer = new BufferedWriter(fWriter);
+        writer.write(accountToAdd);
+        writer.newLine();
+        writer.close();
+        Cryptography.encryptFile(location, location, mPassword);
+    }
+
+    /**
+     * Adds content to a file without appending, encrypts the file with the provided master password,
+     * and overwrites the existing content.
+     * This method creates a FileWriter for the specified file, writes the given content to the file,
+     * and then encrypts the entire file using the provided master password. The existing content in
+     * the file is overwritten with the new content.
+     *
+     * @param location      The location of the file to which content is added and encrypted.
+     * @param contentToAdd  The content to be added to the file.
+     * @param mPassword     The master password used to encrypt the file.
+     *
+     * @throws Exception    If an error occurs during the file writing or encryption process.
+     *                      The specific exception type may vary based on the underlying operations.
+     */
+    public static void addDataWithoutAppend(final String location, final String contentToAdd, final String mPassword)
+            throws Exception {
+        FileWriter fWriter = new FileWriter(location);
+        fWriter.write(contentToAdd);
+        fWriter.close();
+        Cryptography.encryptFile(location, location, mPassword);
+    }
+
+    /**
+     * Decrypts the content of a file using the provided master password and overwrites the file with
+     * the decrypted text.
+     * This method decrypts the specified file using the provided master password, converts the decrypted
+     * data into a string, and overwrites the original file with the decrypted text.
+     *
+     * @param location   The location of the file to be decrypted and overwritten.
+     * @param mPassword  The master password used to decrypt the file.
+     *
+     * @throws Exception If an error occurs during the decryption process, string conversion, or file writing.
+     *                   The specific exception type may vary based on the underlying operations.
+     */
+    public static void decryptAndSave(final String location, final String mPassword) throws Exception {
+        byte[] decryptedText = Cryptography.decryptFile(location, mPassword);
+        String pText = new String(decryptedText, UTF_8);
+        FileWriter decryptWriter = new FileWriter(location);
+        decryptWriter.write(pText);
+        decryptWriter.close();
+    }
+
+    /**
+     * Retrieves the content of a decrypted file and returns it as an array of strings, where each
+     * element corresponds to a line in the file.
+     * This method decrypts the specified file using the provided master password and converts the
+     * decrypted data into a string. The string is then split into lines using the system-dependent
+     * line separator, and the resulting array of lines is returned.
+     *
+     * @param location   The location of the file to be decrypted and read.
+     * @param mPassword  The master password used to decrypt the file.
+     * @return           An array of strings representing the lines of the decrypted file.
+     *
+     * @throws Exception If an error occurs during the decryption process or string conversion.
+     *                   The specific exception type may vary based on the underlying operations.
+     */
+    public static String[] getContentLines(final String location, final String mPassword) throws Exception {
+        //The files with the data are decrypted and added to a byte
+        byte[] decrypted = Cryptography.decryptFile(location, mPassword);
+
+        //The decrypted data is converted to a string
+        String content = new String(decrypted, UTF_8);
+
+        //The string is split into lines, which are added to a content array
+        return content.split(System.lineSeparator()); //Returning the array
+    }
+
+    /**
+     * Retrieves the password associated with a specific username and service using the provided master password.
+     * This method retrieves the content lines for service, username, and password from their respective files
+     * decrypted with the provided master password. It then searches for a matching username and service combination
+     * and returns the corresponding password if found. If no match is found, the method returns null.
+     *
+     * @param mPassword The master password used to decrypt the files.
+     * @param username  The username for which to retrieve the password.
+     * @param service   The service for which to retrieve the password.
+     * @return The password associated with the given username and service, or null if not found.
+     *
+     * @throws Exception If an error occurs during the decryption process or while retrieving file content.
+     *
+     * @see #getContentLines(String, String)
+     */
+    public static String getPasswordFromFiles(final String mPassword, final String username, final String service)
+            throws Exception {
+        String[] serviceContentLines = getContentLines(SERVICE_LOCATION, mPassword);
+        String[] usernameContentLines = getContentLines(USERNAME_LOCATION, mPassword);
+        String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
+
+        // Find matching line
+        for (int i = 0; i < usernameContentLines.length; i++) {
+            if (usernameContentLines[i].equals(username) && serviceContentLines[i].equals(service)) {
+                return passwordContentLines[i]; // Return corresponding password
+            }
+        }
+
+        return null; // Return null if username and service combination not found
+    }
+
+    /**
+     * Changes the password for a specific service and username combination.
+     * This method retrieves the content lines for service, username, and password from their respective files
+     * decrypted with the provided master password. It then searches for a matching username and service combination
+     * and replaces the corresponding password with the new password. The modified password content is then written back
+     * to the password file and encrypted with the master password.
+     *
+     * @param mPassword The master password used to decrypt and encrypt the password file.
+     * @param service   The service for which the password is to be changed.
+     * @param username  The username associated with the password to be changed.
+     * @param newPass   The new password to replace the existing password.
+     *
+     * @throws Exception If an error occurs during the decryption, file writing, or encryption process.
+     *
+     * @see PasswordTools#getContentLines(String, String)
+     * @see Cryptography#encryptFile(String, String, String)
+     */
+    public static void changePassword(final String mPassword, final String service, final String username, final String newPass)
+            throws Exception {
+        //Retrieving content of the saved accounts using PasswordTools class
+        String[] serviceContentLines = PasswordTools.getContentLines(SERVICE_LOCATION, mPassword);
+        String[] usernameContentLines = PasswordTools.getContentLines(USERNAME_LOCATION, mPassword);
+        String[] passwordContentLines = PasswordTools.getContentLines(PASSWORD_LOCATION, mPassword);
+
+        for (int i = 0; i < serviceContentLines.length; i++) {
+            //If service and username entry match in the same line of their respective files
+            if (serviceContentLines[i].equals(service) && usernameContentLines[i].equals(username)) {
+                //Replacing the desired password in the same line that service and username were found in
+                passwordContentLines[i] = newPass;
+            }
+        }
+        //Initialising a FileWriter to rewrite the password file
+        try (FileWriter passwordChanger = new FileWriter(PASSWORD_LOCATION)) {
+            for (String passwordContentLine : passwordContentLines) {
+                passwordChanger.write(passwordContentLine);
+                passwordChanger.write(System.lineSeparator()); //Using lineSeparator to achieve correct formatting of file
+            }
+        }
+        Cryptography.encryptFile(PASSWORD_LOCATION, PASSWORD_LOCATION, mPassword); //Encrypting the password file
+    }
+}
