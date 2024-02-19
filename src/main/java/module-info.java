@@ -1,4 +1,4 @@
-module com.example.pwmanager_test {
+module com.queomedia.scheel {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -9,6 +9,6 @@ module com.example.pwmanager_test {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
 
-    opens com.example.pwmanager_test to javafx.fxml;
-    exports com.example.pwmanager_test;
+    opens com.queomedia.scheel to javafx.fxml;
+    exports com.queomedia.scheel;
 }
