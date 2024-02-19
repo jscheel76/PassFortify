@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Random;
+import java.security.SecureRandom;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -39,46 +39,52 @@ public class PasswordTools {
      */
     private static final String USERNAME_LOCATION = "Usernames.txt";
 
+    private static final int MINIMUM_PASSWORD_SIZE = 12;
+
     /**
-     * Simple password generation method, which is called upon after the onGenerateClick method is running
-     * Password length is chosen by a 16-32 RNG
-     * Characters for the password get picked randomly out of three simple character arrays, depending on second RNG
-     * Password gets returned
+     * Generates a random password with varying length and character types.
+     * This method utilizes a SecureRandom object to determine the length of the password within a specified range.
+     * It then generates random characters based on different character types (special characters, numbers,
+     * uppercase letters, and lowercase letters) using the generateRandomChar method. The generated characters are
+     * concatenated to form the random password.
      *
-     * @return returns generated password as a string
+     * @return A randomly generated password with varying length and character types.
      */
     public static String passwordGenerator() {
-        final int minimumPasswordSize = 16;
-        //Arrays with letters, numbers and special characters
-        String[] characters = { "§", "!", "$", "%", "%", "&", "/", "?", "+", "*", "#", "~", "@" };
-        String[] letters = { "a", "A", "b", "B", "c", "C", "d", "D", "e", "E", "f", "F", "g", "G", "h", "H", "i", "I",
-                "j", "J", "k", "K", "l", "L", "m", "M", "n", "N" };
-        String[] numbers = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+        SecureRandom randomizer = new SecureRandom();
+        StringBuilder randomPassword = new StringBuilder();
 
-        //Random number generator to pick the length of the password and the character type
-        Random randomizer = new Random();
-        StringBuilder randomPassword = new StringBuilder(); // empty string later to be used for the password
-        int passwordLength; //length of the password
-        int characterPicker; //0 = numbers, 1 = letters, 2 = special characters
-        int randomNumber; //random number to pick the character
-        passwordLength = randomizer.nextInt(minimumPasswordSize, 32); //password length will be between 16 and 32 characters
+        //Using SecureRandom to decide length of the password
+        int passwordLength = randomizer.nextInt(MINIMUM_PASSWORD_SIZE, 24);
 
-        //Loop to generate the password
         for (int i = 0; i < passwordLength; i++) {
-            final int amountOfArrays = 3; //amount of total arrays used
-            characterPicker = randomizer.nextInt(amountOfArrays); //random number to pick the character type
-            if (characterPicker == 0) { //if the character type is 0, a number will be picked
-                randomNumber = randomizer.nextInt(characters.length);
-                randomPassword.append(characters[randomNumber]);
-            } else if (characterPicker == 1) { //if the character type is 1, a letter will be picked
-                randomNumber = randomizer.nextInt(letters.length);
-                randomPassword.append(letters[randomNumber]);
-            } else {
-                randomNumber = randomizer.nextInt(numbers.length); //if the character type is 2, a special character will be picked
-                randomPassword.append(numbers[randomNumber]);
-            }
+            char randomChar = generateRandomChar(randomizer);
+            randomPassword.append(randomChar);
         }
-        return randomPassword.toString(); //returns the password as string
+
+        return randomPassword.toString();
+    }
+
+    /**
+     * Generates a random character based on different character types.
+     * This method takes a SecureRandom object as a parameter and generates a random character based on four character types:
+     * special characters, numbers, uppercase letters, and lowercase letters. It uses ASCII values to determine the range
+     * for each character type.
+     *
+     * @param randomizer The SecureRandom object used for generating random values.
+     * @return A randomly generated character based on the specified character types.
+     * @throws IllegalStateException If an unexpected character type is encountered during the switch statement.
+     */
+    private static char generateRandomChar(final SecureRandom randomizer) {
+        int charType = randomizer.nextInt(4);
+
+        return switch (charType) {
+        case 0 -> (char) randomizer.nextInt(33, 48); // ASCII values for special characters
+        case 1 -> (char) randomizer.nextInt(48, 58); // ASCII values for numbers
+        case 2 -> (char) randomizer.nextInt(65, 91); // ASCII values for uppercase letters
+        case 3 -> (char) randomizer.nextInt(97, 123); // ASCII values for lowercase letters
+        default -> throw new IllegalStateException("Unexpected value: " + charType);
+        };
     }
 
     /**
