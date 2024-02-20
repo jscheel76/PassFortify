@@ -36,7 +36,14 @@ public class PassFortify extends Application {
         }
     }
 
-    public static void main(String[] args) {
+/**
+ * This method launches the application. It serves as the entry point when the program is executed, especially when
+ * running the application from a JAR (Java Archive) file. The launch() method is typically used in JavaFX applications
+ * to initialize and start the graphical user interface.
+ *
+ * @param args Command-line arguments passed to the application (unused in this context).
+ */
+    public static void main(final String[] args) {
         launch();
     }
 }
