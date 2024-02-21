@@ -1,5 +1,8 @@
 package com.queomedia.scheel;
 
+/**
+ * Class used to get coordinates of the window.
+ */
 public class Delta {
     /**
      * x-coordinate for dragging.

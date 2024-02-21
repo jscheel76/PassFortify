@@ -39,7 +39,7 @@ public class PassphraseGenerator {
             indexToPick = indexPicker.nextInt(lengthOfWordlist); //Pick a random index
             passphrase.append(Files.readAllLines(Paths.get("wordlist.txt")).get(indexToPick)); //Add it to the passphrase
             if (i > 1) {
-                passphrase.append(" "); //As long as i is still bigger than 1, add a space to make the passphrase more readable
+                passphrase.append(" "); //As long as the integer 'i' is still bigger than 1, add a space to make the passphrase more readable
             }
         }
         return passphrase.toString(); //Return the passphrase as a string
