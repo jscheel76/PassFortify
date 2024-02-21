@@ -730,7 +730,7 @@ public class PassFortifyController {
         mPassword = mPasswordField2.getText();
         settingCheck(); //Updates and applies settings
         settingCheck(); //Settings need to be checked twice, if settings were just created, otherwise all settings are turned on by default
-        arePasswordsShown = true; //Set to true unless, hidePassword is selected (checked later on)
+        arePasswordsShown = true; //Set to true, unless hidePassword is selected (checked later on)
 
         //Using PasswordTools class to get arrays filled with account information.
         String[] serviceContentLines = PasswordTools.getContentLines(serviceLocation, mPassword);
