@@ -2,6 +2,8 @@
 
 This is a JavaFX-based Password Manager application designed to securely store and manage your passwords. The application provides features such as password encryption, master password functionality, account management, password generation, and more.
 
+![PassFortify loaded up with some accounts](https://i.ibb.co/yq5YXNY/example.png)
+
 ## Table of Contents
 
 - [Introduction](#Introduction)
@@ -27,6 +29,9 @@ PassFortify is a simple GUI based password manager using the JavaFX framework. T
 
 ## Usage
 
+Optimize your experience with the PassFortify.jar file provided in the repository. Place it in a designated folder for organized password file storage, and initiate the application using the command 'java -jar PassFortify.jar' or by creating a convenient desktop batch script.
+
+**IMPORTANT**: Move the wordlist.txt into the same folder as the PassFortify.jar file, otherwise generating passphrases is not possible.
 - **Set Master password**: On first launch you will be prompted to choose a master password.
 - **Access Password Manager**: To access the password manager simply enter your chosen master password.
 - **Manage your accounts**: Using the input field and buttons, add Services, Usernames and Passwords.
