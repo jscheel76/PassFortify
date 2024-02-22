@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="267.0" prefWidth="213.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.queomedia.scheel.AddAccountController">
+   <children>
+      <TextField fx:id="serviceField" layoutX="31.0" layoutY="45.0" promptText="Enter Service" />
+      <TextField fx:id="usernameField" layoutX="32.0" layoutY="81.0" promptText="Enter Username" />
+      <Button layoutX="85.0" layoutY="229.0" mnemonicParsing="false" onAction="#onSaveClick" text="Save" />
+      <Button layoutX="43.0" layoutY="197.0" mnemonicParsing="false" onAction="#onGeneratePasswordClick" prefHeight="25.0" prefWidth="127.0" text="Generate Password" />
+      <PasswordField fx:id="passwordField" layoutX="31.0" layoutY="118.0" promptText="Enter Password" />
+      <HBox prefHeight="36.0" prefWidth="213.0">
+         <children>
+            <MenuBar prefHeight="25.0" prefWidth="216.0" />
+            <Button mnemonicParsing="false" onAction="#onExitButtonClick" text="X" />
+         </children></HBox>
+      <PasswordField fx:id="mPassField" layoutX="31.0" layoutY="155.0" prefHeight="27.0" prefWidth="151.0" promptText="Enter Master Password" />
+   </children>
+</AnchorPane>

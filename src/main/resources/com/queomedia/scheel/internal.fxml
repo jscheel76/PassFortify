@@ -44,7 +44,7 @@
       </HBox>
         <AnchorPane onMouseDragged="#paneDragged" onMousePressed="#panePressed" prefHeight="354.0" prefWidth="606.0" VBox.vgrow="SOMETIMES">
             <children>
-                <Button layoutX="3.0" layoutY="34.0" mnemonicParsing="false" onAction="#onAddAccountButton" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Username" />
+                <Button layoutX="3.0" layoutY="34.0" mnemonicParsing="false" onAction="#onAddUsernameButton" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Username" />
                 <Button layoutX="3.0" layoutY="3.0" mnemonicParsing="false" onAction="#onServiceButtonClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Service" />
                 <Button layoutX="3.0" layoutY="65.0" mnemonicParsing="false" onAction="#onAddPasswordButtonClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Password" />
                 <TableView fx:id="accountTable" layoutX="142.0" layoutY="5.0" onContextMenuRequested="#checkForLeaks" prefHeight="278.0" prefWidth="488.0">

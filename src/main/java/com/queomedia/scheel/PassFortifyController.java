@@ -160,6 +160,9 @@ public class PassFortifyController {
     @FXML
     private CheckMenuItem checkLeak;
 
+    @FXML
+    private CheckMenuItem experimentalMode;
+
     /**
      * Boolean to check if the table is initialised and ready to be copied from.
      */
@@ -201,9 +204,11 @@ public class PassFortifyController {
      * @throws IOException If an I/O error occurs during the window opening process.
      */
     @FXML
-    protected void openWindow(final String sceneToOpen) throws IOException {
+    protected void openWindow(final String sceneToOpen, final boolean close) throws IOException {
         //Closes the previous window
-        ((Stage) feedbackLabel.getScene().getWindow()).close(); //Using UI element present in all three fxml files
+        if (close) {
+            ((Stage) feedbackLabel.getScene().getWindow()).close(); //Using UI element present in all three fxml files
+        }
         //tries to open internals of the password manager, if the password was correct
         FXMLLoader fxmlLoader = new FXMLLoader(PassFortify.class.getResource(sceneToOpen));
         Parent root1 = fxmlLoader.load();
@@ -279,7 +284,7 @@ public class PassFortifyController {
             feedbackLabel.setStyle("-fx-text-fill: red");
         } else {
             PasswordTools.addDataWithoutAppend(mPassLocation, mPassword, mPassword);
-            openWindow(passwordFound); //opens login window
+            openWindow(passwordFound, true); //opens login window
         }
     }
 
@@ -293,7 +298,7 @@ public class PassFortifyController {
      */
     public void logout() throws IOException {
         String passwordFound = "passwordFound.fxml";
-        openWindow(passwordFound); //opens login window
+        openWindow(passwordFound, true); //opens login window
     }
 
     /**
@@ -313,7 +318,11 @@ public class PassFortifyController {
 
         //Compares entered password with decrypted master password
         if ((decryptedMPass).equals(mPassword)) {
-            openWindow(internal); //Opens internal.fxml window
+            if (experimentalMode.isSelected()){
+                openWindow("internal2.fxml", true);
+            } else {
+                openWindow(internal, true); //Opens internal.fxml window
+            }
         } else {
             //if the password was incorrect 3 times, the program closes
             triesLeft--;
@@ -574,6 +583,10 @@ public class PassFortifyController {
         return !userInput.isEmpty(); //returns true if inputField is empty, returns false if inputField contains anything
     }
 
+    public void onAddAccountButton() throws IOException {
+        openWindow("addAccount.fxml", false);
+    }
+
     /**
      * Handles the action triggered when the "Add Username" button is clicked.
      * Retrieves the master password and new username from input fields, performs necessary validations,
@@ -583,7 +596,7 @@ public class PassFortifyController {
      *                   such as issues with decryption, file operations, or password validation.
      */
     @FXML
-    public void onAddAccountButton() throws Exception {
+    public void onAddUsernameButton() throws Exception {
         //Master password and new account get taken from the password and input field
         mPassword = mPasswordField2.getText();
         String accountToAdd = inputField.getText();
