@@ -293,8 +293,6 @@ public class PassFortifyController {
      * This method initiates the logout process by opening the passwordFound.fxml window.
      *
      * @throws IOException If an error occurs during the window opening process.
-     *
-     * @see #openWindow(String)
      */
     public void logout() throws IOException {
         String passwordFound = "passwordFound.fxml";
@@ -318,7 +316,7 @@ public class PassFortifyController {
 
         //Compares entered password with decrypted master password
         if ((decryptedMPass).equals(mPassword)) {
-            if (experimentalMode.isSelected()){
+            if (experimentalMode.isSelected()) {
                 openWindow("internal2.fxml", true);
             } else {
                 openWindow(internal, true); //Opens internal.fxml window

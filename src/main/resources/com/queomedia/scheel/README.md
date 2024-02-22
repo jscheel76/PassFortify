@@ -2,6 +2,8 @@
 
 This is a JavaFX-based Password Manager application designed to securely store and manage your passwords. The application provides features such as password encryption, master password functionality, account management, password generation, and more.
 
+![PassFortify loaded up with some accounts](https://i.ibb.co/yq5YXNY/example.png)
+
 ## Table of Contents
 
 - [Introduction](#Introduction)
@@ -52,4 +54,4 @@ Optimize your experience with the PassFortify.jar file provided in the repositor
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
- You can reach me through my E-Mail: passfortify@proton.me
+You can reach me through my E-Mail: passfortify@proton.me
