@@ -160,6 +160,9 @@ public class PassFortifyController {
     @FXML
     private CheckMenuItem checkLeak;
 
+    /**
+     * CheckMenuItem used to switch between experimental and legacy UI.
+     */
     @FXML
     private CheckMenuItem experimentalMode;
 
@@ -201,6 +204,7 @@ public class PassFortifyController {
      * Closes the previous window before opening the new one.
      *
      * @param sceneToOpen The FXML scene file to open.
+     * @param close boolean used to decide whether the previous window will be closed or not.
      * @throws IOException If an I/O error occurs during the window opening process.
      */
     @FXML
@@ -581,6 +585,12 @@ public class PassFortifyController {
         return !userInput.isEmpty(); //returns true if inputField is empty, returns false if inputField contains anything
     }
 
+    /**
+     * Method called by clicking the "Add Account" button. Opens a second window using the internal2.fxml file.
+     * Allows user to enter full account details in a form.
+     *
+     * @throws IOException if anything unexpected happens during the loading of the fxml.
+     */
     public void onAddAccountButton() throws IOException {
         openWindow("addAccount.fxml", false);
     }
@@ -723,8 +733,13 @@ public class PassFortifyController {
         //Master password is taken from the password field, the table is populated with the decrypted data
         mPassword = mPasswordField2.getText();
         if (PasswordTools.checkMasterpassword(mPassword)) { //Checks whether the master password is correct
-            populateTableData(); //Updating tableView
-            feedbackLabel.setText(""); //Hiding previous feedback
+            if (Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation)) && Files.exists(Path.of(passwordLocation))) {
+                populateTableData(); //Updating tableView
+                feedbackLabel.setText(""); //Hiding previous feedback
+            } else {
+                feedbackLabel.setText("Missing account files.");
+                feedbackLabel.setStyle("-fx-text-fill: red");
+            }
         } else {
             feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");

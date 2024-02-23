@@ -12,7 +12,7 @@
       <PasswordField fx:id="passwordField" layoutX="31.0" layoutY="118.0" promptText="Enter Password" />
       <HBox prefHeight="36.0" prefWidth="213.0">
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="216.0" />
+            <MenuBar onMouseDragged="#paneDragged" onMousePressed="#panePressed" prefHeight="25.0" prefWidth="216.0" />
             <Button mnemonicParsing="false" onAction="#onExitButtonClick" text="X" />
          </children></HBox>
       <PasswordField fx:id="mPassField" layoutX="31.0" layoutY="155.0" prefHeight="27.0" prefWidth="151.0" promptText="Enter Master Password" />
