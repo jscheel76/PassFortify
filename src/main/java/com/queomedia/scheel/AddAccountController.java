@@ -1,6 +1,8 @@
 package com.queomedia.scheel;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
@@ -37,6 +39,9 @@ public class AddAccountController {
     @FXML
     private PasswordField mPassField;
 
+    @FXML
+    private Label passwordFeedback;
+
     /**
      * This method is called when the "Generate Password" button is clicked. It generates a random password using the
      * PasswordTools class, sets the generated password in a text field, and copies the password to the system clipboard.
@@ -48,6 +53,8 @@ public class AddAccountController {
         final ClipboardContent content = new ClipboardContent();
         content.putString(password);
         clipboard.setContent(content); //Placing generated password into clipboard
+        passwordFeedback.setText("Password generated and copied");
+        passwordFeedback.setAlignment(Pos.CENTER);
     }
 
     /**

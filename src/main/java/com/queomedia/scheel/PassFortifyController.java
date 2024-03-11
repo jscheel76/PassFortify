@@ -499,7 +499,6 @@ public class PassFortifyController {
     public void yesClick() {
         yesButton.setVisible(false); //Hide yesButton
         noButton.setVisible(false); //Hide noButton
-
         try {
             changeMasterPass(); //Start password change process
         } catch (Exception e) {
