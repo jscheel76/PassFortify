@@ -102,6 +102,7 @@ public class AddAccountController {
     /**
      * This method is called when the "Exit" button is clicked. It closes the current application window.
      */
+    @FXML
     void onExitButtonClick() {
         ((Stage) serviceField.getScene().getWindow()).close(); //Closing the form.
     }
@@ -114,6 +115,7 @@ public class AddAccountController {
      *
      * @param me The MouseEvent representing the mouse press action.
      */
+    @FXML
     void panePressed(final MouseEvent me) {
         Stage stage = (Stage) serviceField.getScene().getWindow(); //Getting stage object from the label
         Delta.x = stage.getX() - me.getScreenX(); //Setting the x position of the stage
@@ -127,6 +129,7 @@ public class AddAccountController {
      *
      * @param me The MouseEvent representing the dragging action.
      */
+    @FXML
     void paneDragged(final MouseEvent me) {
         Stage stage = (Stage) serviceField.getScene().getWindow(); //Getting stage object from the label
         stage.setX(Delta.x + me.getScreenX()); //Setting the x position of the stage
