@@ -209,10 +209,16 @@ public class PassFortifyController {
      */
     @FXML
     protected void openWindow(final String sceneToOpen, final boolean close) throws IOException {
+       //Getting position of the stage to open the new stage in the same place
+        Stage currentStage = ((Stage) feedbackLabel.getScene().getWindow());
+        double x = currentStage.getX();
+        double y = currentStage.getY();
+
         //Closes the previous window
         if (close) {
             ((Stage) feedbackLabel.getScene().getWindow()).close(); //Using UI element present in all three fxml files
         }
+
         //tries to open internals of the password manager, if the password was correct
         FXMLLoader fxmlLoader = new FXMLLoader(PassFortify.class.getResource(sceneToOpen));
         Parent root1 = fxmlLoader.load();
@@ -224,6 +230,8 @@ public class PassFortifyController {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
         stage.show();
+        stage.setY(y);
+        stage.setX(x);
     }
 
     /**
@@ -733,7 +741,8 @@ public class PassFortifyController {
         //Master password is taken from the password field, the table is populated with the decrypted data
         mPassword = mPasswordField2.getText();
         if (PasswordTools.checkMasterpassword(mPassword)) { //Checks whether the master password is correct
-            if (Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation)) && Files.exists(Path.of(passwordLocation))) {
+            if (Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation))
+                    && Files.exists(Path.of(passwordLocation))) {
                 populateTableData(); //Updating tableView
                 feedbackLabel.setText(""); //Hiding previous feedback
             } else {
