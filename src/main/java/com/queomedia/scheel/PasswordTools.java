@@ -429,6 +429,7 @@ public class PasswordTools {
             if (serviceContentLines[i].equals(service) && usernameContentLines[i].equals(username)) {
                 //Replacing the desired password in the same line that service and username were found in
                 passwordContentLines[i] = newPass;
+                break;
             }
         }
         //Initialising a FileWriter to rewrite the password file

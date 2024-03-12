@@ -57,6 +57,7 @@ public class AddAccountController {
         content.putString(password);
         clipboard.setContent(content); //Placing generated password into clipboard
         passwordFeedback.setText("Password generated and copied");
+        passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
         passwordFeedback.setAlignment(Pos.CENTER);
     }
 

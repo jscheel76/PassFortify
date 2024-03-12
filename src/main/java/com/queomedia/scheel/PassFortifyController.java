@@ -571,7 +571,6 @@ public class PassFortifyController {
             PasswordTools.decryptAndEncrypt(usernameLocation, mPassword, newpass); //decrypting usernames and encrypting them with new master password
             PasswordTools.addDataWithoutAppend(mPassLocation, newpass, newpass); //replacing master password file
             mPassword = newpass; //Reassigning mPassword to the new password
-            populateTableData(); //Repopulating tableview
 
             //Shows user that the master password has been changed
             feedbackLabel.setText("Master password changed"); //User feedback
@@ -602,35 +601,26 @@ public class PassFortifyController {
         openWindow("addAccount.fxml", false);
     }
 
-    /**
-     * Handles the action triggered when the "Add Username" button is clicked.
-     * Retrieves the master password and new username from input fields, performs necessary validations,
-     * decrypts the existing username file, adds the new username, and updates the UI accordingly.
-     *
-     * @throws Exception If any unexpected error occurs during the password addition process,
-     *                   such as issues with decryption, file operations, or password validation.
-     */
     @FXML
-    public void onAddUsernameButton() throws Exception {
-        //Master password and new account get taken from the password and input field
+    public void addInput(String location, String feedback) throws Exception {
+        //Master password and new account are taken from the password and input field
         mPassword = mPasswordField2.getText();
-        String accountToAdd = inputField.getText();
+        String inputToAdd = inputField.getText();
         if (isInput()) { //Checking whether input even exists
             if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
-                final Path usernamePath = Path.of(usernameLocation);
-                if (Files.exists(usernamePath)) {
-                    PasswordTools.decryptAndSave(usernameLocation, mPassword); //Decrypting file
+                if (Files.exists(Path.of(location))) {
+                    PasswordTools.decryptAndSave(location, mPassword); //Decrypting file
                 }
                 try {
-                    PasswordTools.addData(usernameLocation, accountToAdd, mPassword); //Adding new username
-                    feedbackLabel.setText("Account added");
+                    PasswordTools.addData(location, inputToAdd, mPassword); //Adding new input
+                    feedbackLabel.setText(feedback + " added");
                     feedbackLabel.setStyle("-fx-text-fill: #03c203;"); // Green
                 } catch (Exception e) {
                     //Prints error message if account could not be added
-                    feedbackLabel.setText("Service could not be added");
+                    feedbackLabel.setText(feedback + " could not be added");
                     feedbackLabel.setStyle("-fx-text-fill: red;");
                 }
-                if (Files.exists(Path.of(passwordLocation)) && Files.exists(usernamePath)
+                if (Files.exists(Path.of(passwordLocation)) && Files.exists(Path.of(usernameLocation))
                         && Files.exists(Path.of(serviceLocation))) {
                     populateTableData(); //Updating tableview only if all files exist
                 }
@@ -639,94 +629,21 @@ public class PassFortifyController {
                 feedbackLabel.setStyle("-fx-text-fill: red;");
             }
         } else {
-            feedbackLabel.setText("Please enter an account to add");
+            feedbackLabel.setText("Enter the " + feedback + " you want to add in the input field");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
 
-    /**
-     * Handles the action triggered when the "Add Service" button is clicked.
-     * Retrieves the master password and new service from input fields, performs necessary validations,
-     * decrypts the existing service file, adds the new service, and updates the UI accordingly.
-     *
-     * @throws Exception If any unexpected error occurs during the password addition process,
-     *                   such as issues with decryption, file operations, or password validation.
-     */
-    @FXML
     public void onServiceButtonClick() throws Exception {
-        //Master password and new service get taken from the password and input field
-        mPassword = mPasswordField2.getText();
-        String serviceToAdd = inputField.getText();
-
-        if (isInput()) { //Checking whether input even exists
-            if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
-                final Path servicePath = Path.of(serviceLocation);
-                if (Files.exists(servicePath)) { //Checking if the file exists
-                    PasswordTools.decryptAndSave(serviceLocation, mPassword); //Decrypting file
-                }
-                try {
-                    PasswordTools.addData(serviceLocation, serviceToAdd, mPassword); //Adding new service and encrypting
-                    feedbackLabel.setText("Service added");
-                    feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
-                } catch (Exception e) {
-                    feedbackLabel.setText("Service could not be added");
-                    feedbackLabel.setStyle("-fx-text-fill: red;");
-                }
-                if (Files.exists(Path.of(passwordLocation)) && Files.exists(Path.of(usernameLocation))
-                        && Files.exists(servicePath)) {
-                    populateTableData(); //Updating tableview only if all files exist
-                }
-            } else {
-                feedbackLabel.setText("Master password incorrect");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-            }
-        } else {
-            feedbackLabel.setText("Please enter a service to add");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
-        }
+        addInput(serviceLocation, "Service");
     }
 
-    /**
-     * Handles the action triggered when the "Add Password" button is clicked.
-     * Retrieves the master password and new password from input fields, performs necessary validations,
-     * decrypts the existing passwords file, adds the new password, and updates the UI accordingly.
-     *
-     * @throws Exception If any unexpected error occurs during the password addition process,
-     *                   such as issues with decryption, file operations, or password validation.
-     */
-    @FXML
-    public void onAddPasswordButtonClick() throws Exception {
-        //Master password and new password get taken from the password and input field
-        mPassword = mPasswordField2.getText();
-        String passwordToAdd = inputField.getText();
+    public void onAddUsernameButton() throws Exception {
+        addInput(usernameLocation, "Username");
+    }
 
-        if (isInput()) { //Checking whether input even exists
-            if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing passwords
-                final Path passwordPath = Path.of(passwordLocation);
-                if (Files.exists(passwordPath)) {
-                    PasswordTools.decryptAndSave(passwordLocation, mPassword); //Decrypt file if it exists
-                }
-                try {
-                    PasswordTools.addData(passwordLocation, passwordToAdd, mPassword); //Adding password and encrypting
-                    feedbackLabel.setText("Password added");
-                    feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
-                } catch (Exception e) {
-                    //Prints error message if password could not be added
-                    feedbackLabel.setText("Password could not be added");
-                    feedbackLabel.setStyle("-fx-text-fill: red;");
-                }
-                if (Files.exists(passwordPath) && Files.exists(Path.of(usernameLocation))
-                        && Files.exists(Path.of(serviceLocation))) { //Checking if the files exist
-                    populateTableData(); //Updating tableview only if all files exist
-                }
-            } else {
-                feedbackLabel.setText("Master password incorrect");
-                feedbackLabel.setStyle("-fx-text-fill: red;");
-            }
-        } else {
-            feedbackLabel.setText("Please enter a password to add");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
-        }
+    public void onAddPasswordButtonClick() throws Exception {
+        addInput(passwordLocation, "Password");
     }
 
     /**
