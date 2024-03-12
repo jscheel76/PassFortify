@@ -83,9 +83,19 @@ public class AddAccountController {
                 addAccount(masterPassword, username, usernameLocation);
                 String passwordLocation = "Passwords.txt";
                 addAccount(masterPassword, password, passwordLocation);
+                passwordFeedback.setText("Account added");
+                passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
+                passwordFeedback.setAlignment(Pos.CENTER);
+            } else {
+                passwordFeedback.setText("Master password incorrect");
+                passwordFeedback.setStyle("-fx-text-fill: red");
+                passwordFeedback.setAlignment(Pos.CENTER);
             }
+        } else {
+            passwordFeedback.setText("Atleast one field left empty");
+            passwordFeedback.setStyle("-fx-text-fill: red");
+            passwordFeedback.setAlignment(Pos.CENTER);
         }
-        ((Stage) serviceField.getScene().getWindow()).close(); //Closing the form
     }
 
     /**
