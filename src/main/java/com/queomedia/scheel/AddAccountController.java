@@ -39,6 +39,9 @@ public class AddAccountController {
     @FXML
     private PasswordField mPassField;
 
+    /**
+     * Label used to return feedback to the user.
+     */
     @FXML
     private Label passwordFeedback;
 
