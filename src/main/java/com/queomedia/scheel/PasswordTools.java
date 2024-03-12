@@ -2,7 +2,6 @@ package com.queomedia.scheel;
 
 import javafx.stage.FileChooser;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -283,9 +282,10 @@ public class PasswordTools {
 
     public static void addData(final String location, final String accountToAdd, final String mPassword) throws Exception {
         String existingData;
-        if (Files.exists(Path.of(location))) {
+        final Path path = Path.of(location);
+        if (Files.exists(path)) {
             // Read existing data from the file and decrypt
-            byte[] encryptedData = Files.readAllBytes(Paths.get(location));
+            byte[] encryptedData = Files.readAllBytes(path);
             byte[] decryptedData = Cryptography.decrypt(encryptedData, mPassword);
             existingData = new String(decryptedData, StandardCharsets.UTF_8);
 
@@ -296,7 +296,7 @@ public class PasswordTools {
         }
         // Encrypt and save only the modified part of the data
         byte[] newData = Cryptography.encrypt(existingData.getBytes(StandardCharsets.UTF_8), mPassword);
-        Files.write(Paths.get(location), newData);
+        Files.write(path, newData);
     }
 
     /**

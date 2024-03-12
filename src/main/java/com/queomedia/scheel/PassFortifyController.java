@@ -167,11 +167,6 @@ public class PassFortifyController {
     private CheckMenuItem experimentalMode;
 
     /**
-     * Boolean to check if the table is initialised and ready to be copied from.
-     */
-    private boolean arePasswordsShown = false;
-
-    /**
      * Integer determining how many tries a user has left.
      * Using 2+1 as to not use magic numbers.
      */
@@ -209,7 +204,7 @@ public class PassFortifyController {
      */
     @FXML
     protected void openWindow(final String sceneToOpen, final boolean close) throws IOException {
-       //Getting position of the stage to open the new stage in the same place
+        //Getting position of the stage to open the new stage in the same place
         Stage currentStage = ((Stage) feedbackLabel.getScene().getWindow());
         double x = currentStage.getX();
         double y = currentStage.getY();
@@ -678,7 +673,6 @@ public class PassFortifyController {
         mPassword = mPasswordField2.getText();
         settingCheck(); //Updates and applies settings
         settingCheck(); //Settings need to be checked twice, if settings were just created, otherwise all settings are turned on by default
-        arePasswordsShown = true; //Set to true, unless hidePassword is selected (checked later on)
 
         //Using PasswordTools class to get arrays filled with account information.
         String[] serviceContentLines = PasswordTools.getContentLines(serviceLocation, mPassword);
@@ -706,7 +700,6 @@ public class PassFortifyController {
             String passwords;
             if (hidePassword.isSelected()) {
                 passwords = "********"; //Filler, so passwords are not shown
-                arePasswordsShown = false; //Setting to false as to help with deletion logic, as passwords are hidden
             } else {
                 passwords = (i < passwordContentLines.length) ? passwordContentLines[i] : "";
             }
@@ -765,8 +758,6 @@ public class PassFortifyController {
         //If item is selected, password gets taken from password field and deletion is executed
         if (selectedItem != null && PasswordTools.checkMasterpassword(mPass)) {
             String service = selectedItem.getService(); //Service from selected column
-            String username = selectedItem.getUsername(); //Username from selected column
-            String password = selectedItem.getPassword(); //Password from selected column
             String mPassword = mPasswordField2.getText(); //Master password from mPasswordField
 
             try {
@@ -780,30 +771,17 @@ public class PassFortifyController {
                 StringBuilder newUsernameContent = new StringBuilder();
                 StringBuilder newPasswordContent = new StringBuilder();
 
+                //table position used to delete account
+                int pos = accountTable.getSelectionModel().getSelectedIndex();
+
                 boolean deleted = false; //Flag to track whether the item has been deleted
-                if (!arePasswordsShown) {
-                    for (int i = 0; i < serviceContentLines.length; i++) {
-                        if (!deleted && serviceContentLines[i].equals(service)
-                                && usernameContentLines[i].equals(username)) {
-                            deleted = true; //Flagged
-                        } else {
-                            newServiceContent.append(serviceContentLines[i]).append(System.lineSeparator());
-                            newUsernameContent.append(usernameContentLines[i]).append(System.lineSeparator());
-                            newPasswordContent.append(passwordContentLines[i]).append(System.lineSeparator());
-                        }
-                    }
-                } else {
-                    //Deletes the selected item from the string builders
-                    for (int i = 0; i < serviceContentLines.length; i++) {
-                        if (!deleted && serviceContentLines[i].equals(service)
-                                && passwordContentLines[i].equals(password)
-                                && usernameContentLines[i].equals(username)) {
-                            deleted = true; //Flagged
-                        } else {
-                            newServiceContent.append(serviceContentLines[i]).append(System.lineSeparator());
-                            newUsernameContent.append(usernameContentLines[i]).append(System.lineSeparator());
-                            newPasswordContent.append(passwordContentLines[i]).append(System.lineSeparator());
-                        }
+                for (int i = 0; i < serviceContentLines.length; i++) {
+                    if (i == pos) {
+                        deleted = true; //Flagged
+                    } else {
+                        newServiceContent.append(serviceContentLines[i]).append(System.lineSeparator());
+                        newUsernameContent.append(usernameContentLines[i]).append(System.lineSeparator());
+                        newPasswordContent.append(passwordContentLines[i]).append(System.lineSeparator());
                     }
                 }
 
@@ -815,9 +793,6 @@ public class PassFortifyController {
                 feedbackLabel.setText("Account '" + service + "' deleted"); //User feedback
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green color
 
-                if (passwordMatch.isSelected()) {
-                    samePasswordCheck(passwordContentLines); //Checking for duplicate passwords
-                }
             } catch (IOException e) {
                 feedbackLabel.setText("Account could not be deleted"); //User feedback
                 feedbackLabel.setStyle("-fx-text-fill: red;");

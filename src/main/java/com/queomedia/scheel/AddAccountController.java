@@ -84,9 +84,16 @@ public class AddAccountController {
                 addAccount(masterPassword, username, usernameLocation);
                 String passwordLocation = "Passwords.txt";
                 addAccount(masterPassword, password, passwordLocation);
+
+                //User feedback
                 passwordFeedback.setText("Account added");
                 passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
                 passwordFeedback.setAlignment(Pos.CENTER);
+
+                //Emptying the textFields
+                serviceField.setText("");
+                usernameField.setText("");
+                passwordField.setText("");
             } else {
                 passwordFeedback.setText("Master password incorrect");
                 passwordFeedback.setStyle("-fx-text-fill: red");
