@@ -6,8 +6,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -279,26 +281,22 @@ public class PasswordTools {
         Thread.sleep(sleepAMinute);
     }
 
-    /**
-     * Adds account data to a file, appends the content, and encrypts the file with the provided master password.
-     * This method appends the specified account data to the end of the specified file, and then encrypts
-     * the entire file using the provided master password.
-     *
-     * @param location       The location of the file to which account data is appended and encrypted.
-     * @param accountToAdd   The account data to be added to the file.
-     * @param mPassword      The master password used to encrypt the file.
-     *
-     * @throws Exception     If an error occurs during the file writing or encryption process.
-     *                       The specific exception type may vary based on the underlying operations.
-     */
-    public static void addData(final String location, final String accountToAdd, final String mPassword)
-            throws Exception {
-        FileWriter fWriter = new FileWriter(location, true);
-        BufferedWriter writer = new BufferedWriter(fWriter);
-        writer.write(accountToAdd);
-        writer.newLine();
-        writer.close();
-        Cryptography.encryptFile(location, location, mPassword);
+    public static void addData(final String location, final String accountToAdd, final String mPassword) throws Exception {
+        String existingData;
+        if (Files.exists(Path.of(location))) {
+            // Read existing data from the file and decrypt
+            byte[] encryptedData = Files.readAllBytes(Paths.get(location));
+            byte[] decryptedData = Cryptography.decrypt(encryptedData, mPassword);
+            existingData = new String(decryptedData, StandardCharsets.UTF_8);
+
+            // Append new data
+            existingData += accountToAdd + System.lineSeparator();
+        } else {
+            existingData = accountToAdd + System.lineSeparator();
+        }
+        // Encrypt and save only the modified part of the data
+        byte[] newData = Cryptography.encrypt(existingData.getBytes(StandardCharsets.UTF_8), mPassword);
+        Files.write(Paths.get(location), newData);
     }
 
     /**
@@ -317,30 +315,8 @@ public class PasswordTools {
      */
     public static void addDataWithoutAppend(final String location, final String contentToAdd, final String mPassword)
             throws Exception {
-        FileWriter fWriter = new FileWriter(location);
-        fWriter.write(contentToAdd);
-        fWriter.close();
-        Cryptography.encryptFile(location, location, mPassword);
-    }
-
-    /**
-     * Decrypts the content of a file using the provided master password and overwrites the file with
-     * the decrypted text.
-     * This method decrypts the specified file using the provided master password, converts the decrypted
-     * data into a string, and overwrites the original file with the decrypted text.
-     *
-     * @param location   The location of the file to be decrypted and overwritten.
-     * @param mPassword  The master password used to decrypt the file.
-     *
-     * @throws Exception If an error occurs during the decryption process, string conversion, or file writing.
-     *                   The specific exception type may vary based on the underlying operations.
-     */
-    public static void decryptAndSave(final String location, final String mPassword) throws Exception {
-        byte[] decryptedText = Cryptography.decryptFile(location, mPassword);
-        String pText = new String(decryptedText, UTF_8);
-        FileWriter decryptWriter = new FileWriter(location);
-        decryptWriter.write(pText);
-        decryptWriter.close();
+        byte[] newData = Cryptography.encrypt(contentToAdd.getBytes(StandardCharsets.UTF_8), mPassword);
+        Files.write(Paths.get(location), newData);
     }
 
     /**

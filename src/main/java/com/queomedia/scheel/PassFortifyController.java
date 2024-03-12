@@ -608,9 +608,6 @@ public class PassFortifyController {
         String inputToAdd = inputField.getText();
         if (isInput()) { //Checking whether input even exists
             if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
-                if (Files.exists(Path.of(location))) {
-                    PasswordTools.decryptAndSave(location, mPassword); //Decrypting file
-                }
                 try {
                     PasswordTools.addData(location, inputToAdd, mPassword); //Adding new input
                     feedbackLabel.setText(feedback + " added");

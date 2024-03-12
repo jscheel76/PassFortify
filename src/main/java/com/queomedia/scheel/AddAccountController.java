@@ -114,9 +114,6 @@ public class AddAccountController {
             throws Exception {
         final Path file = Path.of(path); //Getting a path object
         //Decrypting the file if it exists
-        if (Files.exists(file)) {
-            PasswordTools.decryptAndSave(path, masterPassword);
-        }
         PasswordTools.addData(path, accountToAdd, masterPassword); //Adding data and re-encrypting the file
     }
 
