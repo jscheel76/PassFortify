@@ -10,9 +10,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 public class AddAccountController {
 
     /**
@@ -79,11 +76,11 @@ public class AddAccountController {
             //Adding account details to the respective files
             if (PasswordTools.checkMasterpassword(masterPassword)) {
                 String serviceLocation = "Services.txt";
-                addAccount(masterPassword, service, serviceLocation);
+                PasswordTools.addData(serviceLocation, service, masterPassword);
                 String usernameLocation = "Usernames.txt";
-                addAccount(masterPassword, username, usernameLocation);
+                PasswordTools.addData(usernameLocation, username, masterPassword);
                 String passwordLocation = "Passwords.txt";
-                addAccount(masterPassword, password, passwordLocation);
+                PasswordTools.addData(passwordLocation, password, masterPassword);
 
                 //User feedback
                 passwordFeedback.setText("Account added");
@@ -100,28 +97,10 @@ public class AddAccountController {
                 passwordFeedback.setAlignment(Pos.CENTER);
             }
         } else {
-            passwordFeedback.setText("Atleast one field left empty");
+            passwordFeedback.setText("At least one field left empty");
             passwordFeedback.setStyle("-fx-text-fill: red");
             passwordFeedback.setAlignment(Pos.CENTER);
         }
-    }
-
-    /**
-     * Adds an account to a specified file after decrypting and saving its contents.
-     * This method takes the master password, account information to be added, and the file path as parameters.
-     * It first checks if the file exists. If the file exists, it decrypts and saves its contents using the PasswordTools class.
-     * Then, it adds the new account information to the file using the PasswordTools class.
-     *
-     * @param masterPassword The master password used for decryption and encryption.
-     * @param accountToAdd   The account information to be added.
-     * @param path           The file path where the account information is stored.
-     * @throws Exception If there is an issue with decrypting and saving the file contents or adding the account information.
-     */
-    private void addAccount(final String masterPassword, final String accountToAdd, final String path)
-            throws Exception {
-        final Path file = Path.of(path); //Getting a path object
-        //Decrypting the file if it exists
-        PasswordTools.addData(path, accountToAdd, masterPassword); //Adding data and re-encrypting the file
     }
 
     /**

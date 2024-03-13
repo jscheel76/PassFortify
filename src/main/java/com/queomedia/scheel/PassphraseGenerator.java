@@ -9,7 +9,7 @@ import java.security.SecureRandom;
  * The PassphraseGenerator class provides a method for generating random passphrases
  * by selecting words from a wordlist.
  *
- * <p>This class utilizes a wordlist file to construct passphrases of a specified length.
+ * <p>This class utilizes a wordlist based on the diceware wordlist to construct passphrases of a specified length.
  * The wordlist should contain one word per line. The number of words to be included in
  * the passphrase and the total number of lines in the wordlist file are configurable.
  * The generated passphrase consists of these randomly chosen words, separated by spaces.</p>

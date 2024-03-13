@@ -84,7 +84,8 @@
             <Label fx:id="accountLabel" alignment="BASELINE_RIGHT" layoutX="430.0" layoutY="283.0" prefHeight="21.0" prefWidth="196.0" textFill="WHITE">
                <font>
                   <Font size="15.0" />
-               </font></Label>
+               </font>
+            </Label>
             </children>
          <VBox.margin>
             <Insets />
