@@ -596,6 +596,19 @@ public class PassFortifyController {
         openWindow("addAccount.fxml", false);
     }
 
+    /**
+     * Adds a new input to the corresponding file after decrypting and saving its contents.
+     *
+     * This method is a common function called by the specific input addition methods (onServiceButtonClick, onAddUsernameButton,
+     * onAddPasswordButtonClick). It takes the file location, feedback label, and input type as parameters and performs the necessary
+     * actions, including checking the master password, decrypting and saving the file contents, and adding the new input. It updates
+     * the feedback label based on the success or failure of the operation and refreshes the table view if applicable.
+     *
+     * @param location  The location of the file where the input will be added.
+     * @param feedback  The type of input being added (e.g., "Service", "Username", "Password").
+     * @throws Exception If there is an issue with checking the master password, decrypting and saving file contents,
+     *                   or adding the input.
+     */
     @FXML
     public void addInput(String location, String feedback) throws Exception {
         //Master password and new account are taken from the password and input field
@@ -626,14 +639,41 @@ public class PassFortifyController {
         }
     }
 
+    /**
+     * Adds a new service input to the corresponding file after decrypting and saving its contents.
+     *
+     * This method is called when the "Add Service" button is clicked. It calls the addInput method and specifies that a service
+     * is being added.
+     *
+     * @throws Exception If there is an issue with checking the master password, decrypting and saving file contents,
+     *                   or adding the service input.
+     */
     public void onServiceButtonClick() throws Exception {
         addInput(serviceLocation, "Service");
     }
 
+    /**
+     * Adds a new username input to the corresponding file after decrypting and saving its contents.
+     *
+     * This method is called when the "Add Username" button is clicked. It calls the addInput method and specifies that a username
+     * is being added.
+     *
+     * @throws Exception If there is an issue with checking the master password, decrypting and saving file contents,
+     *                   or adding the service input.
+     */
     public void onAddUsernameButton() throws Exception {
         addInput(usernameLocation, "Username");
     }
 
+    /**
+     * Adds a new password input to the corresponding file after decrypting and saving its contents.
+     *
+     * This method is called when the "Add Password" button is clicked. It calls the addInput method and specifies that a password
+     * is being added.
+     *
+     * @throws Exception If there is an issue with checking the master password, decrypting and saving file contents,
+     *                   or adding the service input.
+     */
     public void onAddPasswordButtonClick() throws Exception {
         addInput(passwordLocation, "Password");
     }
