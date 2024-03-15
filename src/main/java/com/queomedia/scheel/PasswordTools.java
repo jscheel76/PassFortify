@@ -428,4 +428,18 @@ public class PasswordTools {
         }
         Cryptography.encryptFile(PASSWORD_LOCATION, PASSWORD_LOCATION, mPassword); //Encrypting the password file
     }
+
+    public static void deleteAndSave(int pos, String location, String mPassword) throws Exception {
+        String[] contentLines = getContentLines(location, mPassword);
+        StringBuilder newContent = new StringBuilder();
+        boolean deleted = false; //Flag to track whether the item has been deleted
+        for (int i = 0; i < contentLines.length; i++) {
+            if (i == pos) {
+                deleted = true; //Flagged
+            } else {
+                newContent.append(contentLines[i]).append(System.lineSeparator());
+            }
+        }
+        addDataWithoutAppend(location, newContent.toString(), mPassword);
+    }
 }

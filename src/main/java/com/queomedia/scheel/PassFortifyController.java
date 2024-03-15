@@ -808,34 +808,12 @@ public class PassFortifyController {
             String mPassword = mPasswordField2.getText(); //Master password from mPasswordField
 
             try {
-                //Using PasswordTools class to get arrays filled with account information.
-                String[] serviceContentLines = PasswordTools.getContentLines(serviceLocation, mPassword);
-                String[] usernameContentLines = PasswordTools.getContentLines(usernameLocation, mPassword);
-                String[] passwordContentLines = PasswordTools.getContentLines(passwordLocation, mPassword);
-
-                //Creates new string builders
-                StringBuilder newServiceContent = new StringBuilder();
-                StringBuilder newUsernameContent = new StringBuilder();
-                StringBuilder newPasswordContent = new StringBuilder();
-
                 //table position used to delete account
                 int pos = accountTable.getSelectionModel().getSelectedIndex();
 
-                boolean deleted = false; //Flag to track whether the item has been deleted
-                for (int i = 0; i < serviceContentLines.length; i++) {
-                    if (i == pos) {
-                        deleted = true; //Flagged
-                    } else {
-                        newServiceContent.append(serviceContentLines[i]).append(System.lineSeparator());
-                        newUsernameContent.append(usernameContentLines[i]).append(System.lineSeparator());
-                        newPasswordContent.append(passwordContentLines[i]).append(System.lineSeparator());
-                    }
-                }
-
-                //Adding the data using the PasswordTools class
-                PasswordTools.addDataWithoutAppend(serviceLocation, newServiceContent.toString(), mPassword);
-                PasswordTools.addDataWithoutAppend(usernameLocation, newUsernameContent.toString(), mPassword);
-                PasswordTools.addDataWithoutAppend(passwordLocation, newPasswordContent.toString(), mPassword);
+                PasswordTools.deleteAndSave(pos, serviceLocation, mPassword);
+                PasswordTools.deleteAndSave(pos, usernameLocation, mPassword );
+                PasswordTools.deleteAndSave(pos, passwordLocation, mPassword );
 
                 feedbackLabel.setText("Account '" + service + "' deleted"); //User feedback
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green color
