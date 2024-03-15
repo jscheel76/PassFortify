@@ -598,7 +598,6 @@ public class PassFortifyController {
 
     /**
      * Adds a new input to the corresponding file after decrypting and saving its contents.
-     *
      * This method is a common function called by the specific input addition methods (onServiceButtonClick, onAddUsernameButton,
      * onAddPasswordButtonClick). It takes the file location, feedback label, and input type as parameters and performs the necessary
      * actions, including checking the master password, decrypting and saving the file contents, and adding the new input. It updates
@@ -641,7 +640,6 @@ public class PassFortifyController {
 
     /**
      * Adds a new service input to the corresponding file after decrypting and saving its contents.
-     *
      * This method is called when the "Add Service" button is clicked. It calls the addInput method and specifies that a service
      * is being added.
      *
@@ -654,7 +652,6 @@ public class PassFortifyController {
 
     /**
      * Adds a new username input to the corresponding file after decrypting and saving its contents.
-     *
      * This method is called when the "Add Username" button is clicked. It calls the addInput method and specifies that a username
      * is being added.
      *
@@ -667,7 +664,6 @@ public class PassFortifyController {
 
     /**
      * Adds a new password input to the corresponding file after decrypting and saving its contents.
-     *
      * This method is called when the "Add Password" button is clicked. It calls the addInput method and specifies that a password
      * is being added.
      *

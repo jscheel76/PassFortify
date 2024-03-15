@@ -357,24 +357,18 @@ public class PasswordTools {
     }
 
     /**
-     * Retrieves the password associated with a specific username and service using the provided master password.
-     * This method retrieves the content lines for service, username, and password from their respective files
-     * decrypted with the provided master password. It then searches for a matching username and service combination
-     * and returns the corresponding password if found. If no match is found, the method returns null.
+     * Retrieves the password at the specified position in the content of the password file,
+     * after decrypting the file using the provided master password.
      *
-     * @param mPassword The master password used to decrypt the files.
-     * @param username  The username for which to retrieve the password.
-     * @param service   The service for which to retrieve the password.
-     * @return The password associated with the given username and service, or null if not found.
-     *
-     * @throws Exception If an error occurs during the decryption process or while retrieving file content.
-     *
-     * @see #getContentLines(String, String)
+     * @param mPassword The master password used for decryption.
+     * @param pos       The position of the password to retrieve in the file's content.
+     * @return          The password corresponding to the specified position in the file's content.
+     * @throws Exception If any error occurs during reading or decrypting the password file,
+     *                   an exception is thrown to handle the issue.
      */
     public static String getPasswordFromFiles(final String mPassword, final int pos) throws Exception {
         String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
         return passwordContentLines[pos]; // Return corresponding password
-
     }
 
     /**
@@ -420,6 +414,16 @@ public class PasswordTools {
         Cryptography.encryptFile(PASSWORD_LOCATION, PASSWORD_LOCATION, mPassword); //Encrypting the password file
     }
 
+    /**
+     * Deletes the data at the specified position in the content of the files located at the given location,
+     * and then saves the updated content after encrypting it using the provided master password.
+     *
+     * @param pos The position of the data to be deleted in the file's content. Coming from the position of the tableview entry.
+     * @param location The location of the file.
+     * @param mPassword The master password used for encryption.
+     * @throws Exception If any error occurs during reading, encrypting, or writing the file date,
+     *                   an exception is thrown to handle the issue.
+     */
     public static void deleteAndSave(int pos, String location, String mPassword) throws Exception {
         String[] contentLines = getContentLines(location, mPassword);
         StringBuilder newContent = new StringBuilder();
