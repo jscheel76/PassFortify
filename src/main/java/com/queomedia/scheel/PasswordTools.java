@@ -290,7 +290,8 @@ public class PasswordTools {
      * @param mPassword    The master password used for decryption and encryption.
      * @throws Exception If there is an issue with reading, decrypting, appending, encrypting, or writing the file data.
      */
-    public static void addData(final String location, final String accountToAdd, final String mPassword) throws Exception {
+    public static void addData(final String location, final String accountToAdd, final String mPassword)
+            throws Exception {
         String existingData;
         final Path path = Path.of(location);
         if (Files.exists(path)) {
@@ -370,20 +371,10 @@ public class PasswordTools {
      *
      * @see #getContentLines(String, String)
      */
-    public static String getPasswordFromFiles(final String mPassword, final String username, final String service)
-            throws Exception {
-        String[] serviceContentLines = getContentLines(SERVICE_LOCATION, mPassword);
-        String[] usernameContentLines = getContentLines(USERNAME_LOCATION, mPassword);
+    public static String getPasswordFromFiles(final String mPassword, final int pos) throws Exception {
         String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
+        return passwordContentLines[pos]; // Return corresponding password
 
-        // Find matching line
-        for (int i = 0; i < usernameContentLines.length; i++) {
-            if (usernameContentLines[i].equals(username) && serviceContentLines[i].equals(service)) {
-                return passwordContentLines[i]; // Return corresponding password
-            }
-        }
-
-        return null; // Return null if username and service combination not found
     }
 
     /**

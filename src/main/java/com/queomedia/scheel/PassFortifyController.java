@@ -729,7 +729,7 @@ public class PassFortifyController {
 
         //ObservableList is created for the data
         ObservableList<DataEntry> data = FXCollections.observableArrayList();
-    //    DataEntryRepository dataSquared = new DataEntryRepository();
+        //    DataEntryRepository dataSquared = new DataEntryRepository();
 
         //calculates the maximum number of lines
         int maxLines = Math.max(serviceContentLines.length,
@@ -748,10 +748,10 @@ public class PassFortifyController {
             data.add(new DataEntry(services, usernames, passwords)); //Adds the information as a DataEntry object
         }
 
-      //  for (DataEntry entry : data) {
-      //      dataSquared.addDataEntry(entry);
-      //  }
-      //  dataSquared.saveToTextFile("data_entries.txt");
+        //  for (DataEntry entry : data) {
+        //      dataSquared.addDataEntry(entry);
+        //  }
+        //  dataSquared.saveToTextFile("data_entries.txt");
 
         //The data is added to the CellValueFactories
         services.setCellValueFactory(new PropertyValueFactory<>("service"));
@@ -812,12 +812,11 @@ public class PassFortifyController {
                 int pos = accountTable.getSelectionModel().getSelectedIndex();
 
                 PasswordTools.deleteAndSave(pos, serviceLocation, mPassword);
-                PasswordTools.deleteAndSave(pos, usernameLocation, mPassword );
-                PasswordTools.deleteAndSave(pos, passwordLocation, mPassword );
+                PasswordTools.deleteAndSave(pos, usernameLocation, mPassword);
+                PasswordTools.deleteAndSave(pos, passwordLocation, mPassword);
 
                 feedbackLabel.setText("Account '" + service + "' deleted"); //User feedback
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green color
-
             } catch (IOException e) {
                 feedbackLabel.setText("Account could not be deleted"); //User feedback
                 feedbackLabel.setStyle("-fx-text-fill: red;");
@@ -845,10 +844,8 @@ public class PassFortifyController {
     public void copyPassword() throws Exception {
         mPassword = mPasswordField2.getText();
         if (accountTable.getSelectionModel().getSelectedItem() != null) {
-            String username = accountTable.getSelectionModel().getSelectedItem().getUsername();
-            String service = accountTable.getSelectionModel().getSelectedItem().getService();
-
-            String password = PasswordTools.getPasswordFromFiles(mPassword, username, service);
+            int pos = accountTable.getSelectionModel().getSelectedIndex();
+            String password = PasswordTools.getPasswordFromFiles(mPassword, pos);
 
             if (password != null) {
                 final Clipboard clipboard = Clipboard.getSystemClipboard();
