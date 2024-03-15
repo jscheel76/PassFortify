@@ -685,22 +685,23 @@ public class PassFortifyController {
      * @throws Exception If an unexpected error occurs during the process, such as incorrect master password or table population issues.
      */
     @FXML
-    public void onRevealAccountsClick() throws Exception {
+    boolean onRevealAccountsClick() throws Exception {
         //Master password is taken from the password field, the table is populated with the decrypted data
         mPassword = mPasswordField2.getText();
-        if (PasswordTools.checkMasterpassword(mPassword)) { //Checks whether the master password is correct
-            if (Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation))
-                    && Files.exists(Path.of(passwordLocation))) {
-                populateTableData(); //Updating tableView
-                feedbackLabel.setText(""); //Hiding previous feedback
-            } else {
-                feedbackLabel.setText("Missing account files.");
-                feedbackLabel.setStyle("-fx-text-fill: red");
-            }
-        } else {
+        if (!PasswordTools.checkMasterpassword(mPassword)) {
             feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");
+            return false;
         }
+        if (!Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation))
+                && Files.exists(Path.of(passwordLocation))) {
+            feedbackLabel.setText("Missing account files.");
+            feedbackLabel.setStyle("-fx-text-fill: red");
+            return false;
+        }
+        populateTableData(); //Updating tableView
+        feedbackLabel.setText(""); //Hiding previous feedback
+        return false;
     }
 
     /**
@@ -728,6 +729,7 @@ public class PassFortifyController {
 
         //ObservableList is created for the data
         ObservableList<DataEntry> data = FXCollections.observableArrayList();
+    //    DataEntryRepository dataSquared = new DataEntryRepository();
 
         //calculates the maximum number of lines
         int maxLines = Math.max(serviceContentLines.length,
@@ -745,6 +747,11 @@ public class PassFortifyController {
             }
             data.add(new DataEntry(services, usernames, passwords)); //Adds the information as a DataEntry object
         }
+
+      //  for (DataEntry entry : data) {
+      //      dataSquared.addDataEntry(entry);
+      //  }
+      //  dataSquared.saveToTextFile("data_entries.txt");
 
         //The data is added to the CellValueFactories
         services.setCellValueFactory(new PropertyValueFactory<>("service"));

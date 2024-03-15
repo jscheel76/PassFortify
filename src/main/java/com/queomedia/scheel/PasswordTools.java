@@ -280,6 +280,16 @@ public class PasswordTools {
         Thread.sleep(sleepAMinute);
     }
 
+    /**
+     * Adds new account data to the specified location in a file after decrypting and encrypting its contents.
+     * If the file exists, it reads the existing data, decrypts it, appends the new data, and then encrypts and saves
+     * the modified content back to the file. If the file does not exist, it creates a new file and adds the new data.
+     *
+     * @param location     The location of the file where the account data will be added.
+     * @param accountToAdd The account data to be added.
+     * @param mPassword    The master password used for decryption and encryption.
+     * @throws Exception If there is an issue with reading, decrypting, appending, encrypting, or writing the file data.
+     */
     public static void addData(final String location, final String accountToAdd, final String mPassword) throws Exception {
         String existingData;
         final Path path = Path.of(location);
@@ -288,12 +298,13 @@ public class PasswordTools {
             byte[] encryptedData = Files.readAllBytes(path);
             byte[] decryptedData = Cryptography.decrypt(encryptedData, mPassword);
             existingData = new String(decryptedData, StandardCharsets.UTF_8);
-
-            // Append new data
-            existingData += accountToAdd + System.lineSeparator();
         } else {
-            existingData = accountToAdd + System.lineSeparator();
+            existingData = "";
         }
+
+        // Append new data
+        existingData += accountToAdd + System.lineSeparator();
+
         // Encrypt and save only the modified part of the data
         byte[] newData = Cryptography.encrypt(existingData.getBytes(StandardCharsets.UTF_8), mPassword);
         Files.write(path, newData);
