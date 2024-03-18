@@ -40,6 +40,9 @@ public class PasswordTools {
      */
     private static final String USERNAME_LOCATION = "Usernames.txt";
 
+    /**
+     * Minimum size of generated passwords.
+     */
     private static final int MINIMUM_PASSWORD_SIZE = 12;
 
     /**

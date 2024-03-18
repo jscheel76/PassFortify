@@ -736,11 +736,11 @@ public class PassFortifyController {
             String usernames = (i < usernameContentLines.length) ? usernameContentLines[i] : "";
             String passwords;
             if (hidePassword.isSelected()) {
-                passwords = "********"; //Filler, so passwords are not shown
+                passwords = "********"; // Fillers, so passwords are not shown
             } else {
                 passwords = (i < passwordContentLines.length) ? passwordContentLines[i] : "";
             }
-            data.add(new DataEntry(services, usernames, passwords)); //Adds the information as a DataEntry object
+            data.add(new DataEntry(services, usernames, passwords)); // Adds the information as a DataEntry object
         }
 
         //The data is added to the CellValueFactories

@@ -61,7 +61,11 @@ public class AddAccountController {
      */
     public void onGeneratePasswordClick() {
         String password = PasswordTools.passwordGenerator();
-        passwordField.setText(password); //Placing generated password into the passwordField
+        if (passwordCheckBox.isSelected()){
+            passwordPlaintext.setText(password);
+        } else {
+            passwordField.setText(password); //Placing generated password into the passwordField
+        }
         final Clipboard clipboard = Clipboard.getSystemClipboard(); //initialising clipboard
         final ClipboardContent content = new ClipboardContent();
         content.putString(password);
