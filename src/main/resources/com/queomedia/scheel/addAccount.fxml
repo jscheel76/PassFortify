@@ -5,21 +5,21 @@
 
 <AnchorPane prefHeight="225.0" prefWidth="352.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.queomedia.scheel.AddAccountController">
    <children>
-      <TextField fx:id="serviceField" layoutX="17.0" layoutY="61.0" promptText="Enter Service" />
-      <TextField fx:id="usernameField" layoutX="183.0" layoutY="61.0" promptText="Enter Username" />
-      <Button layoutX="195.0" layoutY="153.0" mnemonicParsing="false" onAction="#onSaveClick" prefHeight="25.0" prefWidth="127.0" text="Save" />
-      <Button layoutX="26.0" layoutY="153.0" mnemonicParsing="false" onAction="#onGeneratePasswordClick" prefHeight="25.0" prefWidth="127.0" text="Generate Password" />
-      <PasswordField fx:id="passwordField" layoutX="17.0" layoutY="109.0" promptText="Enter Password" />
+      <TextField fx:id="serviceField" layoutX="17.0" layoutY="58.0" promptText="Enter Service" />
+      <TextField fx:id="usernameField" layoutX="183.0" layoutY="58.0" promptText="Enter Username" />
+      <Button layoutX="195.0" layoutY="158.0" mnemonicParsing="false" onAction="#onSaveClick" prefHeight="25.0" prefWidth="127.0" text="Save" />
+      <Button layoutX="26.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePasswordClick" prefHeight="25.0" prefWidth="127.0" text="Generate Password" />
+      <PasswordField fx:id="passwordField" layoutX="17.0" layoutY="106.0" promptText="Enter Password" />
       <HBox prefHeight="17.0" prefWidth="352.0">
          <children>
             <MenuBar onMouseDragged="#paneDragged" onMousePressed="#panePressed" prefHeight="25.0" prefWidth="351.0" />
             <Button mnemonicParsing="false" onAction="#onExitButtonClick" text="X" />
          </children></HBox>
-      <PasswordField fx:id="mPassField" layoutX="183.0" layoutY="109.0" prefHeight="27.0" prefWidth="151.0" promptText="Enter Master Password" />
+      <PasswordField fx:id="mPassField" layoutX="183.0" layoutY="106.0" prefHeight="27.0" prefWidth="151.0" promptText="Enter Master Password" />
       <Label fx:id="passwordFeedback" layoutX="7.0" layoutY="194.0" prefHeight="17.0" prefWidth="339.0" textFill="#2ec61a" />
-      <Label layoutX="14.0" layoutY="45.0" prefHeight="17.0" prefWidth="151.0" text="Service" textFill="WHITE" />
-      <Label layoutX="183.0" layoutY="45.0" text="Username" textFill="WHITE" />
-      <Label layoutX="16.0" layoutY="94.0" text="Password" textFill="WHITE" />
-      <Label layoutX="183.0" layoutY="94.0" text="Master Password" textFill="WHITE" />
+      <Label layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="151.0" text="Service" textFill="WHITE" />
+      <Label layoutX="183.0" layoutY="42.0" text="Username" textFill="WHITE" />
+      <Label layoutX="16.0" layoutY="91.0" text="Password" textFill="WHITE" />
+      <Label layoutX="183.0" layoutY="91.0" text="Master Password" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -725,7 +725,6 @@ public class PassFortifyController {
 
         //ObservableList is created for the data
         ObservableList<DataEntry> data = FXCollections.observableArrayList();
-        //    DataEntryRepository dataSquared = new DataEntryRepository();
 
         //calculates the maximum number of lines
         int maxLines = Math.max(serviceContentLines.length,
@@ -743,11 +742,6 @@ public class PassFortifyController {
             }
             data.add(new DataEntry(services, usernames, passwords)); //Adds the information as a DataEntry object
         }
-
-        //  for (DataEntry entry : data) {
-        //      dataSquared.addDataEntry(entry);
-        //  }
-        //  dataSquared.saveToTextFile("data_entries.txt");
 
         //The data is added to the CellValueFactories
         services.setCellValueFactory(new PropertyValueFactory<>("service"));
