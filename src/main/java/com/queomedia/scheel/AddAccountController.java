@@ -2,6 +2,7 @@ package com.queomedia.scheel;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -24,6 +25,9 @@ public class AddAccountController {
     @FXML
     private TextField usernameField;
 
+    @FXML
+    private TextField passwordPlaintext;
+
     /**
      * PasswordField used to enter a passwort that the user would like to add.
      */
@@ -41,6 +45,9 @@ public class AddAccountController {
      */
     @FXML
     private Label passwordFeedback;
+
+    @FXML
+    private CheckBox passwordCheckBox;
 
     /**
      * This method is called when the "Generate Password" button is clicked. It generates a random password using the
@@ -70,7 +77,14 @@ public class AddAccountController {
         String masterPassword = mPassField.getText();
         String service = serviceField.getText();
         String username = usernameField.getText();
-        String password = passwordField.getText();
+        String password;
+
+        if (passwordCheckBox.isSelected()) {
+            password = passwordPlaintext.getText();
+        } else {
+            password = passwordField.getText();
+        }
+
         //Checking if one of the inputFields is left empty
         if (!service.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
             //Adding account details to the respective files
@@ -91,6 +105,7 @@ public class AddAccountController {
                 serviceField.setText("");
                 usernameField.setText("");
                 passwordField.setText("");
+                passwordPlaintext.setText("");
             } else {
                 passwordFeedback.setText("Master password incorrect");
                 passwordFeedback.setStyle("-fx-text-fill: red");
@@ -100,6 +115,22 @@ public class AddAccountController {
             passwordFeedback.setText("At least one field left empty");
             passwordFeedback.setStyle("-fx-text-fill: red");
             passwordFeedback.setAlignment(Pos.CENTER);
+        }
+    }
+
+    @FXML
+    void onPasswordCheckBoxClick() {
+        String fieldContent;
+        if (passwordCheckBox.isSelected()) {
+            passwordField.setVisible(false);
+            passwordPlaintext.setVisible(true);
+            fieldContent = passwordField.getText();
+            passwordPlaintext.setText(fieldContent);
+        } else {
+            passwordPlaintext.setVisible(false);
+            passwordField.setVisible(true);
+            fieldContent = passwordPlaintext.getText();
+            passwordField.setText(fieldContent);
         }
     }
 

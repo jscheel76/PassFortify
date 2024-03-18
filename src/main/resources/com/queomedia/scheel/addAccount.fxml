@@ -21,5 +21,7 @@
       <Label layoutX="183.0" layoutY="42.0" text="Username" textFill="WHITE" />
       <Label layoutX="16.0" layoutY="91.0" text="Password" textFill="WHITE" />
       <Label layoutX="183.0" layoutY="91.0" text="Master Password" textFill="WHITE" />
+      <TextField fx:id="passwordPlaintext" layoutX="17.0" layoutY="106.0" promptText="Enter Pssword" visible="false" />
+      <CheckBox fx:id="passwordCheckBox" layoutX="16.0" layoutY="137.0" mnemonicParsing="false" onAction="#onPasswordCheckBoxClick" text="Show Password" textFill="WHITE" />
    </children>
 </AnchorPane>
