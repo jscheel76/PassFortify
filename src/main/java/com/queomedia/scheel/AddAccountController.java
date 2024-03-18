@@ -25,6 +25,9 @@ public class AddAccountController {
     @FXML
     private TextField usernameField;
 
+    /**
+     * Alternative to the PasswordField, when user wants to display password in plaintext.
+     */
     @FXML
     private TextField passwordPlaintext;
 
@@ -46,6 +49,9 @@ public class AddAccountController {
     @FXML
     private Label passwordFeedback;
 
+    /**
+     * CheckBox is used to allow the user to choose between hiding his password or displaying it in plaintext
+     */
     @FXML
     private CheckBox passwordCheckBox;
 
@@ -79,7 +85,7 @@ public class AddAccountController {
         String username = usernameField.getText();
         String password;
 
-        if (passwordCheckBox.isSelected()) {
+        if (passwordCheckBox.isSelected()) { //Checking whether user is using passwordField or textField to enter password.
             password = passwordPlaintext.getText();
         } else {
             password = passwordField.getText();
@@ -101,7 +107,7 @@ public class AddAccountController {
                 passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
                 passwordFeedback.setAlignment(Pos.CENTER);
 
-                //Emptying the textFields
+                //Deleting input
                 serviceField.setText("");
                 usernameField.setText("");
                 passwordField.setText("");
@@ -118,19 +124,25 @@ public class AddAccountController {
         }
     }
 
+    /**
+     * This method is called when the passwordCheckBox is clicked. When the checkBox is selected, the passwordField is hiding and replaced by a textField.
+     * Vice versa, the textField is hidden when the checkBox is not selected. Any user input is transferred between the two fields upon changing selection.
+     */
     @FXML
     void onPasswordCheckBoxClick() {
         String fieldContent;
+
+        //Reading user selection
         if (passwordCheckBox.isSelected()) {
-            passwordField.setVisible(false);
-            passwordPlaintext.setVisible(true);
-            fieldContent = passwordField.getText();
-            passwordPlaintext.setText(fieldContent);
+            passwordField.setVisible(false); //Hiding passwordField
+            passwordPlaintext.setVisible(true); //Displaying textField
+            fieldContent = passwordField.getText(); //Getting user input
+            passwordPlaintext.setText(fieldContent); //Transferring user input to textField
         } else {
-            passwordPlaintext.setVisible(false);
-            passwordField.setVisible(true);
-            fieldContent = passwordPlaintext.getText();
-            passwordField.setText(fieldContent);
+            passwordPlaintext.setVisible(false); //Hiding textField
+            passwordField.setVisible(true); //Displaying passwordField
+            fieldContent = passwordPlaintext.getText(); //Getting user input
+            passwordField.setText(fieldContent); //Transferring user input to passwordField
         }
     }
 
