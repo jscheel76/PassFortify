@@ -736,7 +736,7 @@ public class PassFortifyController {
             String usernames = (i < usernameContentLines.length) ? usernameContentLines[i] : "";
             String passwords;
             if (hidePassword.isSelected()) {
-                passwords = "********"; // Fillers, so passwords are not shown
+                passwords = (i < passwordContentLines.length) ? "******" : "";
             } else {
                 passwords = (i < passwordContentLines.length) ? passwordContentLines[i] : "";
             }
