@@ -164,7 +164,7 @@ public class PassFortifyController {
      * CheckMenuItem used to switch between experimental and legacy UI.
      */
     @FXML
-    private CheckMenuItem experimentalMode;
+    private CheckMenuItem legacyEdition;
 
     /**
      * Integer determining how many tries a user has left.
@@ -316,17 +316,17 @@ public class PassFortifyController {
      * @throws Exception If any unexpected error occurs during the process, such as decryption or window opening issues.
      */
     public void onPasswordButtonClick() throws Exception {
-        String internal = "internal.fxml"; //fxml file for the internal window
+        String legacy = "legacyInternal.fxml"; //fxml file for the internal window
         mPassword = passField.getText(); //Retrieves entered masterpassword from passField
         byte[] decryptedText = Cryptography.decryptFile(mPassLocation, mPassword);
         String decryptedMPass = new String(decryptedText, UTF_8);
 
         //Compares entered password with decrypted master password
         if ((decryptedMPass).equals(mPassword)) {
-            if (experimentalMode.isSelected()) {
-                openWindow("internal2.fxml", true);
+            if (legacyEdition.isSelected()) {
+                openWindow(legacy, true);
             } else {
-                openWindow(internal, true); //Opens internal.fxml window
+                openWindow("internal.fxml", true); //Opens legacyInternal.fxml window
             }
         } else {
             //if the password was incorrect 3 times, the program closes
@@ -587,7 +587,7 @@ public class PassFortifyController {
     }
 
     /**
-     * Method called by clicking the "Add Account" button. Opens a second window using the internal2.fxml file.
+     * Method called by clicking the "Add Account" button. Opens a second window using the internal.fxml file.
      * Allows user to enter full account details in a form.
      *
      * @throws IOException if anything unexpected happens during the loading of the fxml.
@@ -864,8 +864,6 @@ public class PassFortifyController {
      *
      * @throws Exception If an error occurs during the password replacement, file writing, or encryption process.
      *
-     * @see PasswordTools#getContentLines(String, String)
-     * @see Cryptography#encryptFile(String, String, String)
      * @see #populateTableData()
      */
     public void onChangePasswordClick() throws Exception {

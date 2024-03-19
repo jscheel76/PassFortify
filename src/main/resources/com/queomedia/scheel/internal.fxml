@@ -15,8 +15,6 @@
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#onCheckPasswordStrengthClick" text="Check password strength" />
                               <MenuItem mnemonicParsing="false" onAction="#onChangeMasterPassClick" text="Change master password" />
-                              <MenuItem mnemonicParsing="false" onAction="#onChangePasswordClick" text="Change password" />
-                              <MenuItem mnemonicParsing="false" onAction="#onGeneratePassphraseClick" text="Generate Passphrase" />
                               <MenuItem mnemonicParsing="false" onAction="#onCreateBackUpClick" text="Create Backup" />
                               <MenuItem mnemonicParsing="false" onAction="#handleSearchButtonClick" text="Filter" />
                               <MenuItem mnemonicParsing="false" onAction="#onCloseClick" text="Close" />
@@ -44,9 +42,7 @@
       </HBox>
         <AnchorPane onMouseDragged="#paneDragged" onMousePressed="#panePressed" prefHeight="354.0" prefWidth="606.0" VBox.vgrow="SOMETIMES">
             <children>
-                <Button layoutX="3.0" layoutY="34.0" mnemonicParsing="false" onAction="#onAddUsernameButton" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Username" />
-                <Button layoutX="3.0" layoutY="3.0" mnemonicParsing="false" onAction="#onServiceButtonClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Service" />
-                <Button layoutX="3.0" layoutY="65.0" mnemonicParsing="false" onAction="#onAddPasswordButtonClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Add Password" />
+                <Button layoutX="3.0" layoutY="3.0" mnemonicParsing="false" onAction="#onAddAccountButton" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Add Account" />
                 <TableView fx:id="accountTable" layoutX="142.0" layoutY="5.0" onContextMenuRequested="#checkForLeaks" prefHeight="278.0" prefWidth="488.0">
                     <placeholder>
                         <Label text="Initialize the table by clicking ''Reveal Accounts''" textFill="white" />
@@ -60,17 +56,17 @@
                   <Insets top="-3.0" />
                </padding>
                 </TableView>
-                <Button fx:id="logoutButton" layoutX="548.0" layoutY="325.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="83.0" stylesheets="@stylesheet.css" text="Logout" />
-                <Button layoutX="3.0" layoutY="127.0" mnemonicParsing="false" onAction="#onRevealAccountsClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Reveal Accounts" />
-            <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onGenerateClick" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Generate Password" />
+                <Button layoutX="548.0" layoutY="325.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="83.0" stylesheets="@stylesheet.css" text="Logout" />
+                <Button layoutX="3.0" layoutY="65.0" mnemonicParsing="false" onAction="#onRevealAccountsClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Reveal Accounts" />
+            <Button layoutX="3.0" layoutY="127.0" mnemonicParsing="false" onAction="#onGenerateClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Password" />
             <TextField fx:id="inputField" layoutX="4.0" layoutY="220.0" prefHeight="25.0" prefWidth="129.0" promptText="Input here" stylesheets="@stylesheet.css" />
             <PasswordField fx:id="mPasswordField2" layoutX="4.0" layoutY="255.0" prefHeight="25.0" prefWidth="129.0" promptText="Enter Masterpass" />
             <Label fx:id="feedbackLabel" layoutX="4.0" layoutY="287.0" prefHeight="17.0" prefWidth="554.0" textFill="#30da47">
                <font>
                   <Font size="13.0" />
                </font></Label>
-            <Button layoutX="3.0" layoutY="96.0" mnemonicParsing="false" onAction="#onDeleteAccountButtonClicked" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Delete Account" />
-            <Button layoutX="3.0" layoutY="158.0" mnemonicParsing="false" onAction="#copyPassword" prefHeight="25.0" prefWidth="129.0" stylesheets="@stylesheet.css" text="Copy Password" />
+            <Button layoutX="3.0" layoutY="34.0" mnemonicParsing="false" onAction="#onDeleteAccountButtonClicked" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Delete Account" />
+            <Button layoutX="3.0" layoutY="96.0" mnemonicParsing="false" onAction="#copyPassword" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Copy Password" />
             <Label fx:id="warningLabel" layoutX="7.0" layoutY="311.0" prefHeight="41.0" prefWidth="536.0" textFill="#f80000">
                <font>
                   <Font size="20.0" />
@@ -84,8 +80,9 @@
             <Label fx:id="accountLabel" alignment="BASELINE_RIGHT" layoutX="430.0" layoutY="283.0" prefHeight="21.0" prefWidth="196.0" textFill="WHITE">
                <font>
                   <Font size="15.0" />
-               </font>
-            </Label>
+               </font></Label>
+            <Button layoutX="4.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePassphraseClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Passphrase" />
+            <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Password" />
             </children>
          <VBox.margin>
             <Insets />
