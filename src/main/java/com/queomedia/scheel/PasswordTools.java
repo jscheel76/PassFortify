@@ -371,6 +371,9 @@ public class PasswordTools {
      */
     public static String getPasswordFromFiles(final String mPassword, final int pos) throws Exception {
         String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
+        if (pos >= passwordContentLines.length) {
+            return null;
+        }
         return passwordContentLines[pos]; // Return corresponding password
     }
 

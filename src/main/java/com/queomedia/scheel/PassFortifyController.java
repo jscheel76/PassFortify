@@ -845,7 +845,7 @@ public class PassFortifyController {
                 feedbackLabel.setText("Password copied");
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;"); // Green
             } else {
-                feedbackLabel.setText("Password not found. Make sure master password is correct");
+                feedbackLabel.setText("Error! Either master password is incorrect, or no password in selection");
                 feedbackLabel.setStyle("-fx-text-fill: red;");
             }
         } else {
