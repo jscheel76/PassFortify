@@ -301,6 +301,15 @@ public class PassFortifyController {
         openWindow(passwordFound, true); //opens login window
     }
 
+    /**
+     * Handles the event when the Enter key is pressed.
+     * It invokes the onPasswordButtonClick method, thus acting like a button press.
+     *
+     * @see #onPasswordButtonClick()
+     * @param event The KeyEvent representing the key press event.
+     * @throws Exception If any error occurs during the execution of the associated action,
+     *                   an exception is thrown to handle the issue.
+     */
     @FXML
     void enterPressed(KeyEvent event) throws Exception {
         if(event.getCode() == KeyCode.ENTER) {
