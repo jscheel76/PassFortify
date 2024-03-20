@@ -18,6 +18,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -297,6 +299,13 @@ public class PassFortifyController {
     public void logout() throws IOException {
         String passwordFound = "passwordFound.fxml";
         openWindow(passwordFound, true); //opens login window
+    }
+
+    @FXML
+    void enterPressed(KeyEvent event) throws Exception {
+        if(event.getCode() == KeyCode.ENTER) {
+            onPasswordButtonClick();
+        }
     }
 
     /**

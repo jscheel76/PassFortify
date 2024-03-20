@@ -446,6 +446,11 @@ public class PasswordTools {
         addDataWithoutAppend(location, newContent.toString(), mPassword);
     }
 
+    /**
+     * Support Method used to transfer a string into the users clipboard. Used primarily when something is generated-
+     *
+     * @param clipboardContent Sring which will be placed in clipbord. In this case either a generated password or passphrase
+     */
     public static void toClipboard(final String clipboardContent){
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();

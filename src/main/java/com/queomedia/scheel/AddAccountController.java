@@ -59,7 +59,7 @@ public class AddAccountController {
      */
     public void onGeneratePasswordClick() {
         String password = PasswordTools.passwordGenerator();
-        if (passwordCheckBox.isSelected()){
+        if (passwordCheckBox.isSelected()) {
             passwordPlaintext.setText(password);
         } else {
             passwordField.setText(password); //Placing generated password into the passwordField
