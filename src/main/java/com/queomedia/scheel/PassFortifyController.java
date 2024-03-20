@@ -18,8 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -237,10 +235,7 @@ public class PassFortifyController {
     public void onGeneratePasswordLoginWindow() {
         String newMasterKey = PasswordTools.passwordGenerator();
         passField.setText(newMasterKey); //Depositing generated password in the passField
-        final Clipboard clipboard = Clipboard.getSystemClipboard(); //Initialize clipboard
-        final ClipboardContent content = new ClipboardContent(); //String to store copied password
-        content.putString(newMasterKey); //Assign the generated password to the content string
-        clipboard.setContent(content); //Place password in users clipboard
+        PasswordTools.toClipboard(newMasterKey);
         feedbackLabel.setText("Generated secure master password and copied it to clipboard");
     }
 
@@ -254,10 +249,7 @@ public class PassFortifyController {
     public void onGeneratePassphraseLoginWindow() throws IOException {
         String passphrase = PassphraseGenerator.generatePassphrase(); //Using PassphraseGenerator class to generate Passphrase
         passField.setText(passphrase); //Depositing passphrase in the pass field
-        final Clipboard clipboard = Clipboard.getSystemClipboard(); //Initialize clipboard
-        final ClipboardContent content = new ClipboardContent(); //String to store copied password
-        content.putString(passphrase); //Assign the generated password to the content string
-        clipboard.setContent(content); //Place password in users clipboard
+        PasswordTools.toClipboard(passphrase);
         feedbackLabel.setText("Generated passphrase and copied it to clipboard");
         feedbackLabel.setAlignment(Pos.CENTER); //Centering text
     }
@@ -271,6 +263,7 @@ public class PassFortifyController {
     public void onGeneratePassphraseClick() throws IOException {
         String passphrase = PassphraseGenerator.generatePassphrase(); //Using PassphraseGenerator class to generate Passphrase
         inputField.setText(passphrase); //Depositing passphrase in the input field
+        PasswordTools.toClipboard(passphrase);
         feedbackLabel.setText("Generated passphrase");
         feedbackLabel.setStyle("-fx-text-fill: #03c203");
     }
@@ -838,10 +831,7 @@ public class PassFortifyController {
             String password = PasswordTools.getPasswordFromFiles(mPassword, pos);
 
             if (password != null) {
-                final Clipboard clipboard = Clipboard.getSystemClipboard();
-                final ClipboardContent content = new ClipboardContent();
-                content.putString(password);
-                clipboard.setContent(content);
+                PasswordTools.toClipboard(password);
                 feedbackLabel.setText("Password copied");
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;"); // Green
             } else {
@@ -915,6 +905,7 @@ public class PassFortifyController {
     public void onGenerateClick() {
         String generatedPassword = PasswordTools.passwordGenerator(); //Generates password
         inputField.setText(generatedPassword); //Enters the generated password into the inputField
+        PasswordTools.toClipboard(generatedPassword);
         feedbackLabel.setText("Password generated"); //User feedback
         feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
     }

@@ -6,8 +6,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -66,10 +64,7 @@ public class AddAccountController {
         } else {
             passwordField.setText(password); //Placing generated password into the passwordField
         }
-        final Clipboard clipboard = Clipboard.getSystemClipboard(); //initialising clipboard
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(password);
-        clipboard.setContent(content); //Placing generated password into clipboard
+        PasswordTools.toClipboard(password);
         passwordFeedback.setText("Password generated and copied");
         passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
         passwordFeedback.setAlignment(Pos.CENTER);

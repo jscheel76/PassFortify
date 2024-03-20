@@ -1,5 +1,7 @@
 package com.queomedia.scheel;
 
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -442,5 +444,12 @@ public class PasswordTools {
             }
         }
         addDataWithoutAppend(location, newContent.toString(), mPassword);
+    }
+
+    public static void toClipboard(final String clipboardContent){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(clipboardContent);
+        clipboard.setContent(content);
     }
 }
