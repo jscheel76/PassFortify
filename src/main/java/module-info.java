@@ -8,6 +8,7 @@ module com.queomedia.scheel {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
+    requires org.apache.commons.io;
 
     opens com.queomedia.scheel to javafx.fxml;
     exports com.queomedia.scheel;

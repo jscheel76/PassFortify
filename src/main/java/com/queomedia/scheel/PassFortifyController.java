@@ -312,7 +312,7 @@ public class PassFortifyController {
      */
     @FXML
     void enterPressed(KeyEvent event) throws Exception {
-        if(event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == KeyCode.ENTER) {
             onPasswordButtonClick();
         }
     }
@@ -915,10 +915,11 @@ public class PassFortifyController {
     }
 
     /**
-     * Method that gets called when the "Generate Password" button is clicked
-     * String generatedPassword gets assigned the output of the passwordGenerator method
-     * The input field gets set to the generated password
-     * The user gets informed that the password has been generated
+     * This method is invoked when the user clicks the "Generate" button.
+     * It opens the password generation form, allowing the user to select character sets
+     * and specify the length of the generated password.
+     *
+     * @throws IOException If an error occurs while attempting to open the password generation form.
      */
     public void onGenerateClick() throws IOException {
         openWindow("passwordGenerationForm.fxml", false);
