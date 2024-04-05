@@ -49,6 +49,7 @@
     background-color: #373636;
     -fx-table-cell-border-color: #59555d;
 }
+
 .table-view:focused{
     -fx-border-width: 1;
     border-width: 1;
@@ -61,6 +62,7 @@
     -fx-background-color: #373636;
     background-color: #373636;
 }
+
 .table-view .column-header-background{
     -fx-border-width: 0 0 1 0;
     border-width: 0 0 1 0;
@@ -71,6 +73,7 @@
     background-color: #1A1A1A;
     -fx-text-fill: #bebebe;
 }
+
 .table-view .column-header {
     -fx-background-color: transparent;
     background-color: transparent;
@@ -78,11 +81,13 @@
     border-color: #222222;
     -fx-text-fill: #ffffff;
 }
+
 .table-view .column-resize-line {
     -fx-background-color: #4e4e4e;
     background-color: #4e4e4e;
     -fx-pref-width: 1;
 }
+
 .table-row-cell{
     -fx-background-color: #373636;
     background-color: #373636;
@@ -90,12 +95,14 @@
     -fx-margin: 1;
     margin: 1;
 }
+
 .table-row-cell:hover {
     -fx-background-color: #3E3E40;
     background-color: #3E3E40;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
+
 .table-row-cell:selected {
     -fx-table-cell-border-color: #222222;
     -fx-background-color: #3E3E40;
@@ -103,6 +110,7 @@
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
+
 .table-view .virtual-flow .scroll-bar:vertical,
 .table-view .virtual-flow .scroll-bar:vertical .track,
 .table-view .virtual-flow .scroll-bar:vertical .track-background,
@@ -114,25 +122,30 @@
     -fx-background-color:#37373d;
     -fx-fill: #37373d;
 }
+
 .table-row-cell:pressed {
     -fx-background-color: #4e4e4e;
     background-color: #4e4e4e;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
+
 .table-view .column-header .label {
     -fx-alignment: center-left;
     -fx-cursor: HAND;
     cursor: HAND;
     -fx-text-fill: #ffffff;
 }
+
 .table-view > .virtual-flow > .corner{
     -fx-background-color: transparent;
 }
+
 .table-view .filler {
     -fx-background-color: transparent;
     background-color: transparent;
 }
+
 .table-view .column-drag-header{
     -fx-background-color: transparent;
     background-color: transparent;
@@ -151,7 +164,6 @@
     -fx-background-radius : 0.0em;
     -fx-border-radius :2.0em;
 }
-
 
 .scroll-bar:horizontal .increment-button ,
 .scroll-bar:horizontal .decrement-button {
@@ -202,7 +214,28 @@
 .menu-item .label {
     -fx-text-fill: white;
 }
+
 .check-menu-item
 {
     -fx-mark-color: #50d32c;
 }
+/**
+#exitButton {
+    -fx-background-color:
+            #000000,
+            linear-gradient(#dc3131, #c22828);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 4 10 4 10;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+#minimizeButton {
+    -fx-background-color: #5a595e;
+     -fx-background-insets: 0,1,2,3;
+     -fx-background-radius: 3,2,2,2;
+     -fx-padding: 4 10 4 10;
+     -fx-text-fill: white;
+     -fx-font-size: 12px;
+ }

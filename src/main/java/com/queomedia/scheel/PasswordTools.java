@@ -68,6 +68,7 @@ public class PasswordTools {
             randomPassword.append(randomChar);
         }
 
+        //Returning the generated password
         return randomPassword.toString();
     }
 
@@ -216,7 +217,7 @@ public class PasswordTools {
      */
     public static Path getFilePath() {
         FileChooser filechooser = new FileChooser();
-        filechooser.setTitle("Open a folder to save backup"); //Title
+        filechooser.setTitle("Select a directory where to store the backup"); //Title
         filechooser.setInitialDirectory(new File(System.getProperty("user.home"))); //Set initial directory to users home directory
         filechooser.setInitialFileName("PassFortify Backup"); //Set automatic name for the file to "Backup"
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Folders", "*."));

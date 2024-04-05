@@ -920,12 +920,8 @@ public class PassFortifyController {
      * The input field gets set to the generated password
      * The user gets informed that the password has been generated
      */
-    public void onGenerateClick() {
-        String generatedPassword = PasswordTools.passwordGenerator(); //Generates password
-        inputField.setText(generatedPassword); //Enters the generated password into the inputField
-        PasswordTools.toClipboard(generatedPassword);
-        feedbackLabel.setText("Password generated"); //User feedback
-        feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
+    public void onGenerateClick() throws IOException {
+        openWindow("passwordGenerationForm.fxml", false);
     }
 
     /**

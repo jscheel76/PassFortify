@@ -37,7 +37,7 @@
                   </menus>
               </MenuBar>
             <Button minWidth="28.0" mnemonicParsing="false" onAction="#onMinimizeClick" text="-" />
-            <Button mnemonicParsing="false" onAction="#onCloseClick" text="X" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onCloseClick" text="X" />
          </children>
       </HBox>
         <AnchorPane onMouseDragged="#paneDragged" onMousePressed="#panePressed" prefHeight="354.0" prefWidth="606.0" VBox.vgrow="SOMETIMES">
