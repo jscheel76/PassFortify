@@ -9,6 +9,7 @@ module com.queomedia.scheel {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
     requires org.apache.commons.io;
+    requires java.logging;
 
     opens com.queomedia.scheel to javafx.fxml;
     exports com.queomedia.scheel;

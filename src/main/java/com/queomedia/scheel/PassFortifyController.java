@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.logging.LogManager;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -227,6 +228,7 @@ public class PassFortifyController {
         stage.show();
         stage.setY(y);
         stage.setX(x);
+        LogManager.getLogManager().reset();
     }
 
     /**
