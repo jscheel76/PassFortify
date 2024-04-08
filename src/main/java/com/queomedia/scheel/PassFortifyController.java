@@ -200,18 +200,18 @@ public class PassFortifyController {
      * Closes the previous window before opening the new one.
      *
      * @param sceneToOpen The FXML scene file to open.
-     * @param close boolean used to decide whether the previous window will be closed or not.
+     * @param closePreviousWindow boolean used to decide whether the previous window will be closed or not.
      * @throws IOException If an I/O error occurs during the window opening process.
      */
     @FXML
-    protected void openWindow(final String sceneToOpen, final boolean close) throws IOException {
+    protected void openWindow(final String sceneToOpen, final boolean closePreviousWindow) throws IOException {
         //Getting position of the stage to open the new stage in the same place
         Stage currentStage = ((Stage) feedbackLabel.getScene().getWindow());
         double x = currentStage.getX();
         double y = currentStage.getY();
 
         //Closes the previous window
-        if (close) {
+        if (closePreviousWindow) {
             ((Stage) feedbackLabel.getScene().getWindow()).close(); //Using UI element present in all three fxml files
         }
 
@@ -399,10 +399,10 @@ public class PassFortifyController {
                 settingWriter.close();
 
                 //Manually selecting and unselecting the checkMenuItems, as otherwise it would bug out.
+                checkLeak.setSelected(false);
                 hidePassword.setSelected(true);
                 passwordMatch.setSelected(false);
                 clearPassword.setSelected(false);
-                checkLeak.setSelected(false);
             } catch (IOException e) {
                 feedbackLabel.setText("Error creating settings file.");
                 feedbackLabel.setStyle("-fx-text-fill: red");
@@ -789,8 +789,7 @@ public class PassFortifyController {
 
             // Check if any of the columns contain the search term
             return entry.getService().toLowerCase().contains(lowerCaseFilter)
-                    || entry.getUsername().toLowerCase().contains(lowerCaseFilter)
-                    || entry.getPassword().toLowerCase().contains(lowerCaseFilter);
+                    || entry.getUsername().toLowerCase().contains(lowerCaseFilter);
         });
     }
 

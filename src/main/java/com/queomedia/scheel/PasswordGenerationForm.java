@@ -51,6 +51,9 @@ public class PasswordGenerationForm {
     @FXML
     private Label feedbackLabel;
 
+    /**
+     * Slider used to allow user to select password length.
+     */
     @FXML
     private Slider lengthSlider;
 
@@ -85,10 +88,11 @@ public class PasswordGenerationForm {
     public void passwordGenerator() {
         try {
             SecureRandom randomizer = new SecureRandom();
-            StringBuilder randomPassword = new StringBuilder();
+            StringBuilder randomPassword = new StringBuilder(); //Using stringbuilder to construct the password
 
             List<String> characterSets = new ArrayList<>();
 
+            //Adding selected character sets to the list
             if (lowercaseBox.isSelected()) {
                 characterSets.add(LOWERCASE_LETTERS);
             }
@@ -102,16 +106,27 @@ public class PasswordGenerationForm {
                 characterSets.add(SPECIAL_CHARACTERS);
             }
 
+            //parsing length of desired password from the textfield
             int passwordLength = Integer.parseInt(lengthField.getText());
 
+            //Checking if the password length is within the acceptable range
+            if (passwordLength > 256) {
+                feedbackLabel.setText("Maxium size is 256 characters.");
+                feedbackLabel.setAlignment(Pos.CENTER);
+                return;
+            }
+
+            //Getting size of the character set
             int numSets = characterSets.size();
 
+            //Generating password character by character
             for (int i = 0; i < passwordLength; i++) {
                 String selectedCharacterSet = characterSets.get(randomizer.nextInt(numSets));
                 char randomChar = selectedCharacterSet.charAt(randomizer.nextInt(selectedCharacterSet.length()));
                 randomPassword.append(randomChar);
             }
 
+            //Copying the generated password to the clipboard
             PasswordTools.toClipboard(String.valueOf(randomPassword));
             lengthField.setText(String.valueOf(randomPassword));
             feedbackLabel.setText("Password generated and copied");
@@ -162,10 +177,16 @@ public class PasswordGenerationForm {
         ((Stage) lengthField.getScene().getWindow()).close(); //Closing the form.
     }
 
+    /**
+     * Adjusts the settings of the length slider and updates the length field accordingly.
+     * This method is invoked when the user interacts with the length slider.
+     * It sets the minimum and maximum values of the length slider to 8 and 48, respectively,
+     * and updates the length field to display the current selected password length.
+     */
     @FXML
     void slide() {
         lengthSlider.setMin(8);
-        lengthSlider.setMax(50);
+        lengthSlider.setMax(48);
         int passwordLength = (int) lengthSlider.getValue();
         lengthField.setText(String.valueOf(passwordLength));
     }
