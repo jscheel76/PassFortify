@@ -52,6 +52,12 @@ public class PasswordGenerationForm {
     private Label feedbackLabel;
 
     /**
+     * Label used to display generated password.
+     */
+    @FXML
+    private Label passwordLabel;
+
+    /**
      * Slider used to allow user to select password length.
      */
     @FXML
@@ -128,8 +134,9 @@ public class PasswordGenerationForm {
 
             //Copying the generated password to the clipboard
             PasswordTools.toClipboard(String.valueOf(randomPassword));
-            lengthField.setText(String.valueOf(randomPassword));
+            passwordLabel.setText(String.valueOf(randomPassword));
             feedbackLabel.setText("Password generated and copied");
+            passwordLabel.setAlignment(Pos.CENTER);
             feedbackLabel.setAlignment(Pos.CENTER);
         } catch (NumberFormatException e) {
             feedbackLabel.setText("Please enter numbers only.");

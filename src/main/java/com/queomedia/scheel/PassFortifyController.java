@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -1058,8 +1059,7 @@ public class PassFortifyController {
      * @throws IOException not used
      */
     public void onAboutButtonClick() throws IOException {
-        String url = "https://github.com/jscheel76/Passwordmanager-Java-Test"; //Link to projects GitHub
-        java.awt.Desktop.getDesktop().browse(java.net.URI.create(url)); //Open browser with specified url
+        java.awt.Desktop.getDesktop().browse(URI.create("https://github.com/jscheel76/Passwordmanager-Java-Test")); //Open browser with specified url
     }
 
     /**
@@ -1068,8 +1068,7 @@ public class PassFortifyController {
      * @throws IOException not used
      */
     public void onContactButtonClick() throws IOException {
-        String url = "mailto:passfortify@proton.me"; //Using a mailto: address, to open users e-mail client
-        java.awt.Desktop.getDesktop().browse(java.net.URI.create(url)); //Open browser with specified url
+        java.awt.Desktop.getDesktop().browse(URI.create("mailto:passfortify@proton.me")); //Open browser with specified url
     }
 
     /**
