@@ -30,7 +30,7 @@ public class AddAccountController {
     private TextField passwordPlaintext;
 
     /**
-     * PasswordField used to enter a passwort that the user would like to add.
+     * PasswordField used to enter a password that the user would like to add.
      */
     @FXML
     private PasswordField passwordField;
