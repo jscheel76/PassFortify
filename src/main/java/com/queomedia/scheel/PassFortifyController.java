@@ -777,20 +777,25 @@ public class PassFortifyController {
      */
     @FXML
     private void handleSearchButtonClick() throws Exception {
-        populateTableData();
-        String newValue = inputField.getText();
-        filteredData.setPredicate(entry -> { //setting the predicate of the filtered list
-            if (newValue == null || newValue.isEmpty()) {
-                return true; // Show all entries when the search field is empty
-            }
+        if (PasswordTools.checkMasterpassword(mPasswordField2.getText())) {
+            populateTableData();
+            String newValue = inputField.getText();
+            filteredData.setPredicate(entry -> { //setting the predicate of the filtered list
+                if (newValue == null || newValue.isEmpty()) {
+                    return true; // Show all entries when the search field is empty
+                }
 
-            // Convert to lowercase for case-insensitive search
-            String lowerCaseFilter = newValue.toLowerCase();
+                // Convert to lowercase for case-insensitive search
+                String lowerCaseFilter = newValue.toLowerCase();
 
-            // Check if any of the columns contain the search term
-            return entry.getService().toLowerCase().contains(lowerCaseFilter)
-                    || entry.getUsername().toLowerCase().contains(lowerCaseFilter);
-        });
+                // Check if any of the columns contain the search term
+                return entry.getService().toLowerCase().contains(lowerCaseFilter)
+                        || entry.getUsername().toLowerCase().contains(lowerCaseFilter);
+            });
+        } else {
+            feedbackLabel.setText("Wrong master password");
+            feedbackLabel.setStyle("-fx-text-fill: red");
+        }
     }
 
     /**
