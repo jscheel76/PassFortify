@@ -38,7 +38,7 @@
                       </Menu>
                   </menus>
               </MenuBar>
-            <Button minWidth="28.0" mnemonicParsing="false" onAction="#onMinimizeClick" text="-" />
+            <Button fx:id="minimizeButton" minWidth="28.0" mnemonicParsing="false" onAction="#onMinimizeClick" text="-" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onCloseClick" text="X" />
          </children>
       </HBox>

@@ -780,14 +780,14 @@ public class PassFortifyController {
     private void handleSearchButtonClick() throws Exception {
         if (PasswordTools.checkMasterpassword(mPasswordField2.getText())) {
             populateTableData();
-            String newValue = inputField.getText();
+            String filterThis = inputField.getText();
             filteredData.setPredicate(entry -> { //setting the predicate of the filtered list
-                if (newValue == null || newValue.isEmpty()) {
+                if (filterThis == null || filterThis.isEmpty()) {
                     return true; // Show all entries when the search field is empty
                 }
 
                 // Convert to lowercase for case-insensitive search
-                String lowerCaseFilter = newValue.toLowerCase();
+                String lowerCaseFilter = filterThis.toLowerCase();
 
                 // Check if any of the columns contain the search term
                 return entry.getService().toLowerCase().contains(lowerCaseFilter)
