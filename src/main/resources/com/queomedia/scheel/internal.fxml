@@ -59,9 +59,9 @@
                 <Button layoutX="548.0" layoutY="325.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="83.0" stylesheets="@stylesheet.css" text="Logout" />
                 <Button layoutX="3.0" layoutY="65.0" mnemonicParsing="false" onAction="#onRevealAccountsClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Reveal Accounts" />
             <Button layoutX="3.0" layoutY="127.0" mnemonicParsing="false" onAction="#onGenerateClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Password" />
-            <TextField fx:id="inputField" layoutX="4.0" layoutY="220.0" prefHeight="25.0" prefWidth="129.0" promptText="Input here" stylesheets="@stylesheet.css" />
+            <TextField fx:id="inputField" layoutX="4.0" layoutY="220.0" prefHeight="25.0" prefWidth="129.0" promptText="Enter Input" stylesheets="@stylesheet.css" />
             <PasswordField fx:id="mPasswordField2" layoutX="4.0" layoutY="255.0" prefHeight="25.0" prefWidth="129.0" promptText="Enter Masterpass" />
-            <Label fx:id="feedbackLabel" layoutX="4.0" layoutY="287.0" prefHeight="17.0" prefWidth="554.0" textFill="#30da47">
+            <Label fx:id="feedbackLabel" layoutX="93.0" layoutY="287.0" prefHeight="19.0" prefWidth="465.0" textFill="#30da47">
                <font>
                   <Font size="13.0" />
                </font></Label>
@@ -83,6 +83,8 @@
                </font></Label>
             <Button layoutX="4.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePassphraseClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Passphrase" />
             <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Password" />
+            <CheckBox fx:id="inputBox" layoutX="5.0" layoutY="288.0" mnemonicParsing="false" onAction="#onInputBoxChange" prefHeight="17.0" prefWidth="83.0" text="Hide Input?" textFill="WHITE" />
+            <PasswordField fx:id="inputHidden" layoutX="4.0" layoutY="220.0" prefHeight="27.0" prefWidth="129.0" promptText="Enter Input" visible="false" />
             </children>
          <VBox.margin>
             <Insets />

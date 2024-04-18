@@ -9,13 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -197,6 +191,18 @@ public class PassFortifyController {
     private String savedPasswordStrength = "";
 
     /**
+     * CheckBox used to allow users to hide their input, for example during a password change
+     */
+    @FXML
+    private CheckBox inputBox;
+
+    /**
+     * PasswordField used in place of the inputField, when inputBox is selected
+     */
+    @FXML
+    private PasswordField inputHidden;
+
+    /**
      * Opens a new window based on the provided FXML scene file.
      * Closes the previous window before opening the new one.
      *
@@ -271,6 +277,26 @@ public class PassFortifyController {
         PasswordTools.toClipboard(passphrase);
         feedbackLabel.setText("Generated passphrase");
         feedbackLabel.setStyle("-fx-text-fill: #03c203");
+    }
+
+    /**
+     * Handles the change event of the input box.
+     * This method is invoked when the state of the input box (checkbox) changes.
+     * If the input box is checked, it hides the input field and displays the hidden input field,
+     * copying the content of the input field to the hidden input field.
+     * If the input box is unchecked, it hides the hidden input field and displays the input field,
+     * copying the content of the hidden input field to the input field.
+     */
+    public void onInputBoxChange(){
+        if (inputBox.isSelected()) {
+            inputField.setVisible(false);
+            inputHidden.setVisible(true);
+            inputHidden.setText(inputField.getText());
+        } else {
+            inputHidden.setVisible(false);
+            inputField.setVisible(true);
+            inputField.setText(inputHidden.getText());
+        }
     }
 
     /**
