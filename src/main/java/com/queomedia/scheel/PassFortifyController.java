@@ -108,31 +108,6 @@ public class PassFortifyController {
     private Button noButton;
 
     /**
-     * String used to save the master password.
-     */
-    private String mPassword;
-
-    /**
-     * Location of the password file.
-     */
-    private final String passwordLocation = "Passwords.txt";
-
-    /**
-     * Location of the service file.
-     */
-    private final String serviceLocation = "Services.txt";
-
-    /**
-     * Location of the username file.
-     */
-    private final String usernameLocation = "Usernames.txt";
-
-    /**
-     * Location of the master password file.
-     */
-    private final String mPassLocation = "MPass.txt";
-
-    /**
      * CheckMenuItem to enable setting that warns user about using multiple passwords.
      */
     @FXML
@@ -163,12 +138,6 @@ public class PassFortifyController {
     private CheckMenuItem legacyEdition;
 
     /**
-     * Integer determining how many tries a user has left.
-     * Using 2+1 as to not use magic numbers.
-     */
-    private int triesLeft = 2 + 1;
-
-    /**
      * Label that warns user that he entered the wrong password.
      */
     @FXML
@@ -181,16 +150,6 @@ public class PassFortifyController {
     private Label accountLabel;
 
     /**
-     * Filtered list used to filter the tableview entries.
-     */
-    private FilteredList<DataEntry> filteredData;
-
-    /**
-     * Global String used to save the password strength evaluation.
-     */
-    private String savedPasswordStrength = "";
-
-    /**
      * CheckBox used to allow users to hide their input, for example during a password change
      */
     @FXML
@@ -201,6 +160,47 @@ public class PassFortifyController {
      */
     @FXML
     private PasswordField inputHidden;
+
+    /**
+     * Integer determining how many tries a user has left.
+     * Using 2+1 as to not use magic numbers.
+     */
+    private int triesLeft = 2 + 1;
+
+    /**
+     * Filtered list used to filter the tableview entries.
+     */
+    private FilteredList<DataEntry> filteredData;
+
+    /**
+     * Global String used to save the password strength evaluation.
+     */
+    private String savedPasswordStrength = "";
+
+    /**
+     * String used to save the master password.
+     */
+    private String mPassword;
+
+    /**
+     * Location of the password file.
+     */
+    private final String passwordLocation = "Passwords.txt";
+
+    /**
+     * Location of the service file.
+     */
+    private final String serviceLocation = "Services.txt";
+
+    /**
+     * Location of the username file.
+     */
+    private final String usernameLocation = "Usernames.txt";
+
+    /**
+     * Location of the master password file.
+     */
+    private final String mPassLocation = "MPass.txt";
 
     /**
      * Opens a new window based on the provided FXML scene file.
@@ -287,7 +287,7 @@ public class PassFortifyController {
      * If the input box is unchecked, it hides the hidden input field and displays the input field,
      * copying the content of the hidden input field to the input field.
      */
-    public void onInputBoxChange(){
+    public void onInputBoxChange() {
         if (inputBox.isSelected()) {
             inputField.setVisible(false);
             inputHidden.setVisible(true);
@@ -503,7 +503,12 @@ public class PassFortifyController {
      * Otherwise, the user will be prompted to confirm the master password change with "yes" and "no" buttons.
      */
     public void onChangeMasterPassClick() {
-        String newMasterPass = inputField.getText(); //Takes the new master password from the input field
+        String newMasterPass;
+        if (inputBox.isSelected()) {
+            newMasterPass = inputHidden.getText();
+        } else {
+            newMasterPass = inputField.getText(); //Takes the new master password from the input field
+        }
         String currentMasterPass = mPasswordField2.getText(); //Takes the current master password from the password fieldZ
         onCheckPasswordStrengthClick(); //Checking the strength of the new master password
 
@@ -596,8 +601,12 @@ public class PassFortifyController {
      */
     @FXML
     public void changeMasterPass() throws Exception {
-        //New master password is taken from input field, old master password from the password field
-        String newpass = inputField.getText();
+        String newpass;
+        if (inputBox.isSelected()) {
+            newpass = inputHidden.getText();
+        } else {
+            newpass = inputField.getText();
+        }
         mPassword = mPasswordField2.getText();
 
         if (PasswordTools.checkMasterpassword(mPassword) && newpass != null) {
@@ -622,7 +631,12 @@ public class PassFortifyController {
      * @return true if the input field is not empty, false otherwise.
      */
     public boolean isInput() {
-        String userInput = inputField.getText();
+        String userInput;
+        if (inputBox.isSelected()) {
+            userInput = inputHidden.getText();
+        } else {
+            userInput = inputField.getText();
+        }
         return !userInput.isEmpty(); //returns true if inputField is empty, returns false if inputField contains anything
     }
 
@@ -652,7 +666,12 @@ public class PassFortifyController {
     public void addInput(String location, String feedback) throws Exception {
         //Master password and new account are taken from the password and input field
         mPassword = mPasswordField2.getText();
-        String inputToAdd = inputField.getText();
+        String inputToAdd;
+        if (inputBox.isSelected()) {
+            inputToAdd = inputHidden.getText();
+        } else {
+            inputToAdd = inputField.getText();
+        }
         if (isInput()) { //Checking whether input even exists
             if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
                 try {
@@ -806,7 +825,12 @@ public class PassFortifyController {
     private void handleSearchButtonClick() throws Exception {
         if (PasswordTools.checkMasterpassword(mPasswordField2.getText())) {
             populateTableData();
-            String filterThis = inputField.getText();
+            String filterThis;
+            if (inputBox.isSelected()) {
+                filterThis = inputHidden.getText();
+            } else {
+                filterThis = inputField.getText();
+            }
             filteredData.setPredicate(entry -> { //setting the predicate of the filtered list
                 if (filterThis == null || filterThis.isEmpty()) {
                     return true; // Show all entries when the search field is empty
@@ -910,7 +934,12 @@ public class PassFortifyController {
     public void onChangePasswordClick() throws Exception {
         if (accountTable.getSelectionModel().getSelectedItem() != null) {
             mPassword = mPasswordField2.getText();
-            String newPass = inputField.getText(); //Retrieving new password from input field
+            String newPass;
+            if (inputBox.isSelected()) {
+                newPass = inputHidden.getText();
+            } else {
+                 newPass = inputField.getText(); //Retrieving new password from input field
+            }
 
             //Getting service and username from user selection to be used for search
             String service = accountTable.getSelectionModel().getSelectedItem().getService();
@@ -1067,7 +1096,12 @@ public class PassFortifyController {
      * the PasswordTools.passwordStrengthOutput method, and the result is displayed on the feedbackLabel.
      */
     public void onCheckPasswordStrengthClick() {
-        String passwordToCheck = inputField.getText();
+        String passwordToCheck;
+        if (inputBox.isSelected()) {
+            passwordToCheck = inputHidden.getText();
+        } else {
+            passwordToCheck = inputField.getText();
+        }
         //Checks whether the input field is empty
         if (Objects.equals(passwordToCheck, "")) {
             feedbackLabel.setText("Please enter a password to check"); //User feedback
