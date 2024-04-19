@@ -503,12 +503,7 @@ public class PassFortifyController {
      * Otherwise, the user will be prompted to confirm the master password change with "yes" and "no" buttons.
      */
     public void onChangeMasterPassClick() {
-        String newMasterPass;
-        if (inputBox.isSelected()) {
-            newMasterPass = inputHidden.getText();
-        } else {
-            newMasterPass = inputField.getText(); //Takes the new master password from the input field
-        }
+        String newMasterPass = getInput();
         String currentMasterPass = mPasswordField2.getText(); //Takes the current master password from the password fieldZ
         onCheckPasswordStrengthClick(); //Checking the strength of the new master password
 
@@ -601,12 +596,7 @@ public class PassFortifyController {
      */
     @FXML
     public void changeMasterPass() throws Exception {
-        String newpass;
-        if (inputBox.isSelected()) {
-            newpass = inputHidden.getText();
-        } else {
-            newpass = inputField.getText();
-        }
+        String newpass = getInput();
         mPassword = mPasswordField2.getText();
 
         if (PasswordTools.checkMasterpassword(mPassword) && newpass != null) {
@@ -631,12 +621,7 @@ public class PassFortifyController {
      * @return true if the input field is not empty, false otherwise.
      */
     public boolean isInput() {
-        String userInput;
-        if (inputBox.isSelected()) {
-            userInput = inputHidden.getText();
-        } else {
-            userInput = inputField.getText();
-        }
+        String userInput = getInput();
         return !userInput.isEmpty(); //returns true if inputField is empty, returns false if inputField contains anything
     }
 
@@ -666,12 +651,7 @@ public class PassFortifyController {
     public void addInput(String location, String feedback) throws Exception {
         //Master password and new account are taken from the password and input field
         mPassword = mPasswordField2.getText();
-        String inputToAdd;
-        if (inputBox.isSelected()) {
-            inputToAdd = inputHidden.getText();
-        } else {
-            inputToAdd = inputField.getText();
-        }
+        String inputToAdd = getInput();
         if (isInput()) { //Checking whether input even exists
             if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
                 try {
@@ -825,12 +805,7 @@ public class PassFortifyController {
     private void handleSearchButtonClick() throws Exception {
         if (PasswordTools.checkMasterpassword(mPasswordField2.getText())) {
             populateTableData();
-            String filterThis;
-            if (inputBox.isSelected()) {
-                filterThis = inputHidden.getText();
-            } else {
-                filterThis = inputField.getText();
-            }
+            String filterThis = getInput();
             filteredData.setPredicate(entry -> { //setting the predicate of the filtered list
                 if (filterThis == null || filterThis.isEmpty()) {
                     return true; // Show all entries when the search field is empty
@@ -934,12 +909,7 @@ public class PassFortifyController {
     public void onChangePasswordClick() throws Exception {
         if (accountTable.getSelectionModel().getSelectedItem() != null) {
             mPassword = mPasswordField2.getText();
-            String newPass;
-            if (inputBox.isSelected()) {
-                newPass = inputHidden.getText();
-            } else {
-                 newPass = inputField.getText(); //Retrieving new password from input field
-            }
+            String newPass = getInput();
 
             //Getting service and username from user selection to be used for search
             String service = accountTable.getSelectionModel().getSelectedItem().getService();
@@ -1096,12 +1066,7 @@ public class PassFortifyController {
      * the PasswordTools.passwordStrengthOutput method, and the result is displayed on the feedbackLabel.
      */
     public void onCheckPasswordStrengthClick() {
-        String passwordToCheck;
-        if (inputBox.isSelected()) {
-            passwordToCheck = inputHidden.getText();
-        } else {
-            passwordToCheck = inputField.getText();
-        }
+        String passwordToCheck  = getInput();
         //Checks whether the input field is empty
         if (Objects.equals(passwordToCheck, "")) {
             feedbackLabel.setText("Please enter a password to check"); //User feedback
@@ -1111,6 +1076,23 @@ public class PassFortifyController {
             feedbackLabel.setText("Password is " + savedPasswordStrength); //User feedback
             feedbackLabel.setStyle("-fx-text-fill: yellow");
         }
+    }
+
+    /**
+     * Retrieves the input from either the visible input field or the hidden input field, based on the state of the input box.
+     * If the input box is selected, it retrieves the text from the hidden input field.
+     * If the input box is not selected, it retrieves the text from the visible input field.
+     *
+     * @return The input text retrieved from either the visible or hidden input field.
+     */
+    public String getInput() {
+        String input;
+        if (inputBox.isSelected()) {
+            input = inputHidden.getText();
+        } else {
+            input = inputField.getText();
+        }
+        return input;
     }
 
     /**
