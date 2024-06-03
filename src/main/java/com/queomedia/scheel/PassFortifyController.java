@@ -273,7 +273,11 @@ public class PassFortifyController {
      */
     public void onGeneratePassphraseClick() throws IOException {
         String passphrase = PassphraseGenerator.generatePassphrase(); //Using PassphraseGenerator class to generate Passphrase
-        inputField.setText(passphrase); //Depositing passphrase in the input field
+        if (inputBox.isSelected()){
+            inputHidden.setText(passphrase);
+        } else {
+            inputField.setText(passphrase); //Depositing passphrase in the input field
+        }
         PasswordTools.toClipboard(passphrase);
         feedbackLabel.setText("Generated passphrase");
         feedbackLabel.setStyle("-fx-text-fill: #03c203");
