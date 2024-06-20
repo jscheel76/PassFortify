@@ -273,7 +273,7 @@ public class PassFortifyController {
      */
     public void onGeneratePassphraseClick() throws IOException {
         String passphrase = PassphraseGenerator.generatePassphrase(); //Using PassphraseGenerator class to generate Passphrase
-        if (inputBox.isSelected()){
+        if (inputBox.isSelected()) {
             inputHidden.setText(passphrase);
         } else {
             inputField.setText(passphrase); //Depositing passphrase in the input field
@@ -313,7 +313,7 @@ public class PassFortifyController {
     @FXML
     protected void onSetMasterPassClick() throws Exception {
         String passwordFound = "passwordFound.fxml"; //fxml file of the login window
-        mPassword = passField.getText(); //Entered password retrieved from passField
+        mPassword = passField.getText();
         if (passField.getText().isEmpty()) {
             feedbackLabel.setText("Please enter password");
             feedbackLabel.setStyle("-fx-text-fill: red");
@@ -381,7 +381,7 @@ public class PassFortifyController {
             } else if (triesLeft > 0) {
                 tryLabel.setText("Wrong password, " + triesLeft + " attempt remaining");
             } else {
-                System.exit(0); //Exits the application after too many attempts
+                System.exit(0);
             }
         }
     }
@@ -394,8 +394,8 @@ public class PassFortifyController {
      * @throws IOException If an I/O error occurs while reading or creating the settings file.
      */
     public void settingCheck() throws IOException {
-        BufferedReader reader; //BufferedReader to read lines
-        String settingLocation = "settings.txt"; //Location of the settings file
+        BufferedReader reader;
+        String settingLocation = "settings.txt";
         Path settingPath = Path.of(settingLocation);
 
         //Checking whether the setting file exits
@@ -404,12 +404,12 @@ public class PassFortifyController {
             final int amountOfSettings = 4; //4, because there is four settings.
             String[] settingContentLines = new String[amountOfSettings]; //Array containing the settings
             reader = new BufferedReader(new FileReader(settingLocation));
-            String line = reader.readLine(); //reads first line and assigns it to the string
-            int i = 0; //Integer used to go through all positions in the array
+            String line = reader.readLine();
             while (line != null) {
+                int i = 0;
                 settingContentLines[i] = line; //Setting line is assigned to a position in the array
-                line = reader.readLine(); //Next line gets read
-                i++; //incrementing to read the next line
+                line = reader.readLine();
+                i++;
             }
             reader.close();
 
@@ -418,7 +418,7 @@ public class PassFortifyController {
             passwordMatch.setSelected(settingContentLines[1].equals("PasswordWarning1"));
             if (settingContentLines[2].equals("ClearPassword1")) {
                 clearPassword.setSelected(true);
-                onClearMPass(); //Clearing password field if setting is selected
+                onClearMPass();
             } else {
                 clearPassword.setSelected(false);
             }
@@ -484,7 +484,7 @@ public class PassFortifyController {
      */
     public void onClearMPass() {
         if (clearPassword.isSelected()) { //Checking whether the clear password setting is selected
-            mPasswordField2.setText(""); //clearing password field
+            mPasswordField2.setText("");
         }
         settingUpdater(); //Updating settings
     }
@@ -495,7 +495,7 @@ public class PassFortifyController {
      */
     public void onMinimizeClick() {
         Stage obj = (Stage) feedbackLabel.getScene().getWindow(); //Using a label existing in all FXMLs to locate the Stage
-        obj.setIconified(true); //Minimizing window
+        obj.setIconified(true);
     }
 
     /**
@@ -513,11 +513,9 @@ public class PassFortifyController {
 
         //Checks whether the input field is empty
         if (newMasterPass.isEmpty()) {
-            //If no new master password is entered in the input field, a notice is displayed to enter one and the process is cancelled
             feedbackLabel.setText("Input field is empty, please enter a new master password");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         } else if (currentMasterPass.isEmpty()) {
-            //If master password is entered in the password field, a notice is displayed to enter it and the process is cancelled
             feedbackLabel.setText("You have to enter your current master password to proceed");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         } else {
@@ -525,7 +523,7 @@ public class PassFortifyController {
             accountLabel.setText("");
             feedbackLabel.setText("Are you sure you want to change the master password to '" + newMasterPass + "' ("
                     + savedPasswordStrength + ")?"); //Prompt asking the user if he wants to change it to the new password
-            feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
+            feedbackLabel.setStyle("-fx-text-fill: #03c203;");
             yesButton.setVisible(true); //Button to confirm is displayed
             noButton.setVisible(true); //Button to cancel is displayed
         }
@@ -541,7 +539,7 @@ public class PassFortifyController {
         try {
             changeMasterPass(); //Start password change process
         } catch (Exception e) {
-            feedbackLabel.setText("Master password could not be changed"); //User feedback
+            feedbackLabel.setText("Master password could not be changed");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
@@ -558,7 +556,7 @@ public class PassFortifyController {
         noButton.setVisible(false); //Hide noButton
         populateTableData(); //Reset tableview
 
-        feedbackLabel.setText("Master password change cancelled"); //User feedback
+        feedbackLabel.setText("Master password change cancelled");
         feedbackLabel.setStyle("-fx-text-fill: red;");
     }
 
@@ -572,8 +570,8 @@ public class PassFortifyController {
      */
     public void panePressed(final MouseEvent me) {
         Stage stage = (Stage) feedbackLabel.getScene().getWindow(); //Getting stage object from the label
-        Delta.x = stage.getX() - me.getScreenX(); //Setting the x position of the stage
-        Delta.y = stage.getY() - me.getScreenY(); //Setting the y position of the stage
+        Delta.x = stage.getX() - me.getScreenX();
+        Delta.y = stage.getY() - me.getScreenY();
     }
 
     /**
@@ -585,8 +583,8 @@ public class PassFortifyController {
      */
     public void paneDragged(final MouseEvent me) {
         Stage stage = (Stage) feedbackLabel.getScene().getWindow(); //Getting stage object from the label
-        stage.setX(Delta.x + me.getScreenX()); //Setting the x position of the stage
-        stage.setY(Delta.y + me.getScreenY()); //Setting the y position of the stage
+        stage.setX(Delta.x + me.getScreenX());
+        stage.setY(Delta.y + me.getScreenY());
     }
 
     /**
@@ -611,10 +609,10 @@ public class PassFortifyController {
             mPassword = newpass; //Reassigning mPassword to the new password
 
             //Shows user that the master password has been changed
-            feedbackLabel.setText("Master password changed"); //User feedback
-            feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
+            feedbackLabel.setText("Master password changed");
+            feedbackLabel.setStyle("-fx-text-fill: #03c203;");
         } else {
-            feedbackLabel.setText("Master password incorrect"); //User feedback
+            feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
@@ -659,9 +657,9 @@ public class PassFortifyController {
         if (isInput()) { //Checking whether input even exists
             if (PasswordTools.checkMasterpassword(mPassword)) { //Comparing master password
                 try {
-                    PasswordTools.addData(location, inputToAdd, mPassword); //Adding new input
+                    PasswordTools.addData(location, inputToAdd, mPassword);
                     feedbackLabel.setText(feedback + " added");
-                    feedbackLabel.setStyle("-fx-text-fill: #03c203;"); // Green
+                    feedbackLabel.setStyle("-fx-text-fill: #03c203;");
                 } catch (Exception e) {
                     //Prints error message if account could not be added
                     feedbackLabel.setText(feedback + " could not be added");
@@ -738,8 +736,8 @@ public class PassFortifyController {
             feedbackLabel.setStyle("-fx-text-fill: red");
             return false;
         }
-        populateTableData(); //Updating tableView
-        feedbackLabel.setText(""); //Hiding previous feedback
+        populateTableData();
+        feedbackLabel.setText("");
         return false;
     }
 
@@ -763,7 +761,7 @@ public class PassFortifyController {
         if (passwordMatch.isSelected() && !hidePassword.isSelected()) {
             samePasswordCheck(passwordContentLines); //enters the samePasswordCheck to check if passwords are reused
         } else {
-            warningLabel.setText(""); //Resetting the warning label
+            warningLabel.setText("");
         }
 
         //ObservableList is created for the data
@@ -795,7 +793,6 @@ public class PassFortifyController {
         accountTable.setItems(filteredData); //Displaying the filtered list through the tableview
         accountLabel.setText("Accounts saved: " + maxLines); //Using maxLines to determine the amount of accounts saved
 
-        //Allows for single cell selection
         accountTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
@@ -815,7 +812,6 @@ public class PassFortifyController {
                     return true; // Show all entries when the search field is empty
                 }
 
-                // Convert to lowercase for case-insensitive search
                 String lowerCaseFilter = filterThis.toLowerCase();
 
                 // Check if any of the columns contain the search term
@@ -842,7 +838,7 @@ public class PassFortifyController {
         //If item is selected, password gets taken from password field and deletion is executed
         if (selectedItem != null && PasswordTools.checkMasterpassword(mPass)) {
             String service = selectedItem.getService(); //Service from selected column
-            String mPassword = mPasswordField2.getText(); //Master password from mPasswordField
+            String mPassword = mPasswordField2.getText();
 
             try {
                 //table position used to delete account
@@ -852,10 +848,10 @@ public class PassFortifyController {
                 PasswordTools.deleteAndSave(pos, usernameLocation, mPassword);
                 PasswordTools.deleteAndSave(pos, passwordLocation, mPassword);
 
-                feedbackLabel.setText("Account '" + service + "' deleted"); //User feedback
-                feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green color
+                feedbackLabel.setText("Account '" + service + "' deleted");
+                feedbackLabel.setStyle("-fx-text-fill: #03c203;");
             } catch (IOException e) {
-                feedbackLabel.setText("Account could not be deleted"); //User feedback
+                feedbackLabel.setText("Account could not be deleted");
                 feedbackLabel.setStyle("-fx-text-fill: red;");
                 throw new RuntimeException(e);
             }
@@ -864,10 +860,10 @@ public class PassFortifyController {
             feedbackLabel.setStyle("-fx-text-fill: red");
         }
         if (!PasswordTools.checkMasterpassword(mPass)) {
-            feedbackLabel.setText("Master password incorrect"); //User feedback
+            feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         } else {
-            populateTableData(); //Refreshes the table
+            populateTableData();
         }
     }
 
@@ -887,7 +883,7 @@ public class PassFortifyController {
             if (password != null) {
                 PasswordTools.toClipboard(password);
                 feedbackLabel.setText("Password copied");
-                feedbackLabel.setStyle("-fx-text-fill: #03c203;"); // Green
+                feedbackLabel.setStyle("-fx-text-fill: #03c203;");
             } else {
                 feedbackLabel.setText("Error! Either master password is incorrect, or no password in selection");
                 feedbackLabel.setStyle("-fx-text-fill: red;");
@@ -921,8 +917,8 @@ public class PassFortifyController {
 
             //Using PasswordTools class to perform the change of the password
             PasswordTools.changePassword(mPassword, service, username, newPass);
-            feedbackLabel.setText("Password changed"); //User feedback
-            feedbackLabel.setStyle("-fx-text-fill: #03c203"); //Green color
+            feedbackLabel.setText("Password changed");
+            feedbackLabel.setStyle("-fx-text-fill: #03c203");
 
             populateTableData(); //Updating tableview
         } else {
@@ -976,7 +972,7 @@ public class PassFortifyController {
             feedbackLabel.setText("Backup created"); //User feedback
             feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
         } catch (IOException | InterruptedException | RuntimeException e) {
-            feedbackLabel.setText("Backup could not be created"); //User feedback after fail
+            feedbackLabel.setText("Backup could not be created");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
@@ -1018,7 +1014,7 @@ public class PassFortifyController {
      * @since 2024-01-11
      */
     public void onCloseClick() {
-        Platform.exit(); //Closes the window and stops the application
+        Platform.exit();
     }
 
     /**
@@ -1035,10 +1031,10 @@ public class PassFortifyController {
         //Checks whether same password is used multiple times using the samePasswordCheck method from the PasswordTools class
         boolean hasSamePassword = PasswordTools.duplicatePasswordCheck(passwordContentLines);
         if (hasSamePassword) { //Checks whether same password is used multiple times
-            warningLabel.setText("WARNING: Same password used for different accounts"); //Warning message displayed if that's the case
+            warningLabel.setText("WARNING: Same password used for different accounts");
             warningLabel.setStyle("-fx-text-fill: red;");
         } else {
-            warningLabel.setText(""); //Warning label set to empty, if no passwords are duplicates
+            warningLabel.setText("");
         }
     }
 
@@ -1055,10 +1051,10 @@ public class PassFortifyController {
             if (passwordMatch.isSelected()) { //Checking whether the setting to alert for duplicate passwords is enabled
                 populateTableData(); //If enabled, tableview will be repopulated and warning appears on bottom
             } else {
-                warningLabel.setText(""); //If not enabled, the warning text will be set to empty, to make it disappear
+                warningLabel.setText("");
             }
         } else {
-            feedbackLabel.setText("Master password incorrect"); //User feedback
+            feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
@@ -1070,14 +1066,14 @@ public class PassFortifyController {
      * the PasswordTools.passwordStrengthOutput method, and the result is displayed on the feedbackLabel.
      */
     public void onCheckPasswordStrengthClick() {
-        String passwordToCheck  = getInput();
+        String passwordToCheck = getInput();
         //Checks whether the input field is empty
         if (Objects.equals(passwordToCheck, "")) {
-            feedbackLabel.setText("Please enter a password to check"); //User feedback
+            feedbackLabel.setText("Please enter a password to check");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         } else {
             savedPasswordStrength = PasswordTools.passwordStrengthOutput(passwordToCheck); //Evaluating the strength of the password
-            feedbackLabel.setText("Password is " + savedPasswordStrength); //User feedback
+            feedbackLabel.setText("Password is " + savedPasswordStrength);
             feedbackLabel.setStyle("-fx-text-fill: yellow");
         }
     }
@@ -1105,7 +1101,7 @@ public class PassFortifyController {
      * @throws IOException not used
      */
     public void onAboutButtonClick() throws IOException {
-        java.awt.Desktop.getDesktop().browse(URI.create("https://github.com/jscheel76/Passwordmanager-Java-Test")); //Open browser with specified url
+        java.awt.Desktop.getDesktop().browse(URI.create("https://github.com/jscheel76/Passwordmanager-Java-Test"));
     }
 
     /**
@@ -1114,7 +1110,7 @@ public class PassFortifyController {
      * @throws IOException not used
      */
     public void onContactButtonClick() throws IOException {
-        java.awt.Desktop.getDesktop().browse(URI.create("mailto:passfortify@proton.me")); //Open browser with specified url
+        java.awt.Desktop.getDesktop().browse(URI.create("mailto:passfortify@proton.me"));
     }
 
     /**
@@ -1124,7 +1120,7 @@ public class PassFortifyController {
      */
     @FXML
     public void hidePasswordsUpdater() throws Exception {
-        settingUpdater(); //Updating settings
-        onRevealAccountsClick(); //Repopulating tableview
+        settingUpdater();
+        onRevealAccountsClick();
     }
 }
