@@ -405,8 +405,8 @@ public class PassFortifyController {
             String[] settingContentLines = new String[amountOfSettings]; //Array containing the settings
             reader = new BufferedReader(new FileReader(settingLocation));
             String line = reader.readLine();
+            int i = 0;
             while (line != null) {
-                int i = 0;
                 settingContentLines[i] = line; //Setting line is assigned to a position in the array
                 line = reader.readLine();
                 i++;
