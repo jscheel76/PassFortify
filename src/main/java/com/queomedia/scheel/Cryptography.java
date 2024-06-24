@@ -97,11 +97,7 @@ public class Cryptography {
      *                       InvalidKeyException, InvalidAlgorithmParameterException, and IllegalBlockSizeException.
      */
     public static byte[] encrypt(final byte[] pText, final String masterPassword) throws Exception {
-
-        //Generate a random nonce as salt
         byte[] salt = getRandomNonce(SALT_LENGTH_BYTE);
-
-        //Generate a random nonce as IV (Initialization Vector)
         byte[] iv = getRandomNonce(IV_LENGTH_BYTE);
 
         //Derive the AES key from the master password and salt
@@ -188,11 +184,7 @@ public class Cryptography {
 
         //Encrypt the file content using the provided master password
         byte[] encryptedText = encrypt(fileContent, masterPassword);
-
-        //Specify the path for the output file
         Path path = Paths.get(toFile);
-
-        //Write the encrypted data to the specified output file
         Files.write(path, encryptedText);
     }
 
@@ -206,10 +198,7 @@ public class Cryptography {
      *                          or if there is an issue with the decryption process (e.g., cryptographic operations fail).
      */
     public static byte[] decryptFile(final String fromEncryptedFile, final String masterPassword) throws Exception {
-        //Read the content of the encrypted file into a byte array
         byte[] fileContent = Files.readAllBytes(Paths.get(fromEncryptedFile));
-
-        //Decrypt the file content using the provided master password
         return decrypt(fileContent, masterPassword);
     }
 }

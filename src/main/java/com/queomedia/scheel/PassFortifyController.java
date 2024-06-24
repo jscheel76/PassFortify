@@ -965,10 +965,9 @@ public class PassFortifyController {
      * The user gets informed whether the backup has been created.
      */
     public void onCreateBackUpClick() {
-        String settingsLocation = "settings.txt"; //Location of settings file
         try {
             Path destinationDirectory = PasswordTools.getFilePath(); //Assigns the file path through the getFilePath method
-            PasswordTools.createBackup(destinationDirectory, settingsLocation); //using passwordTools class to generate backup
+            PasswordTools.createBackup(destinationDirectory); //using passwordTools class to generate backup
             feedbackLabel.setText("Backup created"); //User feedback
             feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
         } catch (IOException | InterruptedException | RuntimeException e) {

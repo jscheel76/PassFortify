@@ -43,6 +43,11 @@ public class PasswordTools {
     private static final String USERNAME_LOCATION = "Usernames.txt";
 
     /**
+     * Location of the username file.
+     */
+    private static final String SETTINGS_LOCATION = "Settings.txt";
+
+    /**
      * Minimum size of generated passwords.
      */
     private static final int MINIMUM_PASSWORD_SIZE = 12;
@@ -262,7 +267,7 @@ public class PasswordTools {
      * @throws IOException         If an I/O error occurs during file copying or directory creation.
      * @throws InterruptedException If the thread sleep is interrupted.
      */
-    public static void createBackup(final Path destinationDirectory, final String settingsLocation)
+    public static void createBackup(final Path destinationDirectory)
             throws IOException, InterruptedException {
         final int sleepAMinute = 1000; //Integer used to sleep for 1000ms
         // Create the destination directory if it doesn't exist
@@ -272,14 +277,14 @@ public class PasswordTools {
         Path destinationPasswordPath = destinationDirectory.resolve("Passwords.txt");
         Path destinationUsernamePath = destinationDirectory.resolve("Usernames.txt");
         Path destinationServicePath = destinationDirectory.resolve("Services.txt");
-        Path destinationBackupPath = destinationDirectory.resolve("settings.txt");
+        Path destinationSettingsPath = destinationDirectory.resolve("settings.txt");
         Path destinationMpassPath = destinationDirectory.resolve("MPass.txt");
 
         // Copy each file to the corresponding destination
         Files.copy(Path.of(PASSWORD_LOCATION), destinationPasswordPath);
         Files.copy(Path.of(USERNAME_LOCATION), destinationUsernamePath);
         Files.copy(Path.of(SERVICE_LOCATION), destinationServicePath);
-        Files.copy(Path.of(settingsLocation), destinationBackupPath);
+        Files.copy(Path.of(SETTINGS_LOCATION), destinationSettingsPath);
         Files.copy(Path.of(M_PASS_LOCATION), destinationMpassPath);
 
         //Waiting one second, to display the message once the backup is actually created
@@ -401,9 +406,9 @@ public class PasswordTools {
             final String newPass)
             throws Exception {
         //Retrieving content of the saved accounts using PasswordTools class
-        String[] serviceContentLines = PasswordTools.getContentLines(SERVICE_LOCATION, mPassword);
-        String[] usernameContentLines = PasswordTools.getContentLines(USERNAME_LOCATION, mPassword);
-        String[] passwordContentLines = PasswordTools.getContentLines(PASSWORD_LOCATION, mPassword);
+        String[] serviceContentLines = getContentLines(SERVICE_LOCATION, mPassword);
+        String[] usernameContentLines = getContentLines(USERNAME_LOCATION, mPassword);
+        String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
 
         for (int i = 0; i < serviceContentLines.length; i++) {
             //If service and username entry match in the same line of their respective files

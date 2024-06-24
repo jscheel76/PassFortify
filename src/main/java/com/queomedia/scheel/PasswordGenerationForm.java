@@ -158,8 +158,8 @@ public class PasswordGenerationForm {
     @FXML
     void panePressed(final MouseEvent me) {
         Stage stage = (Stage) lengthField.getScene().getWindow(); //Getting stage object from the label
-        Delta.x = stage.getX() - me.getScreenX(); //Setting the x position of the stage
-        Delta.y = stage.getY() - me.getScreenY(); //Setting the y position of the stage
+        Delta.x = stage.getX() - me.getScreenX();
+        Delta.y = stage.getY() - me.getScreenY();
     }
 
     /**
@@ -172,8 +172,8 @@ public class PasswordGenerationForm {
     @FXML
     void paneDragged(final MouseEvent me) {
         Stage stage = (Stage) lengthField.getScene().getWindow(); //Getting stage object from the label
-        stage.setX(Delta.x + me.getScreenX()); //Setting the x position of the stage
-        stage.setY(Delta.y + me.getScreenY()); //Setting the y position of the stage
+        stage.setX(Delta.x + me.getScreenX());
+        stage.setY(Delta.y + me.getScreenY());
     }
 
     /**
@@ -181,7 +181,7 @@ public class PasswordGenerationForm {
      */
     @FXML
     void onExitButtonClick() {
-        ((Stage) lengthField.getScene().getWindow()).close(); //Closing the form.
+        ((Stage) lengthField.getScene().getWindow()).close();
     }
 
     /**
