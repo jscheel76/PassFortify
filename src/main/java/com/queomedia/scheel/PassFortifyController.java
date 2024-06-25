@@ -361,7 +361,6 @@ public class PassFortifyController {
      * @throws Exception If any unexpected error occurs during the process, such as decryption or window opening issues.
      */
     public void onPasswordButtonClick() throws Exception {
-        String legacy = "legacyInternal.fxml"; //fxml file for the internal window
         mPassword = passField.getText(); //Retrieves entered masterpassword from passField
         byte[] decryptedText = Cryptography.decryptFile(mPassLocation, mPassword);
         String decryptedMPass = new String(decryptedText, UTF_8);
@@ -747,7 +746,7 @@ public class PassFortifyController {
     private void populateTableData() throws Exception {
         mPassword = mPasswordField2.getText();
         applySettings(); //Updates and applies settings
-        applySettings(); //Settings need to be checked twice, if settings were just created, otherwise all settings are turned on by default
+        applySettings(); //Settings need to be checked twice. if settings file was just created all settings would be turned on by default
 
         //Using PasswordTools class to get arrays filled with account information.
         String[] serviceContentLines = PasswordTools.getContentLines(serviceLocation, mPassword);

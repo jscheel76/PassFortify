@@ -269,8 +269,7 @@ public class PasswordTools {
      */
     public static void createBackup(final Path destinationDirectory)
             throws IOException, InterruptedException {
-        final int sleepAMinute = 1000; //Integer used to sleep for 1000ms
-        // Create the destination directory if it doesn't exist
+        final int sleepASecond = 1000;
         Files.createDirectories(destinationDirectory);
 
         // Define destination paths for each file
@@ -288,7 +287,7 @@ public class PasswordTools {
         Files.copy(Path.of(M_PASS_LOCATION), destinationMpassPath);
 
         //Waiting one second, to display the message once the backup is actually created
-        Thread.sleep(sleepAMinute);
+        Thread.sleep(sleepASecond);
     }
 
     /**
