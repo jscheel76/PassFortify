@@ -25,7 +25,7 @@
                         <CheckMenuItem fx:id="passwordMatch" onAction="#dupeUpdater" selected="true" text="Duplicate Password Warning" />
                         <CheckMenuItem fx:id="hidePassword" onAction="#hidePasswordsUpdater" selected="true" text="Hide passwords" />
                         <CheckMenuItem fx:id="clearPassword" onAction="#onClearMPass" selected="true" text="Clear masterpass" />
-                        <CheckMenuItem fx:id="checkLeak" onAction="#settingUpdater" selected="true" text="Check leaks on right click" />
+                        <CheckMenuItem fx:id="checkLeak" onAction="#updateSettingsFile" selected="true" text="Check leaks on right click" />
                      </items>
                   </Menu>
                       <Menu mnemonicParsing="false" text="Help">
@@ -85,7 +85,7 @@
                </font></Label>
             <Button layoutX="4.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePassphraseClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Passphrase" />
             <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Password" />
-            <CheckBox fx:id="inputBox" layoutX="5.0" layoutY="288.0" mnemonicParsing="false" onAction="#onInputBoxChange" prefHeight="17.0" prefWidth="83.0" text="Hide Input?" textFill="WHITE" />
+            <CheckBox fx:id="inputCheckBox" layoutX="5.0" layoutY="288.0" mnemonicParsing="false" onAction="#onInputBoxChange" prefHeight="17.0" prefWidth="83.0" text="Hide Input?" textFill="WHITE" />
             <PasswordField fx:id="inputHidden" layoutX="4.0" layoutY="220.0" prefHeight="27.0" prefWidth="129.0" promptText="Enter Input" visible="false" />
             </children>
          <VBox.margin>

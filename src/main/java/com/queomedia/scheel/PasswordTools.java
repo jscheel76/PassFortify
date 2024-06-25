@@ -444,7 +444,6 @@ public class PasswordTools {
         boolean deleted = false; //Flag to track whether the item has been deleted
         for (int i = 0; i < contentLines.length; i++) {
             if (i == pos) {
-                deleted = true; //Flagged
             } else {
                 newContent.append(contentLines[i]).append(System.lineSeparator());
             }
