@@ -437,36 +437,17 @@ public class PassFortifyController {
         }
     }
 
-    /**
-     * Updates the application settings based on the selected states of various settings toggles.
-     * Writes the updated settings to the settings file.
-     * Provides feedback in case of an error while updating the settings file.
-     */
     public void updateSettingsFile() {
         String settingLocation = "settings.txt";
-        try {
-            FileWriter settingWriter = new FileWriter(settingLocation);
-            if (hidePassword.isSelected()) {
-                settingWriter.write("HidePassword1\n"); //1 to enable
-            } else {
-                settingWriter.write("HidePassword0\n"); //0 to disable
-            }
-            if (passwordMatch.isSelected()) {
-                settingWriter.write("PasswordWarning1\n"); //1 to enable
-            } else {
-                settingWriter.write("PasswordWarning0\n"); //0 to disable
-            }
-            if (clearPassword.isSelected()) {
-                settingWriter.write("ClearPassword1\n"); //1 to enable
-            } else {
-                settingWriter.write("ClearPassword0\n"); //0 to disable
-            }
-            if (checkLeak.isSelected()) {
-                settingWriter.write("CheckLeak1\n"); //1 to enable
-            } else {
-                settingWriter.write("CheckLeak0\n"); //0 to disable
-            }
-            settingWriter.close();
+        try (FileWriter settingWriter = new FileWriter(settingLocation)) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(hidePassword.isSelected() ? "HidePassword1\n" : "HidePassword0\n");
+            sb.append(passwordMatch.isSelected() ? "PasswordWarning1\n" : "PasswordWarning0\n");
+            sb.append(clearPassword.isSelected() ? "ClearPassword1\n" : "ClearPassword0\n");
+            sb.append(checkLeak.isSelected() ? "CheckLeak1\n" : "CheckLeak0\n");
+
+            settingWriter.write(sb.toString());
         } catch (IOException e) {
             feedbackLabel.setText("Error updating settings file.");
             feedbackLabel.setStyle("-fx-text-fill: red");
