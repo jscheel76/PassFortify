@@ -261,9 +261,7 @@ public class PasswordTools {
      * specified destination directory. The method also waits for a short duration to ensure that
      * the backup creation message is displayed after the backup is actually created.
      *
-     * @param destinationDirectory The path to the directory where the backup files will be stored.
-     * @param settingsLocation     The location of the settings file to be included in the backup.
-     *
+     * @param destinationDirectory The path to the directory where the backup files will be stored.*
      * @throws IOException         If an I/O error occurs during file copying or directory creation.
      * @throws InterruptedException If the thread sleep is interrupted.
      */
@@ -443,6 +441,7 @@ public class PasswordTools {
         boolean deleted = false; //Flag to track whether the item has been deleted
         for (int i = 0; i < contentLines.length; i++) {
             if (i == pos) {
+                deleted = true;
             } else {
                 newContent.append(contentLines[i]).append(System.lineSeparator());
             }
@@ -451,9 +450,9 @@ public class PasswordTools {
     }
 
     /**
-     * Support Method used to transfer a string into the users clipboard. Used primarily when something is generated-
+     * Support Method used to transfer a string into the user's clipboard. Used primarily when something is generated-
      *
-     * @param clipboardContent Sring which will be placed in clipbord. In this case either a generated password or passphrase
+     * @param clipboardContent String which will be placed in clipboard. In this case either a generated password or passphrase
      */
     public static void toClipboard(final String clipboardContent){
         final Clipboard clipboard = Clipboard.getSystemClipboard();

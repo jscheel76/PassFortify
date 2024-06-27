@@ -28,7 +28,7 @@ public class PasswordGenerationForm {
     private CheckBox uppercaseBox;
 
     /**
-     * CheckBox used to allow user to select digits in password password generation.
+     * CheckBox used to allow user to select digits in password generation.
      */
     @FXML
     private CheckBox digitBox;
@@ -94,7 +94,7 @@ public class PasswordGenerationForm {
     public void passwordGenerator() {
         try {
             SecureRandom randomizer = new SecureRandom();
-            StringBuilder randomPassword = new StringBuilder(); //Using stringbuilder to construct the password
+            StringBuilder randomPassword = new StringBuilder(); //Using StringBuilder to construct the password
 
             List<String> characterSets = new ArrayList<>();
 
@@ -112,12 +112,12 @@ public class PasswordGenerationForm {
                 characterSets.add(SPECIAL_CHARACTERS);
             }
 
-            //parsing length of desired password from the textfield
+            //parsing length of desired password from the textField
             int passwordLength = Integer.parseInt(lengthField.getText());
 
             //Checking if the password length is within the acceptable range
             if (passwordLength > 256) {
-                feedbackLabel.setText("Maxium size is 256 characters.");
+                feedbackLabel.setText("Maximum size is 256 characters.");
                 feedbackLabel.setAlignment(Pos.CENTER);
                 return;
             }

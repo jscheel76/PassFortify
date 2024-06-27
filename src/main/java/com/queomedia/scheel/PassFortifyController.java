@@ -595,16 +595,6 @@ public class PassFortifyController {
     }
 
     /**
-     * Checks if there is any input in the specified input field.
-     *
-     * @return true if the input field is not empty, false otherwise.
-     */
-    public boolean isInput() {
-        String userInput = getInputFromTextField();
-        return !userInput.isEmpty(); //returns true if inputField is empty, returns false if inputField contains anything
-    }
-
-    /**
      * Method called by clicking the "Add Account" button. Opens a second window using the internal.fxml file.
      * Allows user to enter full account details in a form.
      *
@@ -867,10 +857,10 @@ public class PassFortifyController {
         try {
             Path destinationDirectory = PasswordTools.getFilePath(); //Assigns the file path through the getFilePath method
             PasswordTools.createBackup(destinationDirectory); //using passwordTools class to generate backup
-            feedbackLabel.setText("Backup created"); //User feedback
+            feedbackLabel.setText("Backup created."); //User feedback
             feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
         } catch (IOException | InterruptedException | RuntimeException e) {
-            feedbackLabel.setText("Backup could not be created");
+            feedbackLabel.setText("Backup creation was interrupted.");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
