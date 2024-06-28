@@ -19,25 +19,25 @@ public class PasswordGenerationForm {
      * CheckBox used to allow user to select lowercase characters in password generation.
      */
     @FXML
-    private CheckBox lowercaseBox;
+    private CheckBox lowercaseLettersCheckBox;
 
     /**
      * CheckBox used to allow user to select uppercase characters in password generation.
      */
     @FXML
-    private CheckBox uppercaseBox;
+    private CheckBox uppercaseLetterCheckBox;
 
     /**
      * CheckBox used to allow user to select digits in password generation.
      */
     @FXML
-    private CheckBox digitBox;
+    private CheckBox digitCheckBox;
 
     /**
      * CheckBox to allow user to select special characters in password generation.
      */
     @FXML
-    private CheckBox specialBox;
+    private CheckBox specialCharactersCheckBox;
 
     /**
      * TextField to allow user to input custom password length.
@@ -99,16 +99,16 @@ public class PasswordGenerationForm {
             List<String> characterSets = new ArrayList<>();
 
             //Adding selected character sets to the list
-            if (lowercaseBox.isSelected()) {
+            if (lowercaseLettersCheckBox.isSelected()) {
                 characterSets.add(LOWERCASE_LETTERS);
             }
-            if (uppercaseBox.isSelected()) {
+            if (uppercaseLetterCheckBox.isSelected()) {
                 characterSets.add(UPPERCASE_LETTERS);
             }
-            if (digitBox.isSelected()) {
+            if (digitCheckBox.isSelected()) {
                 characterSets.add(DIGITS);
             }
-            if (specialBox.isSelected()) {
+            if (specialCharactersCheckBox.isSelected()) {
                 characterSets.add(SPECIAL_CHARACTERS);
             }
 

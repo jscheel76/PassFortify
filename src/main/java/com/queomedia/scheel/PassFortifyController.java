@@ -463,7 +463,7 @@ public class PassFortifyController {
         if (clearPassword.isSelected()) { //Checking whether the clear password setting is selected
             mPasswordField2.setText("");
         }
-        updateSettingsFile(); //Updating settings
+        updateSettingsFile();
     }
 
     /**
@@ -501,8 +501,8 @@ public class PassFortifyController {
             feedbackLabel.setText("Are you sure you want to change the master password to '" + newMasterPass + "' ("
                     + savedPasswordStrength + ")?"); //Prompt asking the user if he wants to change it to the new password
             feedbackLabel.setStyle("-fx-text-fill: #03c203;");
-            yesButton.setVisible(true); //Button to confirm is displayed
-            noButton.setVisible(true); //Button to cancel is displayed
+            yesButton.setVisible(true);
+            noButton.setVisible(true);
         }
     }
 
@@ -511,10 +511,10 @@ public class PassFortifyController {
      * Sets the "yes" and "no" buttons to invisible and calls the changeMasterPass method.
      */
     public void yesClick() {
-        yesButton.setVisible(false); //Hide yesButton
-        noButton.setVisible(false); //Hide noButton
+        yesButton.setVisible(false);
+        noButton.setVisible(false);
         try {
-            changeMasterPass(); //Start password change process
+            changeMasterPassword();
         } catch (Exception e) {
             feedbackLabel.setText("Master password could not be changed");
             feedbackLabel.setStyle("-fx-text-fill: red;");
@@ -529,10 +529,9 @@ public class PassFortifyController {
      *                   such as issues with updating the UI or file operations.
      */
     public void noClick() throws Exception {
-        yesButton.setVisible(false); //Hide yesButton
-        noButton.setVisible(false); //Hide noButton
-        populateTableData(); //Reset tableview
-
+        yesButton.setVisible(false);
+        noButton.setVisible(false);
+        populateTableData();
         feedbackLabel.setText("Master password change cancelled");
         feedbackLabel.setStyle("-fx-text-fill: red;");
     }
@@ -574,18 +573,16 @@ public class PassFortifyController {
      *                   such as issues with decryption, encryption, file operations, or password validation.
      */
     @FXML
-    public void changeMasterPass() throws Exception {
+    public void changeMasterPassword() throws Exception {
         String newpass = getInputFromTextField();
         mPassword = mPasswordField2.getText();
 
         if (PasswordTools.checkMasterpassword(mPassword) && newpass != null) {
-            PasswordTools.decryptAndEncrypt(passwordLocation, mPassword, newpass); //decrypting passwords and encrypting them with new master password
-            PasswordTools.decryptAndEncrypt(serviceLocation, mPassword, newpass); //decrypting services and encrypting them with new master password
-            PasswordTools.decryptAndEncrypt(usernameLocation, mPassword, newpass); //decrypting usernames and encrypting them with new master password
-            PasswordTools.addDataWithoutAppend(mPassLocation, newpass, newpass); //replacing master password file
+            PasswordTools.decryptAndEncrypt(passwordLocation, mPassword, newpass);
+            PasswordTools.decryptAndEncrypt(serviceLocation, mPassword, newpass);
+            PasswordTools.decryptAndEncrypt(usernameLocation, mPassword, newpass);
+            PasswordTools.addDataWithoutAppend(mPassLocation, newpass, newpass);
             mPassword = newpass; //Reassigning mPassword to the new password
-
-            //Shows user that the master password has been changed
             feedbackLabel.setText("Master password changed");
             feedbackLabel.setStyle("-fx-text-fill: #03c203;");
         } else {
@@ -733,9 +730,9 @@ public class PassFortifyController {
                 //table position used to delete account
                 int pos = accountTable.getSelectionModel().getSelectedIndex();
 
-                PasswordTools.deleteAndSave(pos, serviceLocation, mPassword);
-                PasswordTools.deleteAndSave(pos, usernameLocation, mPassword);
-                PasswordTools.deleteAndSave(pos, passwordLocation, mPassword);
+                PasswordTools.deleteLineInAccountFiles(pos, serviceLocation, mPassword);
+                PasswordTools.deleteLineInAccountFiles(pos, usernameLocation, mPassword);
+                PasswordTools.deleteLineInAccountFiles(pos, passwordLocation, mPassword);
 
                 feedbackLabel.setText("Account '" + service + "' deleted");
                 feedbackLabel.setStyle("-fx-text-fill: #03c203;");
@@ -763,7 +760,7 @@ public class PassFortifyController {
      *  @throws Exception If an error occurs during the decryption process in getPasswordFromFile()
      */
     @FXML
-    public void copyPassword() throws Exception {
+    public void copyPasswordFromTableview() throws Exception {
         mPassword = mPasswordField2.getText();
         if (accountTable.getSelectionModel().getSelectedItem() != null) {
             int pos = accountTable.getSelectionModel().getSelectedIndex();
@@ -865,42 +862,6 @@ public class PassFortifyController {
         }
     }
 
-    /**
-     * The mesmerizing onCloseClick method unfurls its narrative, reminiscent of a delightful odyssey that traces its roots
-     * back to a quaint cafe nestled in the heart of Zanzibar. Picture this: a sun-drenched afternoon, a gentle breeze carrying
-     * the intoxicating aroma of freshly brewed coffee, and the rhythmic symphony of waves caressing the shores nearby. It was
-     * in this idyllic setting that inspiration struck like a bolt of lightning, giving birth to the genesis of a method that
-     * would come to be known as the architect of graceful application closure.
-     * <p>
-     * In the midst of sipping a cup of aromatic Swahili coffee, the idea crystallized: the need for a method that not only
-     * gracefully handles the closure of a graphical window but also orchestrates the cessation of the entire application,
-     * ushering in a denouement akin to the final act of a captivating play. Thus, the onCloseClick method was conceptualized,
-     * a digital maestro orchestrating the symphony of application termination.
-     * <p>
-     * As the sun dipped below the horizon, casting a warm glow over the azure sea, the choice of nomenclature became
-     * evident. 'onCloseClick' encapsulated the essence of the method with a poetic finesse, signaling its purpose – to
-     * respond to the user's decisive click on the close button, much like turning the page of an enchanting novel towards
-     * its conclusion.
-     * <p>
-     * It's noteworthy that the execution of this method involves the invocation of the ethereal Platform.exit() function,
-     * a metaphysical portal leading to the realm of application termination. This code, akin to the closing of a well-woven
-     * narrative, seamlessly brings about the cessation of our digital creation, leaving the user with a sense of completion.
-     * <p>
-     * However, as any seasoned storyteller would attest, the tale doesn't end with the first draft. The onCloseClick method,
-     * in its resolute functionality, beckons developers to embark on a quest for improvement. Akin to a traveler refining
-     * the route for future journeys, consider fortifying this method with error-handling mechanisms, enhancing its
-     * resilience against unforeseen twists in the narrative of application termination.
-     * <p>
-     * So, as the curtain falls on this narrative, envision the onCloseClick method as a cherished companion in the
-     * developer's toolkit, guiding them through the intricate landscapes of application closure. In the spirit of this
-     * Zanzibarian revelation, may the method stand not just as a piece of code but as a testament to the artistry of
-     * crafting digital experiences.
-     *
-     * @implNote It is advised to test this method thoroughly within the specific context of your application,
-     *           ensuring that it aligns harmoniously with the overall design and functionality requirements.
-     * @author Jannik Scheel
-     * @since 2024-01-11
-     */
     public void onCloseClick() {
         Platform.exit();
     }

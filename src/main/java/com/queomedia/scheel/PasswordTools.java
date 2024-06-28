@@ -435,7 +435,7 @@ public class PasswordTools {
      * @throws Exception If any error occurs during reading, encrypting, or writing the file date,
      *                   an exception is thrown to handle the issue.
      */
-    public static void deleteAndSave(int pos, String location, String mPassword) throws Exception {
+    public static void deleteLineInAccountFiles(int pos, String location, String mPassword) throws Exception {
         String[] contentLines = getContentLines(location, mPassword);
         StringBuilder newContent = new StringBuilder();
         boolean deleted = false; //Flag to track whether the item has been deleted
