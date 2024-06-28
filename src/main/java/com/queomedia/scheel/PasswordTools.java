@@ -17,8 +17,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Helper class used by main controller class to generate passwords and evaluate password strength.
- *
- * @author Jannik Scheel
  */
 public class PasswordTools {
 
@@ -72,8 +70,6 @@ public class PasswordTools {
             char randomChar = generateRandomChar(randomizer);
             randomPassword.append(randomChar);
         }
-
-        //Returning the generated password
         return randomPassword.toString();
     }
 
@@ -113,34 +109,34 @@ public class PasswordTools {
 
         //Checks whether the password is equal or longer than 8 characters
         if (passwordToCheck.length() <= lowLength) {
-            passwordStrength -= 2; //Two points deducted if its shorter
+            passwordStrength -= 2;
         }
 
         //Checks whether the password is equal or longer than 10 characters
         if (passwordToCheck.length() >= mediumLength) {
-            passwordStrength++; //Point added if its equal or longer
+            passwordStrength++;
         } else {
             passwordStrength--;
         }
 
         //Checks whether the password contains lowercase letters
         if (passwordToCheck.matches(".*[a-z].*")) {
-            passwordStrength++; //Point added if password contains at least one lowercase letter
+            passwordStrength++;
         }
 
         //Checks whether the password contains uppercase letters
         if (passwordToCheck.matches(".*[A-Z].*")) {
-            passwordStrength++; //Point added if password contains at least one uppercase letter
+            passwordStrength++;
         }
 
         //Checks whether the password contains numbers
         if (passwordToCheck.matches(".*[0-9].*")) {
-            passwordStrength++; //Point added if password contains at least one number
+            passwordStrength++;
         }
 
         //Checks whether password contains special characters
         if (passwordToCheck.matches(".*[§!$%&/?+*#~].*")) {
-            passwordStrength += 2; //Two points added if password contains at least one special character
+            passwordStrength += 2;
         }
         return passwordStrength;
     }
@@ -158,16 +154,16 @@ public class PasswordTools {
         final int fiveRules = 5; //Used to indicate password strength
         int passwordStrength = passwordStrength(passwordToCheck);
         String savedPasswordStrength;
-        if (passwordStrength < 2) { //Less than two points
+        if (passwordStrength < 2) {
             savedPasswordStrength = "weak";
-        } else if (passwordStrength < threeRules) { //Less than three points, but more than two points
+        } else if (passwordStrength < threeRules) {
             savedPasswordStrength = "medium";
-        } else if (passwordStrength <= fiveRules) { //Less than five, but more than three points
+        } else if (passwordStrength <= fiveRules) {
             savedPasswordStrength = "strong";
-        } else { //Any amount of points greater than 6
+        } else {
             savedPasswordStrength = "very strong";
         }
-        return savedPasswordStrength; //Returning the strength of the password
+        return savedPasswordStrength;
     }
 
     /**
@@ -227,7 +223,7 @@ public class PasswordTools {
         filechooser.setInitialFileName("PassFortify Backup"); //Set automatic name for the file to "Backup"
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Folders", "*."));
 
-        return filechooser.showSaveDialog(null).toPath(); //Returning path chosen by user
+        return filechooser.showSaveDialog(null).toPath();
     }
 
     /**
@@ -251,7 +247,7 @@ public class PasswordTools {
             throws Exception {
         byte[] decryptedPass = Cryptography.decryptFile(location, mPassword); //Decrypting the contents of the file
         String pText = new String(decryptedPass, UTF_8);
-        addDataWithoutAppend(location, pText, newpass); //Adding the data by replacing it
+        addDataWithoutAppend(location, pText, newpass);
     }
 
     /**
@@ -265,8 +261,7 @@ public class PasswordTools {
      * @throws IOException         If an I/O error occurs during file copying or directory creation.
      * @throws InterruptedException If the thread sleep is interrupted.
      */
-    public static void createBackup(final Path destinationDirectory)
-            throws IOException, InterruptedException {
+    public static void createBackup(final Path destinationDirectory) throws IOException, InterruptedException {
         final int sleepASecond = 1000;
         Files.createDirectories(destinationDirectory);
 
@@ -310,8 +305,6 @@ public class PasswordTools {
         } else {
             existingData = "";
         }
-
-        // Append new data
         existingData += accountToAdd + System.lineSeparator();
 
         // Encrypt and save only the modified part of the data
@@ -356,12 +349,8 @@ public class PasswordTools {
     public static String[] getContentLines(final String location, final String mPassword) throws Exception {
         //The files with the data are decrypted and added to a byte
         byte[] decrypted = Cryptography.decryptFile(location, mPassword);
-
-        //The decrypted data is converted to a string
         String content = new String(decrypted, UTF_8);
-
-        //The string is split into lines, which are added to a content array
-        return content.split(System.lineSeparator()); //Returning the array
+        return content.split(System.lineSeparator());
     }
 
     /**
@@ -379,7 +368,7 @@ public class PasswordTools {
         if (pos >= passwordContentLines.length) {
             return null;
         }
-        return passwordContentLines[pos]; // Return corresponding password
+        return passwordContentLines[pos];
     }
 
     /**
@@ -438,11 +427,8 @@ public class PasswordTools {
     public static void deleteLineInAccountFiles(int pos, String location, String mPassword) throws Exception {
         String[] contentLines = getContentLines(location, mPassword);
         StringBuilder newContent = new StringBuilder();
-        boolean deleted = false; //Flag to track whether the item has been deleted
         for (int i = 0; i < contentLines.length; i++) {
-            if (i == pos) {
-                deleted = true;
-            } else {
+            if (i != pos) {
                 newContent.append(contentLines[i]).append(System.lineSeparator());
             }
         }
@@ -454,7 +440,7 @@ public class PasswordTools {
      *
      * @param clipboardContent String which will be placed in clipboard. In this case either a generated password or passphrase
      */
-    public static void toClipboard(final String clipboardContent){
+    public static void toClipboard(final String clipboardContent) {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(clipboardContent);

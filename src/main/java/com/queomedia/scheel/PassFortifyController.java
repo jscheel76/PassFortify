@@ -39,12 +39,9 @@ import java.util.logging.LogManager;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * Controller class for the password manager.
+ * Controller class for the password manager and login windows.
  * This class contains all the methods used by the password manager.
  * The main methods are direct interaction with the GUI.
- * Other methods are used as helper methods.
- *
- * @author Jannik Scheel
  */
 public class PassFortifyController {
 
