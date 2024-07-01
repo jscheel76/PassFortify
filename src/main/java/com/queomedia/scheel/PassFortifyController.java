@@ -359,12 +359,8 @@ public class PassFortifyController {
      */
     public void onPasswordButtonClick() throws Exception {
         mPassword = passField.getText(); //Retrieves entered masterpassword from passField
-        byte[] decryptedText = Cryptography.decryptFile(mPassLocation, mPassword);
-        String decryptedMPass = new String(decryptedText, UTF_8);
-
-        //Compares entered password with decrypted master password
-        if ((decryptedMPass).equals(mPassword)) {
-            openWindow("internal.fxml", true); //Opens legacyInternal.fxml window
+        if (PasswordTools.checkMasterpassword(mPassword)) {
+            openWindow("internal.fxml", true);
         } else {
             //if the password was incorrect 3 times, the program closes
             triesLeft--;

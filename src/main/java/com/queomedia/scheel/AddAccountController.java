@@ -62,11 +62,11 @@ public class AddAccountController {
         if (passwordCheckBox.isSelected()) {
             passwordPlaintext.setText(password);
         } else {
-            passwordField.setText(password); //Placing generated password into the passwordField
+            passwordField.setText(password);
         }
         PasswordTools.toClipboard(password);
         passwordFeedback.setText("Password generated and copied");
-        passwordFeedback.setStyle("-fx-text-fill: #03c203;"); //Green
+        passwordFeedback.setStyle("-fx-text-fill: #03c203;");
         passwordFeedback.setAlignment(Pos.CENTER);
     }
 
@@ -133,15 +133,15 @@ public class AddAccountController {
 
         //Reading user selection
         if (passwordCheckBox.isSelected()) {
-            passwordField.setVisible(false); //Hiding passwordField
-            passwordPlaintext.setVisible(true); //Displaying textField
-            fieldContent = passwordField.getText(); //Getting user input
-            passwordPlaintext.setText(fieldContent); //Transferring user input to textField
+            passwordField.setVisible(false);
+            passwordPlaintext.setVisible(true);
+            fieldContent = passwordField.getText();
+            passwordPlaintext.setText(fieldContent);
         } else {
-            passwordPlaintext.setVisible(false); //Hiding textField
-            passwordField.setVisible(true); //Displaying passwordField
-            fieldContent = passwordPlaintext.getText(); //Getting user input
-            passwordField.setText(fieldContent); //Transferring user input to passwordField
+            passwordPlaintext.setVisible(false);
+            passwordField.setVisible(true);
+            fieldContent = passwordPlaintext.getText();
+            passwordField.setText(fieldContent);
         }
     }
 
@@ -150,7 +150,7 @@ public class AddAccountController {
      */
     @FXML
     void onExitButtonClick() {
-        ((Stage) serviceField.getScene().getWindow()).close(); //Closing the form.
+        ((Stage) serviceField.getScene().getWindow()).close();
     }
 
     /**
@@ -163,9 +163,9 @@ public class AddAccountController {
      */
     @FXML
     void panePressed(final MouseEvent me) {
-        Stage stage = (Stage) serviceField.getScene().getWindow(); //Getting stage object from the label
-        Delta.x = stage.getX() - me.getScreenX(); //Setting the x position of the stage
-        Delta.y = stage.getY() - me.getScreenY(); //Setting the y position of the stage
+        Stage stage = (Stage) serviceField.getScene().getWindow();
+        Delta.x = stage.getX() - me.getScreenX();
+        Delta.y = stage.getY() - me.getScreenY();
     }
 
     /**
@@ -177,8 +177,8 @@ public class AddAccountController {
      */
     @FXML
     void paneDragged(final MouseEvent me) {
-        Stage stage = (Stage) serviceField.getScene().getWindow(); //Getting stage object from the label
-        stage.setX(Delta.x + me.getScreenX()); //Setting the x position of the stage
-        stage.setY(Delta.y + me.getScreenY()); //Setting the y position of the stage
+        Stage stage = (Stage) serviceField.getScene().getWindow();
+        stage.setX(Delta.x + me.getScreenX());
+        stage.setY(Delta.y + me.getScreenY());
     }
 }
