@@ -17,8 +17,6 @@ import java.security.SecureRandom;
  * <p>The method {@code generatePassphrase()} throws an IOException if there is an
  * issue reading the wordlist file. This could occur if the file is not found or if there
  * is a problem reading its contents.</p>
- *
- * @author Jannik Scheel
  */
 public class PassphraseGenerator {
 

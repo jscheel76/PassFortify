@@ -457,7 +457,7 @@ public class PassFortifyController {
      * Regardless of the setting state, updates other relevant settings.
      */
     public void onClearMPass() {
-        if (clearPassword.isSelected()) { //Checking whether the clear password setting is selected
+        if (clearPassword.isSelected()) {
             mPasswordField2.setText("");
         }
         updateSettingsFile();
@@ -468,7 +468,7 @@ public class PassFortifyController {
      * Minimizes the current window using the JavaFX Stage object associated with a common label in the FXML.
      */
     public void onMinimizeClick() {
-        Stage obj = (Stage) feedbackLabel.getScene().getWindow(); //Using a label existing in all FXMLs to locate the Stage
+        Stage obj = (Stage) feedbackLabel.getScene().getWindow(); //Using a label existing in all relevant FXMLs to locate the Stage
         obj.setIconified(true);
     }
 
@@ -482,8 +482,7 @@ public class PassFortifyController {
      */
     public void onChangeMasterPassClick() {
         String newMasterPass = getInputFromTextField();
-        String currentMasterPass = mPasswordField2.getText(); //Takes the current master password from the password fieldZ
-        onCheckPasswordStrengthClick(); //Checking the strength of the new master password
+        String currentMasterPass = mPasswordField2.getText();
 
         //Checks whether the input field is empty
         if (newMasterPass.isEmpty()) {
@@ -494,6 +493,7 @@ public class PassFortifyController {
             feedbackLabel.setStyle("-fx-text-fill: red;");
         } else {
             //If both a new and current master password is entered, the user is asked to confirm
+            savedPasswordStrength = PasswordTools.passwordStrengthOutput(newMasterPass);
             accountLabel.setText("");
             feedbackLabel.setText("Are you sure you want to change the master password to '" + newMasterPass + "' ("
                     + savedPasswordStrength + ")?"); //Prompt asking the user if he wants to change it to the new password
@@ -605,23 +605,21 @@ public class PassFortifyController {
      * @throws Exception If an unexpected error occurs during the process, such as incorrect master password or table population issues.
      */
     @FXML
-    boolean onRevealAccountsClick() throws Exception {
-        //Master password is taken from the password field, the table is populated with the decrypted data
+    void onRevealAccountsClick() throws Exception {
         mPassword = mPasswordField2.getText();
         if (!PasswordTools.checkMasterpassword(mPassword)) {
             feedbackLabel.setText("Master password incorrect");
             feedbackLabel.setStyle("-fx-text-fill: red;");
-            return false;
+            return;
         }
         if (!Files.exists(Path.of(serviceLocation)) && Files.exists(Path.of(usernameLocation))
                 && Files.exists(Path.of(passwordLocation))) {
             feedbackLabel.setText("Missing account files.");
             feedbackLabel.setStyle("-fx-text-fill: red");
-            return false;
+            return;
         }
         populateTableData();
         feedbackLabel.setText("");
-        return false;
     }
 
     /**
