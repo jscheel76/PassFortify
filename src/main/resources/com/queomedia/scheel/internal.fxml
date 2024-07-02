@@ -24,7 +24,7 @@
                      <items>
                         <CheckMenuItem fx:id="passwordMatch" onAction="#dupeUpdater" selected="true" text="Duplicate Password Warning" />
                         <CheckMenuItem fx:id="hidePassword" onAction="#hidePasswordsUpdater" selected="true" text="Hide passwords" />
-                        <CheckMenuItem fx:id="clearPassword" onAction="#onClearMPass" selected="true" text="Clear masterpass" />
+                        <CheckMenuItem fx:id="clearPassword" onAction="#clearMasterPassSettingActivated" selected="true" text="Clear masterpass" />
                         <CheckMenuItem fx:id="checkLeak" onAction="#updateSettingsFile" selected="true" text="Check leaks on right click" />
                      </items>
                   </Menu>
@@ -56,7 +56,7 @@
                   <Insets top="-3.0" />
                </padding>
                 </TableView>
-                <Button layoutX="548.0" layoutY="325.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="83.0" stylesheets="@stylesheet.css" text="Logout" />
+                <Button layoutX="548.0" layoutY="325.0" mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="25.0" prefWidth="83.0" stylesheets="@stylesheet.css" text="Logout" />
                 <Button layoutX="3.0" layoutY="65.0" mnemonicParsing="false" onAction="#onRevealAccountsClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Reveal Accounts" />
             <Button layoutX="3.0" layoutY="127.0" mnemonicParsing="false" onAction="#onGenerateClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Password" />
             <TextField fx:id="inputField" layoutX="4.0" layoutY="220.0" prefHeight="25.0" prefWidth="129.0" promptText="Enter Input" stylesheets="@stylesheet.css" />
@@ -86,7 +86,7 @@
             <Button layoutX="4.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePassphraseClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Passphrase" />
             <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Password" />
             <CheckBox fx:id="inputCheckBox" layoutX="5.0" layoutY="288.0" mnemonicParsing="false" onAction="#onInputBoxChange" prefHeight="17.0" prefWidth="83.0" text="Hide Input?" textFill="WHITE" />
-            <PasswordField fx:id="inputHidden" layoutX="4.0" layoutY="220.0" prefHeight="27.0" prefWidth="129.0" promptText="Enter Input" visible="false" />
+            <PasswordField fx:id="inputPasswordField" layoutX="4.0" layoutY="220.0" prefHeight="27.0" prefWidth="129.0" promptText="Enter Input" visible="false" />
             </children>
          <VBox.margin>
             <Insets />

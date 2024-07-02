@@ -36,8 +36,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.logging.LogManager;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 /**
  * Controller class for the password manager and login windows.
  * This class contains all the methods used by the password manager.
@@ -157,7 +155,7 @@ public class PassFortifyController {
      * PasswordField used in place of the inputField, when inputBox is selected
      */
     @FXML
-    private PasswordField inputHidden;
+    private PasswordField inputPasswordField;
 
     /**
      * Integer determining how many tries a user has left.
@@ -272,7 +270,7 @@ public class PassFortifyController {
     public void onGeneratePassphraseClick() throws IOException {
         String passphrase = PassphraseGenerator.generatePassphrase(); //Using PassphraseGenerator class to generate Passphrase
         if (inputCheckBox.isSelected()) {
-            inputHidden.setText(passphrase);
+            inputPasswordField.setText(passphrase);
         } else {
             inputField.setText(passphrase); //Depositing passphrase in the input field
         }
@@ -292,12 +290,12 @@ public class PassFortifyController {
     public void onInputBoxChange() {
         if (inputCheckBox.isSelected()) {
             inputField.setVisible(false);
-            inputHidden.setVisible(true);
-            inputHidden.setText(inputField.getText());
+            inputPasswordField.setVisible(true);
+            inputPasswordField.setText(inputField.getText());
         } else {
-            inputHidden.setVisible(false);
+            inputPasswordField.setVisible(false);
             inputField.setVisible(true);
-            inputField.setText(inputHidden.getText());
+            inputField.setText(inputPasswordField.getText());
         }
     }
 
@@ -327,7 +325,7 @@ public class PassFortifyController {
      *
      * @throws IOException If an error occurs during the window opening process.
      */
-    public void logout() throws IOException {
+    public void onLogoutClick() throws IOException {
         String passwordFound = "passwordFound.fxml";
         openWindow(passwordFound, true); //opens login window
     }
@@ -336,20 +334,20 @@ public class PassFortifyController {
      * Handles the event when the Enter key is pressed.
      * It invokes the onPasswordButtonClick method, thus acting like a button press.
      *
-     * @see #onPasswordButtonClick()
+     * @see #onLoginClick()
      * @param event The KeyEvent representing the key press event.
      * @throws Exception If any error occurs during the execution of the associated action,
      *                   an exception is thrown to handle the issue.
      */
     @FXML
-    void enterPressed(KeyEvent event) throws Exception {
+    void enterKeyPressed(KeyEvent event) throws Exception {
         if (event.getCode() == KeyCode.ENTER) {
-            onPasswordButtonClick();
+            onLoginClick();
         }
     }
 
     /**
-     * Handles the action triggered when the "Password" button is clicked.
+     * Handles the action triggered when the "Login" button is clicked.
      * Retrieves the entered master password from the password field,
      * decrypts the stored master password, and opens the internal window if the passwords match.
      * If the password is incorrect, decreases the remaining attempts and provides feedback.
@@ -357,7 +355,7 @@ public class PassFortifyController {
      *
      * @throws Exception If any unexpected error occurs during the process, such as decryption or window opening issues.
      */
-    public void onPasswordButtonClick() throws Exception {
+    public void onLoginClick() throws Exception {
         mPassword = passField.getText(); //Retrieves entered masterpassword from passField
         if (PasswordTools.checkMasterpassword(mPassword)) {
             openWindow("internal.fxml", true);
@@ -407,7 +405,7 @@ public class PassFortifyController {
             passwordMatch.setSelected(settingContentLines[1].equals("PasswordWarning1"));
             if (settingContentLines[2].equals("ClearPassword1")) {
                 clearPassword.setSelected(true);
-                onClearMPass();
+                clearMasterPassSettingActivated();
             } else {
                 clearPassword.setSelected(false);
             }
@@ -452,7 +450,7 @@ public class PassFortifyController {
      * If the setting is selected, clears the content of the master password field.
      * Regardless of the setting state, updates other relevant settings.
      */
-    public void onClearMPass() {
+    public void clearMasterPassSettingActivated() {
         if (clearPassword.isSelected()) {
             mPasswordField2.setText("");
         }
@@ -575,7 +573,7 @@ public class PassFortifyController {
             PasswordTools.decryptAndEncrypt(serviceLocation, mPassword, newpass);
             PasswordTools.decryptAndEncrypt(usernameLocation, mPassword, newpass);
             PasswordTools.addDataWithoutAppend(mPassLocation, newpass, newpass);
-            mPassword = newpass; //Reassigning mPassword to the new password
+            mPassword = newpass;
             feedbackLabel.setText("Master password changed");
             feedbackLabel.setStyle("-fx-text-fill: #03c203;");
         } else {
@@ -844,9 +842,9 @@ public class PassFortifyController {
     public void onCreateBackUpClick() {
         try {
             Path destinationDirectory = PasswordTools.getFilePath(); //Assigns the file path through the getFilePath method
-            PasswordTools.createBackup(destinationDirectory); //using passwordTools class to generate backup
-            feedbackLabel.setText("Backup created."); //User feedback
-            feedbackLabel.setStyle("-fx-text-fill: #03c203;"); //Green
+            PasswordTools.createBackup(destinationDirectory);
+            feedbackLabel.setText("Backup created.");
+            feedbackLabel.setStyle("-fx-text-fill: #03c203;");
         } catch (IOException | InterruptedException | RuntimeException e) {
             feedbackLabel.setText("Backup creation was interrupted.");
             feedbackLabel.setStyle("-fx-text-fill: red;");
@@ -928,7 +926,7 @@ public class PassFortifyController {
     public String getInputFromTextField() {
         String input;
         if (inputCheckBox.isSelected()) {
-            input = inputHidden.getText();
+            input = inputPasswordField.getText();
         } else {
             input = inputField.getText();
         }
