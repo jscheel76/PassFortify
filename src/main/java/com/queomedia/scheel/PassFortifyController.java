@@ -34,7 +34,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-import java.util.logging.LogManager;
+
 
 /**
  * Controller class for the password manager and login windows.
@@ -231,7 +231,6 @@ public class PassFortifyController {
         stage.show();
         stage.setY(y);
         stage.setX(x);
-        LogManager.getLogManager().reset();
     }
 
     /**
@@ -781,21 +780,28 @@ public class PassFortifyController {
      *
      * @see #populateTableData()
      */
-    public void onChangePasswordClick() throws Exception {
+    public void onChangeEntryClick() throws Exception {
         if (accountTable.getSelectionModel().getSelectedItem() != null) {
             mPassword = mPasswordField2.getText();
-            String newPass = getInputFromTextField();
+            String newEntry = getInputFromTextField();
 
-            //Getting service and username from user selection to be used for search
+            TableColumn selectedColumn = accountTable.getSelectionModel().getSelectedCells().get(0).getTableColumn();
+
             String service = accountTable.getSelectionModel().getSelectedItem().getService();
             String username = accountTable.getSelectionModel().getSelectedItem().getUsername();
+            String password = accountTable.getSelectionModel().getSelectedItem().getPassword();
 
-            //Using PasswordTools class to perform the change of the password
-            PasswordTools.changePassword(mPassword, service, username, newPass);
-            feedbackLabel.setText("Password changed");
+            if (selectedColumn.getText().equals("Service")) {
+                PasswordTools.changeEntry(mPassword, passwordLocation, usernameLocation, serviceLocation, password, username, newEntry);
+            } else if (selectedColumn.getText().equals("Username")) {
+                PasswordTools.changeEntry(mPassword, serviceLocation, passwordLocation, usernameLocation, service, password, newEntry);
+            } else if (selectedColumn.getText().equals("Password")) {
+                PasswordTools.changeEntry(mPassword, serviceLocation, usernameLocation, passwordLocation, service, username, newEntry);
+            }
+            feedbackLabel.setText(selectedColumn.getText() + " changed successfully");
             feedbackLabel.setStyle("-fx-text-fill: #03c203");
 
-            populateTableData(); //Updating tableview
+            populateTableData();
         } else {
             feedbackLabel.setText("Please select a password to change");
             feedbackLabel.setStyle("-fx-text-fill: red");

@@ -84,7 +84,7 @@
                   <Font size="15.0" />
                </font></Label>
             <Button layoutX="4.0" layoutY="158.0" mnemonicParsing="false" onAction="#onGeneratePassphraseClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Generate Passphrase" />
-            <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Password" />
+            <Button layoutX="3.0" layoutY="189.0" mnemonicParsing="false" onAction="#onChangeEntryClick" prefHeight="25.0" prefWidth="135.0" stylesheets="@stylesheet.css" text="Change Entry" />
             <CheckBox fx:id="inputCheckBox" layoutX="5.0" layoutY="288.0" mnemonicParsing="false" onAction="#onInputBoxChange" prefHeight="17.0" prefWidth="83.0" text="Hide Input?" textFill="WHITE" />
             <PasswordField fx:id="inputPasswordField" layoutX="4.0" layoutY="220.0" prefHeight="27.0" prefWidth="129.0" promptText="Enter Input" visible="false" />
             </children>

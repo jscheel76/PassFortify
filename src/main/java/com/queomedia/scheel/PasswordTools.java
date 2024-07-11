@@ -371,47 +371,33 @@ public class PasswordTools {
         return passwordContentLines[pos];
     }
 
-    /**
-     * Changes the password for a specific service and username combination.
-     * This method retrieves the content lines for service, username, and password from their respective files
-     * decrypted with the provided master password. It then searches for a matching username and service combination
-     * and replaces the corresponding password with the new password. The modified password content is then written back
-     * to the password file and encrypted with the master password.
-     *
-     * @param mPassword The master password used to decrypt and encrypt the password file.
-     * @param service   The service for which the password is to be changed.
-     * @param username  The username associated with the password to be changed.
-     * @param newPass   The new password to replace the existing password.
-     *
-     * @throws Exception If an error occurs during the decryption, file writing, or encryption process.
-     *
-     * @see PasswordTools#getContentLines(String, String)
-     * @see Cryptography#encryptFile(String, String, String)
-     */
-    public static void changePassword(final String mPassword, final String service, final String username,
-            final String newPass)
+    public static void changeEntry(final String mPassword, final String firstPath, final String secondPath,
+            final String changePath, final String compareFirst, final String compareSecond, final String toChange)
             throws Exception {
         //Retrieving content of the saved accounts using PasswordTools class
-        String[] serviceContentLines = getContentLines(SERVICE_LOCATION, mPassword);
-        String[] usernameContentLines = getContentLines(USERNAME_LOCATION, mPassword);
-        String[] passwordContentLines = getContentLines(PASSWORD_LOCATION, mPassword);
+        String[] firstContentLines = getContentLines(firstPath, mPassword);
+        String[] secondContentLines = getContentLines(secondPath, mPassword);
+        String[] changeContentLines = getContentLines(changePath, mPassword);
 
-        for (int i = 0; i < serviceContentLines.length; i++) {
+        int maxLines = Math.max(firstContentLines.length,
+                Math.max(secondContentLines.length, changeContentLines.length));
+
+        for (int i = 0; i < maxLines; i++) {
             //If service and username entry match in the same line of their respective files
-            if (serviceContentLines[i].equals(service) && usernameContentLines[i].equals(username)) {
+            if (firstContentLines[i].equals(compareFirst) && secondContentLines[i].equals(compareSecond)) {
                 //Replacing the desired password in the same line that service and username were found in
-                passwordContentLines[i] = newPass;
+                changeContentLines[i] = toChange;
                 break;
             }
         }
         //Initialising a FileWriter to rewrite the password file
-        try (FileWriter passwordChanger = new FileWriter(PASSWORD_LOCATION)) {
-            for (String passwordContentLine : passwordContentLines) {
-                passwordChanger.write(passwordContentLine);
-                passwordChanger.write(System.lineSeparator()); //Using lineSeparator to achieve correct formatting of file
+        try (FileWriter contentChanger = new FileWriter(changePath)) {
+            for (String changeContentLine : changeContentLines) {
+                contentChanger.write(changeContentLine);
+                contentChanger.write(System.lineSeparator()); //Using lineSeparator to achieve correct formatting of file
             }
         }
-        Cryptography.encryptFile(PASSWORD_LOCATION, PASSWORD_LOCATION, mPassword); //Encrypting the password file
+        Cryptography.encryptFile(changePath, changePath, mPassword); //Encrypting the password file
     }
 
     /**
