@@ -245,9 +245,16 @@ public class PasswordTools {
      */
     public static void decryptAndEncrypt(final String location, final String mPassword, final String newpass)
             throws Exception {
-        byte[] decryptedPass = Cryptography.decryptFile(location, mPassword); //Decrypting the contents of the file
+        byte[] decryptedPass = Cryptography.decryptFile(location, mPassword);
         String pText = new String(decryptedPass, UTF_8);
         addDataWithoutAppend(location, pText, newpass);
+    }
+
+    public static void changeMPass(String mPassword, String newpass) throws Exception {
+        decryptAndEncrypt(PASSWORD_LOCATION, mPassword, newpass);
+        decryptAndEncrypt(SERVICE_LOCATION, mPassword, newpass);
+        decryptAndEncrypt(USERNAME_LOCATION, mPassword, newpass);
+        addDataWithoutAppend(M_PASS_LOCATION, newpass, newpass);
     }
 
     /**

@@ -35,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
-
 /**
  * Controller class for the password manager and login windows.
  * This class contains all the methods used by the password manager.
@@ -568,10 +567,7 @@ public class PassFortifyController {
         mPassword = mPasswordField2.getText();
 
         if (PasswordTools.checkMasterpassword(mPassword) && newpass != null) {
-            PasswordTools.decryptAndEncrypt(passwordLocation, mPassword, newpass);
-            PasswordTools.decryptAndEncrypt(serviceLocation, mPassword, newpass);
-            PasswordTools.decryptAndEncrypt(usernameLocation, mPassword, newpass);
-            PasswordTools.addDataWithoutAppend(mPassLocation, newpass, newpass);
+            PasswordTools.changeMPass(mPassword, newpass);
             mPassword = newpass;
             feedbackLabel.setText("Master password changed");
             feedbackLabel.setStyle("-fx-text-fill: #03c203;");
@@ -792,18 +788,37 @@ public class PassFortifyController {
             String password = accountTable.getSelectionModel().getSelectedItem().getPassword();
 
             if (selectedColumn.getText().equals("Service")) {
-                PasswordTools.changeEntry(mPassword, passwordLocation, usernameLocation, serviceLocation, password, username, newEntry);
+                PasswordTools.changeEntry(mPassword,
+                        passwordLocation,
+                        usernameLocation,
+                        serviceLocation,
+                        password,
+                        username,
+                        newEntry);
             } else if (selectedColumn.getText().equals("Username")) {
-                PasswordTools.changeEntry(mPassword, serviceLocation, passwordLocation, usernameLocation, service, password, newEntry);
+                PasswordTools.changeEntry(mPassword,
+                        serviceLocation,
+                        passwordLocation,
+                        usernameLocation,
+                        service,
+                        password,
+                        newEntry);
             } else if (selectedColumn.getText().equals("Password")) {
-                PasswordTools.changeEntry(mPassword, serviceLocation, usernameLocation, passwordLocation, service, username, newEntry);
+                PasswordTools.changeEntry(mPassword,
+                        serviceLocation,
+                        usernameLocation,
+                        passwordLocation,
+                        service,
+                        username,
+                        newEntry);
             }
+
             feedbackLabel.setText(selectedColumn.getText() + " changed successfully");
             feedbackLabel.setStyle("-fx-text-fill: #03c203");
 
             populateTableData();
         } else {
-            feedbackLabel.setText("Please select a password to change");
+            feedbackLabel.setText("Please select an entry to change");
             feedbackLabel.setStyle("-fx-text-fill: red");
         }
     }
