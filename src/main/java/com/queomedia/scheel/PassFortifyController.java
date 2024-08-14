@@ -212,12 +212,10 @@ public class PassFortifyController {
         double x = currentStage.getX();
         double y = currentStage.getY();
 
-        //Closes the previous window
         if (closePreviousWindow) {
             ((Stage) feedbackLabel.getScene().getWindow()).close(); //Using UI element present in all three fxml files
         }
 
-        //tries to open internals of the password manager, if the password was correct
         FXMLLoader fxmlLoader = new FXMLLoader(PassFortify.class.getResource(sceneToOpen));
         Parent root1 = fxmlLoader.load();
         Stage stage = new Stage();
